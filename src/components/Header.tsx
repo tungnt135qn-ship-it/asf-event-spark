@@ -33,8 +33,16 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-        <a href="#top" className="shrink-0">
+        <a href="#top" className="flex shrink-0 items-center gap-3">
           <AsfLogo size={scrolled ? 44 : 56} className="transition-all duration-300" />
+          <div className="hidden flex-col leading-tight sm:flex">
+            <span className="text-gradient-gold text-base font-extrabold tracking-tight">
+              ASF 2026
+            </span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">
+              Asian Securities Forum
+            </span>
+          </div>
         </a>
 
         <nav className="hidden items-center gap-6 xl:flex">
