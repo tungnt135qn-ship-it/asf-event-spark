@@ -4,9 +4,7 @@ import { Menu, X } from "lucide-react";
 
 const NAV = [
   { href: "#overview", label: "Overview" },
-  { href: "#why", label: "Why Attend" },
   { href: "#agenda", label: "Agenda" },
-  { href: "#location", label: "Location" },
   { href: "#speakers", label: "Speakers" },
   { href: "#topics", label: "Topics" },
   { href: "#documents", label: "Documents" },
@@ -60,7 +58,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <a
             href="#register"
-            className="hidden rounded-lg bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
+            className="hidden rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
           >
             Register
           </a>
