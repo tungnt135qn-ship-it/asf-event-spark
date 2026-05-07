@@ -45,11 +45,6 @@ export function Hero() {
       id="top"
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-20"
     >
-      {/* Status badge pinned just under header */}
-      <div className="absolute left-1/2 top-20 z-20 -translate-x-1/2 sm:top-24">
-        <StatusBadge />
-      </div>
-
       {/* Glow background */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/3 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,oklch(0.45_0.2_255_/_25%),transparent_60%)]" />
@@ -75,7 +70,7 @@ export function Hero() {
           convenes regulators, market leaders and global investors.
         </p>
 
-        <div className="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-md">
+        <a href="#location" className="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-md transition hover:border-gold/50 hover:bg-white/10">
           <span className="inline-flex items-center gap-2 text-sm text-white">
             <Calendar size={16} className="text-gold" />
             14 – 17 April 2026
@@ -85,7 +80,7 @@ export function Hero() {
             <MapPin size={16} className="text-gold" />
             Hanoi, Vietnam
           </span>
-        </div>
+        </a>
 
         {/* Countdown */}
         <div className="mt-10 flex justify-center gap-3 sm:gap-5">
@@ -98,20 +93,16 @@ export function Hero() {
         <div id="register" className="mt-10 flex flex-wrap justify-center gap-4">
           <a
             href="#register"
-            className="rounded-lg bg-destructive px-7 py-3 text-base font-semibold text-destructive-foreground shadow-lg shadow-destructive/30 transition hover:scale-105 hover:opacity-95"
+            className="rounded-full bg-destructive px-7 py-3 text-base font-semibold text-destructive-foreground shadow-lg shadow-destructive/30 transition hover:scale-105 hover:opacity-95"
           >
             Register Now
           </a>
           <a
             href="#documents"
-            className="rounded-lg border-2 border-gold/60 bg-transparent px-7 py-3 text-base font-semibold text-gold transition hover:bg-gold/10"
+            className="rounded-full border-2 border-gold/60 bg-transparent px-7 py-3 text-base font-semibold text-gold transition hover:bg-gold/10"
           >
             Event Handbook
           </a>
-        </div>
-
-        <div className="mt-6 text-xs text-white/50">
-          Event date: {EVENT_START.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
         </div>
       </div>
     </section>

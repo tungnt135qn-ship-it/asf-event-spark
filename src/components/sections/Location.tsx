@@ -29,7 +29,7 @@ export function Location() {
               href="https://www.google.com/maps/dir/?api=1&destination=National+Convention+Center+Hanoi"
               target="_blank"
               rel="noreferrer"
-              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground transition hover:opacity-90"
+              className="mt-5 inline-flex items-center gap-2 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground transition hover:opacity-90"
             >
               <Navigation size={14} /> Open in Google Maps
             </a>
