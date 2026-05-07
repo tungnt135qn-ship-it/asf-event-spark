@@ -1,5 +1,5 @@
 import { Section } from "./Overview";
-import { Users, TrendingUp, Landmark, Sparkles, ArrowUpRight } from "lucide-react";
+import { Users, TrendingUp, Landmark, Briefcase, ArrowUpRight } from "lucide-react";
 
 const items = [
   {
