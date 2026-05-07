@@ -81,8 +81,8 @@ export function FAQ() {
 
       <div className="grid items-center gap-10 lg:grid-cols-2">
         {/* Left: animation */}
-        <div className="relative mx-auto w-full max-w-md">
-          <DotLottieReact src={faqLottie} loop autoplay style={{ width: "100%", height: "auto" }} />
+        <div className="relative mx-auto w-full max-w-[600px]">
+          <DotLottieReact src={faqLottie} loop autoplay style={{ width: "100%", height: "auto", transform: "scale(1.5)", transformOrigin: "center" }} />
         </div>
 
         {/* Right: accordion */}
