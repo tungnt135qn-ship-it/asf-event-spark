@@ -1,5 +1,6 @@
 import { ExternalLink, CheckCircle2, Globe2, Building2, Calendar } from "lucide-react";
 import overviewImg from "@/assets/overview-hanoi.jpg";
+import vbmaLogo from "@/assets/vbma-logo.png";
 
 function Section({
   id,
