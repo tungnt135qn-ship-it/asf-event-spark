@@ -34,7 +34,7 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
         <a href="#top" className="shrink-0">
-          <AsfLogo />
+          <AsfLogo size={scrolled ? 44 : 56} className="transition-all duration-300" />
         </a>
 
         <nav className="hidden items-center gap-6 xl:flex">

@@ -1,19 +1,14 @@
-type Props = { className?: string; compact?: boolean };
+import logoUrl from "@/assets/asf-logo.png";
 
-export function AsfLogo({ className = "", compact = false }: Props) {
+type Props = { className?: string; size?: number };
+
+export function AsfLogo({ className = "", size = 48 }: Props) {
   return (
-    <div className={`inline-flex items-center gap-2 ${className}`}>
-      <div className="relative">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-gold to-gold-soft text-navy-deep shadow-[var(--shadow-glow)]">
-          <span className="font-black text-lg leading-none">A</span>
-        </div>
-      </div>
-      {!compact && (
-        <div className="leading-tight">
-          <div className="text-gradient-gold text-xl font-extrabold tracking-tight">ASF 2026</div>
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">Asian Securities Forum</div>
-        </div>
-      )}
-    </div>
+    <img
+      src={logoUrl}
+      alt="ASF 2026 — Hanoi"
+      className={className}
+      style={{ height: size, width: "auto" }}
+    />
   );
 }
