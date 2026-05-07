@@ -124,7 +124,7 @@ export function Register() {
           <form
             id="register"
             onSubmit={onSubmit}
-            className="scroll-mt-[calc(30vh+50px)] rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
+            className="scroll-mt-[calc(30vh+25px)] rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
           >
             <h4 className="text-xl font-bold text-white">Delegate Registration</h4>
             <p className="mt-1 text-sm text-white/60">Fill in your details — we'll confirm by email.</p>
