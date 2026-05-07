@@ -157,3 +157,25 @@ html {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid oklch(1 0 0 / 10%);
 }
+
+/* Unified scrollbar styling */
+html {
+  scrollbar-color: var(--gold) var(--navy-deep);
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--navy-deep);
+}
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+  border-radius: 999px;
+  border: 2px solid var(--navy-deep);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
