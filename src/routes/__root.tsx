@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "ASF 2026 31st" },
+      { name: "description", content: "Sự kiện ASF lần thứ 31" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "ASF 2026 31st" },
+      { property: "og:description", content: "Sự kiện ASF lần thứ 31" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "ASF 2026 31st" },
+      { name: "twitter:description", content: "Sự kiện ASF lần thứ 31" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/mX71jRGCIsg1DCgG7MsJhDCTwwn1/social-images/social-1778123030371-LOGO_ASF_op1_v3.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/mX71jRGCIsg1DCgG7MsJhDCTwwn1/social-images/social-1778123030371-LOGO_ASF_op1_v3.webp" },
     ],
     links: [
       {
