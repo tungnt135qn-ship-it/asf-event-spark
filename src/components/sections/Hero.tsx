@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Calendar, MapPin } from "lucide-react";
 import { EVENT_START, getCountdown, getEventStatus } from "@/lib/event";
+import logoUrl from "@/assets/asf-logo.png";
 
 function StatusBadge() {
   const status = getEventStatus();
@@ -56,12 +57,17 @@ export function Hero() {
           <StatusBadge />
         </div>
 
-        <h1 className="text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
-          <span className="block text-gradient-gold">ASF 2026</span>
-          <span className="mt-3 block text-2xl font-semibold text-white sm:text-3xl lg:text-4xl">
-            Asian Securities Forum
-          </span>
-        </h1>
+        <div className="flex justify-center">
+          <img
+            src={logoUrl}
+            alt="ASF 2026 Hanoi"
+            className="h-48 w-auto drop-shadow-[0_0_60px_oklch(0.86_0.16_90_/_0.35)] sm:h-64 lg:h-80"
+          />
+        </div>
+        <h1 className="sr-only">ASF 2026 — Asian Securities Forum, Hanoi</h1>
+        <div className="mt-2 text-sm font-semibold uppercase tracking-[0.3em] text-white/80 sm:text-base">
+          Asian Securities Forum
+        </div>
 
         <p className="mx-auto mt-6 max-w-2xl text-base text-white/80 sm:text-lg">
           Shaping the future of Asia's capital markets. Hosted by VBMA in Vietnam, ASF 2026
