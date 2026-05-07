@@ -56,10 +56,16 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <a
-            href="#register"
-            className="hidden rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
+            href="#documents"
+            className="hidden rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold text-gold transition hover:bg-gold/10 sm:inline-flex"
           >
-            Register
+            Event Handbook
+          </a>
+          <a
+            href="#register"
+            className="hidden rounded-full bg-destructive px-4 py-1.5 text-[13px] font-semibold text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
+          >
+            Register Now
           </a>
           <button
             onClick={() => setOpen((v) => !v)}
