@@ -43,18 +43,22 @@ export function Register() {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    const scrollToCenter = () => {
+    const scrollToCenter = (behavior: ScrollBehavior = "auto") => {
       const el = formRef.current;
       if (!el) return;
-      const headerH = 80;
+      const headerH = document.querySelector("header")?.getBoundingClientRect().height ?? 80;
       const rect = el.getBoundingClientRect();
       const available = window.innerHeight - headerH;
-      const targetY = window.scrollY + rect.top - headerH - Math.max(0, (available - rect.height) / 2);
-      window.scrollTo({ top: targetY, behavior: "smooth" });
+      const centeredOffset = Math.max(16, (available - rect.height) / 2);
+      const targetY = window.scrollY + rect.top - headerH - centeredOffset;
+      window.scrollTo({ top: Math.max(0, targetY), behavior });
+    };
+    const scheduleScrollToCenter = (behavior: ScrollBehavior = "auto") => {
+      requestAnimationFrame(() => requestAnimationFrame(() => scrollToCenter(behavior)));
     };
     const onHash = () => {
       if (window.location.hash === "#register") {
-        setTimeout(scrollToCenter, 50);
+        scheduleScrollToCenter();
       }
     };
     const onClick = (e: MouseEvent) => {
@@ -65,7 +69,7 @@ export function Register() {
       if (window.location.hash !== "#register") {
         history.replaceState(null, "", "#register");
       }
-      setTimeout(scrollToCenter, 0);
+      scheduleScrollToCenter("smooth");
     };
     onHash();
     window.addEventListener("hashchange", onHash);
@@ -157,8 +161,8 @@ export function Register() {
 
           {/* Right form */}
           <form
-            id="register"
             ref={formRef}
+            aria-label="Delegate Registration"
             onSubmit={onSubmit}
             className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
           >
