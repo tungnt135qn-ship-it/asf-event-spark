@@ -8,55 +8,50 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
+import s1 from "@/assets/speakers/s1.jpg";
+import s2 from "@/assets/speakers/s2.jpg";
+import s3 from "@/assets/speakers/s3.jpg";
+import s4 from "@/assets/speakers/s4.jpg";
+import s5 from "@/assets/speakers/s5.jpg";
+import s6 from "@/assets/speakers/s6.jpg";
+import s7 from "@/assets/speakers/s7.jpg";
+import s8 from "@/assets/speakers/s8.jpg";
 
 const speakers = [
-  { name: "Dr. Nguyen Hoang Duong", role: "Chairman", org: "VBMA", bio: "Leading Vietnam's bond market development with 20+ years in capital markets." },
-  { name: "Le Thi Minh Anh", role: "Deputy Director", org: "State Securities Commission", bio: "Architect of Vietnam's market reform & ESG disclosure framework." },
-  { name: "Hiroshi Tanaka", role: "Managing Director", org: "Japan Securities Dealers Assoc.", bio: "Expert on cross-border fixed income flows across Asia." },
-  { name: "Sarah Chen", role: "Head of Asia Fixed Income", org: "Global Asset Management", bio: "Manages USD 30B+ in Asian credit and sovereign portfolios." },
-  { name: "Raj Mehta", role: "CEO", org: "Asia Capital Markets", bio: "Pioneer of digital bond issuance platforms in Southeast Asia." },
-  { name: "Kim Soo-jin", role: "Chief Economist", org: "Korea Financial Investment", bio: "Authority on Asian monetary policy and rate cycles." },
-  { name: "Andrew Lim", role: "Partner", org: "Singapore Exchange", bio: "Drives SGX's regional debt listing and clearing initiatives." },
-  { name: "Maria Santos", role: "Head of ESG", org: "ASEAN Capital Markets Forum", bio: "Champion of sustainable finance and green bond standards." },
+  { img: s1, name: "Christine Laurent", role: "President", org: "European Central Bank", bio: "Steering Europe's monetary policy and championing global financial stability." },
+  { img: s2, name: "James Dorman", role: "CEO", org: "JP Morgan Asia", bio: "Leading one of the world's largest investment banks across Asia-Pacific markets." },
+  { img: s3, name: "Hiroshi Tanaka", role: "Managing Director", org: "Japan Securities Dealers Assoc.", bio: "Expert on cross-border fixed income flows across Asia." },
+  { img: s4, name: "Le Thi Minh Anh", role: "Deputy Director", org: "State Securities Commission", bio: "Architect of Vietnam's market reform and ESG disclosure framework." },
+  { img: s5, name: "Raj Mehta", role: "CEO", org: "Asia Capital Markets", bio: "Pioneer of digital bond issuance platforms in Southeast Asia." },
+  { img: s6, name: "Kim Soo-jin", role: "Chief Economist", org: "Korea Financial Investment", bio: "Authority on Asian monetary policy and rate cycles." },
+  { img: s7, name: "Andrew Lim", role: "Partner", org: "Singapore Exchange", bio: "Drives SGX's regional debt listing and clearing initiatives." },
+  { img: s8, name: "Maria Santos", role: "Head of ESG", org: "ASEAN Capital Markets Forum", bio: "Champion of sustainable finance and green bond standards." },
 ];
 
-const gradients = [
-  "from-gold via-gold-soft to-amber-200",
-  "from-blue-400 via-indigo-500 to-purple-500",
-  "from-rose-400 via-pink-500 to-fuchsia-500",
-  "from-emerald-400 via-teal-500 to-cyan-500",
-  "from-orange-400 via-red-500 to-rose-500",
-  "from-violet-400 via-purple-500 to-indigo-600",
-  "from-cyan-400 via-sky-500 to-blue-600",
-  "from-yellow-400 via-orange-500 to-red-500",
-];
-
-function initials(name: string) {
-  return name.split(" ").map((n) => n[0]).slice(0, 2).join("");
-}
-
-function SpeakerCard({ s, gradient }: { s: (typeof speakers)[number]; gradient: string }) {
+function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
   return (
-    <div className="group relative h-[380px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:border-gold/40 hover:shadow-[var(--shadow-glow)]">
-      {/* Image / gradient avatar */}
-      <div className={`relative h-full w-full bg-gradient-to-br ${gradient}`}>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-7xl font-black text-white/90 drop-shadow-lg">{initials(s.name)}</span>
-        </div>
+    <div className="group relative h-[480px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:border-gold/40 hover:shadow-[var(--shadow-glow)]">
+      <img
+        src={s.img}
+        alt={s.name}
+        loading="lazy"
+        width={512}
+        height={640}
+        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+      />
 
-        {/* Always-visible name footer */}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep via-navy-deep/80 to-transparent p-5 transition group-hover:opacity-0">
-          <h3 className="text-lg font-bold text-white">{s.name}</h3>
-          <div className="mt-1 text-xs text-gold">{s.role}</div>
-        </div>
+      {/* Always-visible name footer */}
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep via-navy-deep/85 to-transparent p-5 transition group-hover:opacity-0">
+        <h3 className="text-lg font-bold text-white">{s.name}</h3>
+        <div className="mt-1 text-xs text-gold">{s.role}</div>
+      </div>
 
-        {/* Hover overlay with details */}
-        <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-navy-deep via-navy-deep/95 to-navy-deep/40 p-6 opacity-0 transition duration-300 group-hover:opacity-100">
-          <h3 className="text-xl font-bold text-white">{s.name}</h3>
-          <div className="mt-1 text-sm font-semibold text-gold">{s.role}</div>
-          <div className="mt-0.5 text-xs text-white/70">{s.org}</div>
-          <p className="mt-3 text-sm leading-relaxed text-white/85">{s.bio}</p>
-        </div>
+      {/* Hover overlay */}
+      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-navy-deep via-navy-deep/95 to-navy-deep/40 p-6 opacity-0 transition duration-300 group-hover:opacity-100">
+        <h3 className="text-xl font-bold text-white">{s.name}</h3>
+        <div className="mt-1 text-sm font-semibold text-gold">{s.role}</div>
+        <div className="mt-0.5 text-xs text-white/70">{s.org}</div>
+        <p className="mt-3 text-sm leading-relaxed text-white/85">{s.bio}</p>
       </div>
     </div>
   );
@@ -73,9 +68,9 @@ export function Speakers() {
         className="mx-auto w-full max-w-6xl"
       >
         <CarouselContent>
-          {speakers.map((s, i) => (
+          {speakers.map((s) => (
             <CarouselItem key={s.name} className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-              <SpeakerCard s={s} gradient={gradients[i % gradients.length]} />
+              <SpeakerCard s={s} />
             </CarouselItem>
           ))}
         </CarouselContent>
