@@ -56,9 +56,6 @@ function NewsDetail() {
             <ArrowLeft size={16} /> Back to News
           </Link>
 
-          <div className="mb-3 inline-flex rounded-md bg-gold/90 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-navy-deep">
-            {n.tag}
-          </div>
           <h1 className="mb-4 text-3xl font-extrabold leading-tight sm:text-5xl">
             <span className="text-gradient-gold">{n.title}</span>
           </h1>
