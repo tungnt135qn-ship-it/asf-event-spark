@@ -59,7 +59,7 @@ export function Overview() {
               loading="lazy"
               width={1024}
               height={1280}
-              className="h-full max-h-[480px] w-full object-cover object-bottom"
+              className="h-full max-h-[530px] w-full object-cover object-bottom"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-transparent to-transparent" />
           </div>
