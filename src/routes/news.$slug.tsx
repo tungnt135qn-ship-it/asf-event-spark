@@ -3,7 +3,7 @@ import { ArrowLeft, CalendarDays, User2, Clock } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Starfield } from "@/components/Starfield";
 import { Footer } from "@/components/sections/Footer";
-import { getNews, news } from "@/lib/news";
+import { getNews, news, type NewsItem } from "@/lib/news";
 
 export const Route = createFileRoute("/news/$slug")({
   loader: ({ params }) => {
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/news/$slug")({
 });
 
 function NewsDetail() {
-  const n = Route.useLoaderData();
+  const n = Route.useLoaderData() as NewsItem;
   const others = news.filter((x) => x.slug !== n.slug).slice(0, 2);
 
   return (
