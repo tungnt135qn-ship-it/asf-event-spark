@@ -23,6 +23,27 @@ const tiers = [
   },
 ];
 
+function Track({
+  items,
+  cls,
+}: {
+  items: string[];
+  cls: string;
+}) {
+  return (
+    <div className="flex shrink-0">
+      {items.map((logo, i) => (
+        <div
+          key={`${logo}-${i}`}
+          className={`mr-4 flex shrink-0 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br px-8 font-bold text-white/80 backdrop-blur-md transition hover:border-gold/30 hover:text-gold ${cls}`}
+        >
+          {logo}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function MarqueeRow({
   items,
   cls,
@@ -34,28 +55,21 @@ function MarqueeRow({
   reverse: boolean;
   speed: number;
 }) {
-  // Duplicate items so the marquee loops seamlessly
-  const loopItems = [...items, ...items];
   return (
     <div className="group relative overflow-hidden">
-      {/* Edge fades */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-navy-deep to-transparent" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-navy-deep to-transparent" />
 
       <div
-        className="flex w-max gap-4 group-hover:[animation-play-state:paused]"
+        className="flex w-max group-hover:[animation-play-state:paused]"
         style={{
           animation: `${reverse ? "marquee-right" : "marquee-left"} ${speed}s linear infinite`,
         }}
       >
-        {loopItems.map((logo, i) => (
-          <div
-            key={`${logo}-${i}`}
-            className={`flex shrink-0 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br px-8 font-bold text-white/80 backdrop-blur-md transition hover:border-gold/30 hover:text-gold ${cls}`}
-          >
-            {logo}
-          </div>
-        ))}
+        {/* Two identical tracks. Translating -50% loops seamlessly because
+            each track ends with the same trailing margin (mr-4 on last item). */}
+        <Track items={items} cls={cls} />
+        <Track items={items} cls={cls} />
       </div>
     </div>
   );
