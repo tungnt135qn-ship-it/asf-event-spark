@@ -1,0 +1,112 @@
+import { useEffect, useState } from "react";
+import { Calendar, MapPin } from "lucide-react";
+import { EVENT_START, getCountdown, getEventStatus } from "@/lib/event";
+
+function StatusBadge() {
+  const status = getEventStatus();
+  const map = {
+    upcoming: { text: "Upcoming", color: "bg-gold/20 text-gold border-gold/40" },
+    live: { text: "Live Now", color: "bg-destructive/20 text-destructive border-destructive/50 animate-pulse" },
+    completed: { text: "Completed", color: "bg-white/10 text-white/70 border-white/20" },
+  } as const;
+  const v = map[status];
+  return (
+    <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider ${v.color}`}>
+      <span className="h-1.5 w-1.5 rounded-full bg-current" />
+      {v.text}
+    </span>
+  );
+}
+
+function CountdownUnit({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="min-w-[72px] rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-center backdrop-blur-md sm:min-w-[96px]">
+        <div className="text-gradient-gold text-3xl font-black tabular-nums sm:text-5xl">
+          {value.toString().padStart(2, "0")}
+        </div>
+      </div>
+      <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/70 sm:text-xs">{label}</div>
+    </div>
+  );
+}
+
+export function Hero() {
+  const [c, setC] = useState(getCountdown());
+
+  useEffect(() => {
+    const id = setInterval(() => setC(getCountdown()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <section
+      id="top"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-24"
+    >
+      {/* Glow background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-1/3 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,oklch(0.45_0.2_255_/_35%),transparent_60%)]" />
+        <div className="absolute bottom-0 left-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,oklch(0.6_0.2_30_/_15%),transparent_70%)]" />
+        <div className="absolute right-10 top-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,oklch(0.85_0.16_90_/_15%),transparent_70%)]" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-5xl text-center">
+        <div className="mb-6 flex justify-center">
+          <StatusBadge />
+        </div>
+
+        <h1 className="text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+          <span className="block text-gradient-gold">ASF 2026</span>
+          <span className="mt-3 block text-2xl font-semibold text-white sm:text-3xl lg:text-4xl">
+            Asian Securities Forum
+          </span>
+        </h1>
+
+        <p className="mx-auto mt-6 max-w-2xl text-base text-white/80 sm:text-lg">
+          Shaping the future of Asia's capital markets. Hosted by VBMA in Vietnam, ASF 2026
+          convenes regulators, market leaders and global investors.
+        </p>
+
+        <div className="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-md">
+          <span className="inline-flex items-center gap-2 text-sm text-white">
+            <Calendar size={16} className="text-gold" />
+            14 – 17 April 2026
+          </span>
+          <span className="h-4 w-px bg-white/20" />
+          <span className="inline-flex items-center gap-2 text-sm text-white">
+            <MapPin size={16} className="text-gold" />
+            Hanoi, Vietnam
+          </span>
+        </div>
+
+        {/* Countdown */}
+        <div className="mt-10 flex justify-center gap-3 sm:gap-5">
+          <CountdownUnit value={c.days} label="Days" />
+          <CountdownUnit value={c.hours} label="Hours" />
+          <CountdownUnit value={c.minutes} label="Minutes" />
+          <CountdownUnit value={c.seconds} label="Seconds" />
+        </div>
+
+        <div id="register" className="mt-10 flex flex-wrap justify-center gap-4">
+          <a
+            href="#register"
+            className="rounded-lg bg-destructive px-7 py-3 text-base font-semibold text-destructive-foreground shadow-lg shadow-destructive/30 transition hover:scale-105 hover:opacity-95"
+          >
+            Register Now
+          </a>
+          <a
+            href="#documents"
+            className="rounded-lg border-2 border-gold/60 bg-transparent px-7 py-3 text-base font-semibold text-gold transition hover:bg-gold/10"
+          >
+            Event Handbook
+          </a>
+        </div>
+
+        <div className="mt-6 text-xs text-white/50">
+          Event date: {EVENT_START.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+        </div>
+      </div>
+    </section>
+  );
+}
