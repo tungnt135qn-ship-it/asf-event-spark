@@ -1,5 +1,5 @@
 import { Section } from "./Overview";
-import { Users, TrendingUp, Landmark, Sparkles, ArrowUpRight } from "lucide-react";
+import { Users, TrendingUp, Landmark, Briefcase, ArrowUpRight } from "lucide-react";
 
 const items = [
   {
@@ -24,7 +24,7 @@ const items = [
     statLabel: "Regulators",
   },
   {
-    icon: Sparkles,
+    icon: Briefcase,
     title: "Investment Opportunities",
     desc: "Discover Vietnam — one of Asia's fastest-growing capital markets — through dedicated investment sessions.",
     stat: "1:1",
