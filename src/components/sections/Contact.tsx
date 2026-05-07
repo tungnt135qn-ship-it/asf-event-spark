@@ -86,6 +86,7 @@ export function Contact() {
             </div>
           </div>
         </div>
+        </div>
 
         {/* Right: Contact channels + map */}
         <div className="lg:col-span-3 space-y-6">
