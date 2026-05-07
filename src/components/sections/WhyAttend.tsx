@@ -24,7 +24,7 @@ const items = [
     statLabel: "Regulators",
   },
   {
-    icon: Sparkles,
+    icon: Briefcase,
     title: "Investment Opportunities",
     desc: "Discover Vietnam — one of Asia's fastest-growing capital markets — through dedicated investment sessions.",
     stat: "1:1",
