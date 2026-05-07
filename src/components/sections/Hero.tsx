@@ -90,20 +90,8 @@ export function Hero() {
           <CountdownUnit value={c.seconds} label="Seconds" />
         </div>
 
-        <div id="register" className="mt-10 flex flex-wrap justify-center gap-4">
-          <a
-            href="#register"
-            className="rounded-full bg-destructive px-7 py-3 text-base font-semibold text-destructive-foreground shadow-lg shadow-destructive/30 transition hover:scale-105 hover:opacity-95"
-          >
-            Register Now
-          </a>
-          <a
-            href="#documents"
-            className="rounded-full border-2 border-gold/60 bg-transparent px-7 py-3 text-base font-semibold text-gold transition hover:bg-gold/10"
-          >
-            Event Handbook
-          </a>
-        </div>
+        <div id="register" />
+
       </div>
     </section>
   );
