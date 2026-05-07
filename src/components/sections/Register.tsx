@@ -57,9 +57,23 @@ export function Register() {
         setTimeout(scrollToCenter, 50);
       }
     };
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      const a = target?.closest('a[href="#register"]') as HTMLAnchorElement | null;
+      if (!a) return;
+      e.preventDefault();
+      if (window.location.hash !== "#register") {
+        history.replaceState(null, "", "#register");
+      }
+      setTimeout(scrollToCenter, 0);
+    };
     onHash();
     window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
+    document.addEventListener("click", onClick);
+    return () => {
+      window.removeEventListener("hashchange", onHash);
+      document.removeEventListener("click", onClick);
+    };
   }, []);
 
   const update = (k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
