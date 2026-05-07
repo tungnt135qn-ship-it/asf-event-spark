@@ -1,11 +1,11 @@
 // Mock event date — easy to update later
-export const EVENT_START = new Date("2026-11-10T09:00:00+07:00");
-export const EVENT_END = new Date("2026-11-13T18:00:00+07:00");
+export const EVENT_START = new Date("2026-04-14T09:00:00+07:00");
+export const EVENT_END = new Date("2026-04-17T18:00:00+07:00");
 
 export const EVENT_DAYS = [
   {
     index: 1,
-    date: new Date("2026-11-10T00:00:00+07:00"),
+    date: new Date("2026-04-14T00:00:00+07:00"),
     label: "Day 1 — Arrival & Pre-meeting",
     sessions: [
       {
@@ -43,7 +43,7 @@ export const EVENT_DAYS = [
   },
   {
     index: 2,
-    date: new Date("2026-11-11T00:00:00+07:00"),
+    date: new Date("2026-04-15T00:00:00+07:00"),
     label: "Day 2 — Main Event",
     sessions: [
       {
@@ -57,7 +57,7 @@ export const EVENT_DAYS = [
   },
   {
     index: 3,
-    date: new Date("2026-11-12T00:00:00+07:00"),
+    date: new Date("2026-04-16T00:00:00+07:00"),
     label: "Day 3 — Conference & Investment Forum",
     sessions: [
       {
@@ -78,7 +78,7 @@ export const EVENT_DAYS = [
   },
   {
     index: 4,
-    date: new Date("2026-11-13T00:00:00+07:00"),
+    date: new Date("2026-04-17T00:00:00+07:00"),
     label: "Day 4 — Day Tour",
     sessions: [
       {

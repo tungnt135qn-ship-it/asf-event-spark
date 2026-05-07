@@ -22,12 +22,12 @@ function StatusBadge() {
 function CountdownUnit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="min-w-[56px] rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-center backdrop-blur-md sm:min-w-[72px]">
-        <div className="text-gradient-gold text-2xl font-black tabular-nums sm:text-3xl">
+      <div className="min-w-[72px] rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-center backdrop-blur-md sm:min-w-[96px]">
+        <div className="text-gradient-gold text-3xl font-black tabular-nums sm:text-5xl">
           {value.toString().padStart(2, "0")}
         </div>
       </div>
-      <div className="mt-1.5 text-[10px] uppercase tracking-[0.2em] text-white/70">{label}</div>
+      <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/70 sm:text-xs">{label}</div>
     </div>
   );
 }
@@ -43,7 +43,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-24 pb-10"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-20"
     >
       {/* Status badge pinned just under header */}
       <div className="absolute left-1/2 top-20 z-20 -translate-x-1/2 sm:top-24">
@@ -52,65 +52,65 @@ export function Hero() {
 
       {/* Glow background */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/3 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,oklch(0.45_0.2_255_/_25%),transparent_60%)]" />
-        <div className="absolute bottom-0 left-1/4 h-[300px] w-[300px] rounded-full bg-[radial-gradient(circle,oklch(0.6_0.2_30_/_15%),transparent_70%)]" />
-        <div className="absolute right-10 top-1/4 h-[300px] w-[300px] rounded-full bg-[radial-gradient(circle,oklch(0.85_0.16_90_/_15%),transparent_70%)]" />
+        <div className="absolute left-1/2 top-1/3 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,oklch(0.45_0.2_255_/_25%),transparent_60%)]" />
+        <div className="absolute bottom-0 left-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,oklch(0.6_0.2_30_/_15%),transparent_70%)]" />
+        <div className="absolute right-10 top-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,oklch(0.85_0.16_90_/_15%),transparent_70%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-4xl text-center">
+      <div className="relative z-10 mx-auto max-w-5xl text-center">
         <div className="flex justify-center">
           <img
             src={logoUrl}
             alt="ASF 2026 Hanoi"
-            className="h-28 w-auto drop-shadow-[0_0_60px_oklch(0.86_0.16_90_/_0.35)] sm:h-36 lg:h-44"
+            className="h-48 w-auto drop-shadow-[0_0_60px_oklch(0.86_0.16_90_/_0.35)] sm:h-64 lg:h-80"
           />
         </div>
         <h1 className="sr-only">ASF 2026 — Asian Securities Forum, Hanoi</h1>
-        <div className="mt-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/80 sm:text-sm">
+        <div className="mt-2 text-sm font-semibold uppercase tracking-[0.3em] text-white/80 sm:text-base">
           Asian Securities Forum
         </div>
 
-        <p className="mx-auto mt-4 max-w-2xl text-sm text-white/80 sm:text-base">
+        <p className="mx-auto mt-6 max-w-2xl text-base text-white/80 sm:text-lg">
           Shaping the future of Asia's capital markets. Hosted by VBMA in Vietnam, ASF 2026
           convenes regulators, market leaders and global investors.
         </p>
 
-        <div className="mt-5 inline-flex flex-wrap items-center justify-center gap-3 rounded-full border border-white/15 bg-white/5 px-5 py-2 backdrop-blur-md">
-          <span className="inline-flex items-center gap-2 text-xs text-white sm:text-sm">
-            <Calendar size={14} className="text-gold" />
-            10 – 13 November 2026
+        <div className="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-md">
+          <span className="inline-flex items-center gap-2 text-sm text-white">
+            <Calendar size={16} className="text-gold" />
+            14 – 17 April 2026
           </span>
           <span className="h-4 w-px bg-white/20" />
-          <span className="inline-flex items-center gap-2 text-xs text-white sm:text-sm">
-            <MapPin size={14} className="text-gold" />
+          <span className="inline-flex items-center gap-2 text-sm text-white">
+            <MapPin size={16} className="text-gold" />
             Hanoi, Vietnam
           </span>
         </div>
 
         {/* Countdown */}
-        <div className="mt-6 flex justify-center gap-2 sm:gap-4">
+        <div className="mt-10 flex justify-center gap-3 sm:gap-5">
           <CountdownUnit value={c.days} label="Days" />
           <CountdownUnit value={c.hours} label="Hours" />
           <CountdownUnit value={c.minutes} label="Minutes" />
           <CountdownUnit value={c.seconds} label="Seconds" />
         </div>
 
-        <div id="register" className="mt-7 flex flex-wrap justify-center gap-3">
+        <div id="register" className="mt-10 flex flex-wrap justify-center gap-4">
           <a
             href="#register"
-            className="rounded-full bg-destructive px-6 py-2.5 text-sm font-semibold text-destructive-foreground shadow-lg shadow-destructive/30 transition hover:scale-105 hover:opacity-95 sm:text-base"
+            className="rounded-lg bg-destructive px-7 py-3 text-base font-semibold text-destructive-foreground shadow-lg shadow-destructive/30 transition hover:scale-105 hover:opacity-95"
           >
             Register Now
           </a>
           <a
             href="#documents"
-            className="rounded-full border-2 border-gold/60 bg-transparent px-6 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10 sm:text-base"
+            className="rounded-lg border-2 border-gold/60 bg-transparent px-7 py-3 text-base font-semibold text-gold transition hover:bg-gold/10"
           >
             Event Handbook
           </a>
         </div>
 
-        <div className="mt-4 text-[11px] text-white/50">
+        <div className="mt-6 text-xs text-white/50">
           Event date: {EVENT_START.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
         </div>
       </div>
