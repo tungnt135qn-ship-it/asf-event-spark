@@ -6,6 +6,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { HelpCircle, MessageSquare, Sparkles, Lightbulb } from "lucide-react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import faqLottie from "@/assets/faq-chatbot.lottie?url";
 
 const faqs = [
   {
@@ -79,28 +81,8 @@ export function FAQ() {
 
       <div className="grid items-center gap-10 lg:grid-cols-2">
         {/* Left: animation */}
-        <div className="relative mx-auto h-80 w-full max-w-md sm:h-96">
-          {/* Halo rings */}
-          <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/20" />
-          <div
-            className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-gold/40"
-            style={{ animation: "faq-pulse-ring 2.4s ease-out infinite" }}
-          />
-          <div
-            className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-gold/40"
-            style={{ animation: "faq-pulse-ring 2.4s ease-out 1.2s infinite" }}
-          />
-
-          {/* Center bubble */}
-          <div className="absolute left-1/2 top-1/2 flex h-32 w-32 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-gold to-gold-soft text-navy-deep shadow-[0_0_60px_rgba(212,175,55,0.5)]">
-            <HelpCircle size={56} strokeWidth={2.2} />
-          </div>
-
-          {/* Floating icons */}
-          <FloatingIcon Icon={MessageSquare} className="left-4 top-6" />
-          <FloatingIcon Icon={Sparkles} className="right-6 top-12" delay="-2s" />
-          <FloatingIcon Icon={Lightbulb} className="bottom-8 left-10" delay="-4s" />
-          <FloatingIcon Icon={HelpCircle} className="bottom-6 right-4" delay="-1s" />
+        <div className="relative mx-auto w-full max-w-md">
+          <DotLottieReact src={faqLottie} loop autoplay style={{ width: "100%", height: "auto" }} />
         </div>
 
         {/* Right: accordion */}
