@@ -57,7 +57,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <a
             href="#documents"
-            className="hidden rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold text-gold transition hover:bg-gold/10 sm:inline-flex"
+            className="hidden items-center justify-center rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold leading-none text-gold transition hover:bg-gold/10 sm:inline-flex"
           >
             Event Handbook
           </a>
