@@ -17,6 +17,7 @@ import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
 import { FloatingActions } from "@/components/FloatingActions";
 import { Footer } from "@/components/sections/Footer";
+import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -42,19 +43,19 @@ function Index() {
       <Header />
       <main>
         <Hero />
-        <Overview />
-        <WhyAttend />
-        <Agenda />
-        <Register />
-        <Hotels />
-        <Location />
-        <Speakers />
-        <KeyContent />
-        <Documents />
-        <News />
-        <Sponsors />
-        <FAQ />
-        <Contact />
+        <Reveal variant="up"><Overview /></Reveal>
+        <Reveal variant="up"><WhyAttend /></Reveal>
+        <Reveal variant="up"><Agenda /></Reveal>
+        <Reveal variant="zoom"><Register /></Reveal>
+        <Reveal variant="up"><Hotels /></Reveal>
+        <Reveal variant="fade"><Location /></Reveal>
+        <Reveal variant="up"><Speakers /></Reveal>
+        <Reveal variant="up"><KeyContent /></Reveal>
+        <Reveal variant="up"><Documents /></Reveal>
+        <Reveal variant="up"><News /></Reveal>
+        <Reveal variant="fade"><Sponsors /></Reveal>
+        <Reveal variant="left"><FAQ /></Reveal>
+        <Reveal variant="up"><Contact /></Reveal>
       </main>
       <Footer />
       <FloatingActions />
