@@ -1,0 +1,87 @@
+import { useEffect, useState } from "react";
+import { AsfLogo } from "./AsfLogo";
+import { Menu, X } from "lucide-react";
+
+const NAV = [
+  { href: "#overview", label: "Overview" },
+  { href: "#why", label: "Why Attend" },
+  { href: "#agenda", label: "Agenda" },
+  { href: "#location", label: "Location" },
+  { href: "#speakers", label: "Speakers" },
+  { href: "#topics", label: "Topics" },
+  { href: "#documents", label: "Documents" },
+  { href: "#news", label: "News" },
+  { href: "#sponsors", label: "Sponsors" },
+  { href: "#faq", label: "FAQ" },
+];
+
+export function Header() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "glass" : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
+        <a href="#top" className="shrink-0">
+          <AsfLogo />
+        </a>
+
+        <nav className="hidden items-center gap-6 xl:flex">
+          {NAV.map((n) => (
+            <a
+              key={n.href}
+              href={n.href}
+              className="text-sm font-medium text-white/85 transition hover:text-gold"
+            >
+              {n.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <a
+            href="#register"
+            className="hidden rounded-lg bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
+          >
+            Register
+          </a>
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="rounded-md p-2 text-white xl:hidden"
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </div>
+
+      {open && (
+        <div className="glass border-t border-white/10 xl:hidden">
+          <div className="mx-auto flex max-w-7xl flex-col px-4 py-4">
+            {NAV.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                onClick={() => setOpen(false)}
+                className="border-b border-white/5 py-3 text-sm font-medium text-white/85 hover:text-gold"
+              >
+                {n.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
