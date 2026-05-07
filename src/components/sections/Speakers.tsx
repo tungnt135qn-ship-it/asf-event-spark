@@ -18,14 +18,14 @@ import s7 from "@/assets/speakers/s7.jpg";
 import s8 from "@/assets/speakers/s8.jpg";
 
 const speakers = [
-  { img: s1, name: "Christine Laurent", role: "President", org: "European Central Bank", bio: "Steering Europe's monetary policy and championing global financial stability." },
-  { img: s2, name: "James Dorman", role: "CEO", org: "JP Morgan Asia", bio: "Leading one of the world's largest investment banks across Asia-Pacific markets." },
-  { img: s3, name: "Hiroshi Tanaka", role: "Managing Director", org: "Japan Securities Dealers Assoc.", bio: "Expert on cross-border fixed income flows across Asia." },
-  { img: s4, name: "Le Thi Minh Anh", role: "Deputy Director", org: "State Securities Commission", bio: "Architect of Vietnam's market reform and ESG disclosure framework." },
-  { img: s5, name: "Raj Mehta", role: "CEO", org: "Asia Capital Markets", bio: "Pioneer of digital bond issuance platforms in Southeast Asia." },
-  { img: s6, name: "Kim Soo-jin", role: "Chief Economist", org: "Korea Financial Investment", bio: "Authority on Asian monetary policy and rate cycles." },
-  { img: s7, name: "Andrew Lim", role: "Partner", org: "Singapore Exchange", bio: "Drives SGX's regional debt listing and clearing initiatives." },
-  { img: s8, name: "Maria Santos", role: "Head of ESG", org: "ASEAN Capital Markets Forum", bio: "Champion of sustainable finance and green bond standards." },
+  { img: s1, title: "Dr.", name: "Christine Laurent", role: "President", org: "European Central Bank", bio: "Steering Europe's monetary policy and championing global financial stability." },
+  { img: s2, title: "Mr.", name: "James Dorman", role: "CEO", org: "JP Morgan Asia", bio: "Leading one of the world's largest investment banks across Asia-Pacific markets." },
+  { img: s3, title: "Prof.", name: "Hiroshi Tanaka", role: "Managing Director", org: "Japan Securities Dealers Assoc.", bio: "Expert on cross-border fixed income flows across Asia." },
+  { img: s4, title: "Ms.", name: "Le Thi Minh Anh", role: "Deputy Director", org: "State Securities Commission", bio: "Architect of Vietnam's market reform and ESG disclosure framework." },
+  { img: s5, title: "Mr.", name: "Raj Mehta", role: "CEO", org: "Asia Capital Markets", bio: "Pioneer of digital bond issuance platforms in Southeast Asia." },
+  { img: s6, title: "Dr.", name: "Kim Soo-jin", role: "Chief Economist", org: "Korea Financial Investment", bio: "Authority on Asian monetary policy and rate cycles." },
+  { img: s7, title: "Mr.", name: "Andrew Lim", role: "Partner", org: "Singapore Exchange", bio: "Drives SGX's regional debt listing and clearing initiatives." },
+  { img: s8, title: "Ms.", name: "Maria Santos", role: "Head of ESG", org: "ASEAN Capital Markets Forum", bio: "Champion of sustainable finance and green bond standards." },
 ];
 
 function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
@@ -33,22 +33,28 @@ function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
     <div className="group relative h-[480px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:border-gold/40 hover:shadow-[var(--shadow-glow)]">
       <img
         src={s.img}
-        alt={s.name}
+        alt={`${s.title} ${s.name}`}
         loading="lazy"
         width={512}
         height={640}
         className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
       />
 
-      {/* Always-visible name footer */}
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep via-navy-deep/85 to-transparent p-5 transition group-hover:opacity-0">
-        <h3 className="text-lg font-bold text-white">{s.name}</h3>
-        <div className="mt-1 text-xs text-gold">{s.role}</div>
+      {/* Always-visible name footer — overlay only bottom 50% */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-deep via-navy-deep/70 to-transparent transition group-hover:opacity-0">
+        <div className="absolute inset-x-0 bottom-0 p-5">
+          <h3 className="text-lg font-bold text-white">
+            <span className="text-gold/90">{s.title}</span> {s.name}
+          </h3>
+          <div className="mt-1 text-xs text-gold">{s.role}</div>
+        </div>
       </div>
 
       {/* Hover overlay */}
       <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-navy-deep via-navy-deep/95 to-navy-deep/40 p-6 opacity-0 transition duration-300 group-hover:opacity-100">
-        <h3 className="text-xl font-bold text-white">{s.name}</h3>
+        <h3 className="text-xl font-bold text-white">
+          <span className="text-gold/90">{s.title}</span> {s.name}
+        </h3>
         <div className="mt-1 text-sm font-semibold text-gold">{s.role}</div>
         <div className="mt-0.5 text-xs text-white/70">{s.org}</div>
         <p className="mt-3 text-sm leading-relaxed text-white/85">{s.bio}</p>

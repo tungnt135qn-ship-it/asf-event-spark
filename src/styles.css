@@ -121,6 +121,15 @@ html {
     50% { opacity: 1; transform: scale(1.1); }
   }
 
+  @keyframes marquee-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes marquee-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
   @keyframes shooting-star {
     0% { transform: translateX(0) translateY(0) rotate(20deg); opacity: 0; }
     10% { opacity: 1; }

@@ -1,33 +1,7 @@
 import { Section } from "./Overview";
-import { Leaf, BarChart3, Globe2, Cpu, Shield } from "lucide-react";
-
-const topics = [
-  {
-    icon: Leaf,
-    title: "Sustainable & Green Finance",
-    desc: "ESG integration, transition finance, sustainability-linked bonds and Asia's path to net zero.",
-  },
-  {
-    icon: BarChart3,
-    title: "Asia Bond Market Outlook",
-    desc: "Macro trends, yield curves, sovereign and corporate issuance across ASEAN+3 markets.",
-  },
-  {
-    icon: Globe2,
-    title: "Cross-border Capital Flows",
-    desc: "Regulatory harmonisation, foreign investor access and regional connectivity initiatives.",
-  },
-  {
-    icon: Cpu,
-    title: "Digital Assets & Tokenization",
-    desc: "Tokenized bonds, DLT settlement infrastructure and the future of post-trade systems.",
-  },
-  {
-    icon: Shield,
-    title: "Market Infrastructure & Resilience",
-    desc: "Clearing, custody and risk management in a fragmented geopolitical landscape.",
-  },
-];
+import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+import { topics } from "@/lib/topics";
 
 export function KeyContent() {
   return (
@@ -35,14 +9,38 @@ export function KeyContent() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {topics.map((t) => (
           <div
-            key={t.title}
-            className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-7 backdrop-blur-md transition hover:border-gold/40"
+            key={t.slug}
+            className="group relative h-72 overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:border-gold/40 hover:shadow-[var(--shadow-glow)]"
           >
-            <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/30 bg-gold/10 text-gold">
-              <t.icon size={26} />
+            <img
+              src={t.image}
+              alt={t.title}
+              loading="lazy"
+              width={800}
+              height={600}
+              className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent" />
+
+            {/* Centered title */}
+            <div className="absolute inset-0 flex items-center justify-center p-6 transition group-hover:opacity-0">
+              <h3 className="text-center text-2xl font-bold text-white drop-shadow-lg">
+                {t.title}
+              </h3>
             </div>
-            <h3 className="mb-2 text-xl font-bold text-white">{t.title}</h3>
-            <p className="text-sm leading-relaxed text-white/75">{t.desc}</p>
+
+            {/* Hover state */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-navy-deep/80 p-6 opacity-0 backdrop-blur-sm transition group-hover:opacity-100">
+              <h3 className="text-center text-2xl font-bold text-white">{t.title}</h3>
+              <p className="line-clamp-3 text-center text-sm text-white/80">{t.desc}</p>
+              <Link
+                to="/topics/$slug"
+                params={{ slug: t.slug }}
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2 text-sm font-bold text-navy-deep transition hover:bg-gold-soft"
+              >
+                Detail <ArrowRight size={16} />
+              </Link>
+            </div>
           </div>
         ))}
       </div>
