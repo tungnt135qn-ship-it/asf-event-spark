@@ -59,20 +59,14 @@ export function Overview() {
               loading="lazy"
               width={1024}
               height={1280}
-              className="h-full w-full object-cover"
+              className="h-full max-h-[480px] w-full object-cover object-bottom"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-navy-deep/70 px-3 py-1 text-xs font-semibold text-gold backdrop-blur-md">
-                Hanoi · Vietnam · 2026
-              </div>
-            </div>
           </div>
 
-          {/* Floating stat card */}
-          <div className="absolute -bottom-6 -right-4 hidden rounded-2xl border border-gold/30 bg-navy/90 p-5 shadow-xl backdrop-blur-md sm:block">
-            <div className="text-gradient-gold text-3xl font-black">500+</div>
-            <div className="text-xs uppercase tracking-wider text-white/70">Delegates</div>
+          {/* Floating VBMA logo card */}
+          <div className="absolute -bottom-6 -right-4 hidden rounded-2xl border border-gold/30 bg-white p-4 shadow-xl sm:block">
+            <img src={vbmaLogo} alt="VBMA" className="h-12 w-auto" />
           </div>
         </div>
 
