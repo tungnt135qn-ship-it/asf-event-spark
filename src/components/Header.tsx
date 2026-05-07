@@ -31,7 +31,16 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-        <a href="#top" className="flex shrink-0 items-center gap-3">
+        <a
+          href="#top"
+          onClick={(e) => {
+            e.preventDefault();
+            history.replaceState(null, "", window.location.pathname + window.location.search);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            setOpen(false);
+          }}
+          className="flex shrink-0 items-center gap-3 cursor-pointer"
+        >
           <AsfLogo size={scrolled ? 44 : 56} className="transition-all duration-300" />
           <div className="hidden flex-col leading-tight sm:flex">
             <span className="text-gradient-gold text-base font-extrabold tracking-tight">
