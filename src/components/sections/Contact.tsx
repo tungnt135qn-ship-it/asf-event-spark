@@ -38,7 +38,7 @@ export function Contact() {
         {/* Left: Org card + socials */}
         <div className="lg:col-span-2 flex">
           <div className="flex w-full flex-col">
-          <div className="rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/10 to-transparent p-6 backdrop-blur-md">
+          <div className="flex flex-1 flex-col rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/10 to-transparent p-6 backdrop-blur-md">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/20 text-gold">
                 <User size={22} />
