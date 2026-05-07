@@ -39,7 +39,7 @@ export const Route = createFileRoute("/topics/$slug")({
 });
 
 function TopicDetail() {
-  const t = Route.useLoaderData();
+  const t = Route.useLoaderData() as ReturnType<typeof getTopic> & object;
   const others = topics.filter((x) => x.slug !== t.slug).slice(0, 3);
 
   return (
