@@ -90,8 +90,6 @@ export function Hero() {
           <CountdownUnit value={c.seconds} label="Seconds" />
         </div>
 
-        <div id="register" />
-
       </div>
     </section>
   );
