@@ -17,6 +17,7 @@ import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
 import { FloatingActions } from "@/components/FloatingActions";
 import { Footer } from "@/components/sections/Footer";
+import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
