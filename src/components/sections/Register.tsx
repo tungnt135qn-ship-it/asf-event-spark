@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Section } from "./Overview";
 import { ArrowRight, Calendar, MapPin, Users, Mail, CheckCircle2, ExternalLink } from "lucide-react";
 import { z } from "zod";
@@ -40,6 +40,27 @@ export function Register() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
   const [submittedName, setSubmittedName] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    const scrollToCenter = () => {
+      const el = formRef.current;
+      if (!el) return;
+      const headerH = 80;
+      const rect = el.getBoundingClientRect();
+      const available = window.innerHeight - headerH;
+      const targetY = window.scrollY + rect.top - headerH - Math.max(0, (available - rect.height) / 2);
+      window.scrollTo({ top: targetY, behavior: "smooth" });
+    };
+    const onHash = () => {
+      if (window.location.hash === "#register") {
+        setTimeout(scrollToCenter, 50);
+      }
+    };
+    onHash();
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
 
   const update = (k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -123,8 +144,9 @@ export function Register() {
           {/* Right form */}
           <form
             id="register"
+            ref={formRef}
             onSubmit={onSubmit}
-            className="scroll-mt-[calc(30vh+25px)] rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
+            className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
           >
             <h4 className="text-xl font-bold text-white">Delegate Registration</h4>
             <p className="mt-1 text-sm text-white/60">Fill in your details — we'll confirm by email.</p>
