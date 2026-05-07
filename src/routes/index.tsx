@@ -54,8 +54,10 @@ function Index() {
         <News />
         <Sponsors />
         <FAQ />
+        <Contact />
       </main>
       <Footer />
+      <FloatingActions />
     </div>
   );
 }
