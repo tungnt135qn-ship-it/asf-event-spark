@@ -43,20 +43,21 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-24"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-20"
     >
+      {/* Status badge pinned just under header */}
+      <div className="absolute left-1/2 top-20 z-20 -translate-x-1/2 sm:top-24">
+        <StatusBadge />
+      </div>
+
       {/* Glow background */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/3 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,oklch(0.45_0.2_255_/_35%),transparent_60%)]" />
+        <div className="absolute left-1/2 top-1/3 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,oklch(0.45_0.2_255_/_25%),transparent_60%)]" />
         <div className="absolute bottom-0 left-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,oklch(0.6_0.2_30_/_15%),transparent_70%)]" />
         <div className="absolute right-10 top-1/4 h-[400px] w-[400px] rounded-full bg-[radial-gradient(circle,oklch(0.85_0.16_90_/_15%),transparent_70%)]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-5xl text-center">
-        <div className="mb-6 flex justify-center">
-          <StatusBadge />
-        </div>
-
         <div className="flex justify-center">
           <img
             src={logoUrl}
