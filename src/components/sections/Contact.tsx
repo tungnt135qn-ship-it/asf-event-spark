@@ -36,8 +36,9 @@ export function Contact() {
     <Section id="contact" eyebrow="Contact" title="Liên hệ Ban tổ chức">
       <div className="grid gap-6 lg:grid-cols-5">
         {/* Left: Org card + socials */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/10 to-transparent p-6 backdrop-blur-md">
+        <div className="lg:col-span-2 flex">
+          <div className="flex w-full flex-col">
+          <div className="flex flex-1 flex-col rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/10 to-transparent p-6 backdrop-blur-md">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/20 text-gold">
                 <User size={22} />
@@ -65,7 +66,7 @@ export function Contact() {
                 </a>
               </div>
             </div>
-            <div className="mt-5">
+            <div className="mt-auto pt-5">
               <div className="mb-2 text-xs uppercase tracking-wider text-gold/80">Theo dõi chúng tôi</div>
               <div className="flex gap-2">
                 {socials.map((s) => {
@@ -84,6 +85,7 @@ export function Contact() {
               </div>
             </div>
           </div>
+        </div>
         </div>
 
         {/* Right: Contact channels + map */}
