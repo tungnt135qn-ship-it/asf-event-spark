@@ -88,7 +88,7 @@ export function Register() {
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gold/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-destructive/20 blur-3xl" />
 
-        <div className="relative grid gap-10 lg:grid-cols-2 lg:items-start">
+        <div className="relative grid gap-10 lg:grid-cols-2 lg:items-center">
           {/* Left info */}
           <div>
             <h3 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
