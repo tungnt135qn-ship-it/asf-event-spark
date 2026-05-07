@@ -5,6 +5,8 @@ import { Hero } from "@/components/sections/Hero";
 import { Overview } from "@/components/sections/Overview";
 import { WhyAttend } from "@/components/sections/WhyAttend";
 import { Agenda } from "@/components/sections/Agenda";
+import { Register } from "@/components/sections/Register";
+import { Hotels } from "@/components/sections/Hotels";
 import { Location } from "@/components/sections/Location";
 import { Speakers } from "@/components/sections/Speakers";
 import { KeyContent } from "@/components/sections/KeyContent";
@@ -41,6 +43,8 @@ function Index() {
         <Overview />
         <WhyAttend />
         <Agenda />
+        <Register />
+        <Hotels />
         <Location />
         <Speakers />
         <KeyContent />
