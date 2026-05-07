@@ -48,7 +48,7 @@ export function Overview() {
 
   return (
     <Section id="overview" eyebrow="Overview" title="Shaping Asia's Capital Markets">
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
         {/* Left: Image */}
         <div className="relative">
           <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-gold/20 via-transparent to-destructive/20 blur-2xl" />
