@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { HelpCircle, MessageSquare, Sparkles, Lightbulb } from "lucide-react";
 
 const faqs = [
   {
@@ -41,26 +42,86 @@ const faqs = [
   },
 ];
 
+function FloatingIcon({
+  Icon,
+  className,
+  delay = "0s",
+}: {
+  Icon: typeof HelpCircle;
+  className: string;
+  delay?: string;
+}) {
+  return (
+    <div
+      className={`absolute flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/30 bg-white/10 text-gold shadow-xl backdrop-blur-md ${className}`}
+      style={{
+        animation: `faq-float 6s ease-in-out ${delay} infinite`,
+      }}
+    >
+      <Icon size={24} />
+    </div>
+  );
+}
+
 export function FAQ() {
   return (
     <Section id="faq" eyebrow="FAQ" title="Frequently Asked Questions">
-      <div className="mx-auto max-w-3xl">
-        <Accordion type="single" collapsible className="space-y-3">
-          {faqs.map((f, i) => (
-            <AccordionItem
-              key={i}
-              value={`item-${i}`}
-              className="overflow-hidden rounded-xl border border-white/10 bg-white/5 px-5 backdrop-blur-md"
-            >
-              <AccordionTrigger className="text-left text-base font-semibold text-white hover:text-gold hover:no-underline">
-                {f.q}
-              </AccordionTrigger>
-              <AccordionContent className="text-sm leading-relaxed text-white/75">
-                {f.a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+      <style>{`
+        @keyframes faq-float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-14px) rotate(4deg); }
+        }
+        @keyframes faq-pulse-ring {
+          0% { transform: scale(0.85); opacity: 0.6; }
+          100% { transform: scale(1.4); opacity: 0; }
+        }
+      `}</style>
+
+      <div className="grid items-center gap-10 lg:grid-cols-2">
+        {/* Left: animation */}
+        <div className="relative mx-auto h-80 w-full max-w-md sm:h-96">
+          {/* Halo rings */}
+          <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/20" />
+          <div
+            className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-gold/40"
+            style={{ animation: "faq-pulse-ring 2.4s ease-out infinite" }}
+          />
+          <div
+            className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-gold/40"
+            style={{ animation: "faq-pulse-ring 2.4s ease-out 1.2s infinite" }}
+          />
+
+          {/* Center bubble */}
+          <div className="absolute left-1/2 top-1/2 flex h-32 w-32 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-gold to-gold-soft text-navy-deep shadow-[0_0_60px_rgba(212,175,55,0.5)]">
+            <HelpCircle size={56} strokeWidth={2.2} />
+          </div>
+
+          {/* Floating icons */}
+          <FloatingIcon Icon={MessageSquare} className="left-4 top-6" />
+          <FloatingIcon Icon={Sparkles} className="right-6 top-12" delay="-2s" />
+          <FloatingIcon Icon={Lightbulb} className="bottom-8 left-10" delay="-4s" />
+          <FloatingIcon Icon={HelpCircle} className="bottom-6 right-4" delay="-1s" />
+        </div>
+
+        {/* Right: accordion */}
+        <div>
+          <Accordion type="single" collapsible className="space-y-3">
+            {faqs.map((f, i) => (
+              <AccordionItem
+                key={i}
+                value={`item-${i}`}
+                className="overflow-hidden rounded-xl border border-white/10 bg-white/5 px-5 backdrop-blur-md"
+              >
+                <AccordionTrigger className="text-left text-base font-semibold text-white hover:text-gold hover:no-underline">
+                  {f.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm leading-relaxed text-white/75">
+                  {f.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </div>
     </Section>
   );
