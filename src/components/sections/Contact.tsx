@@ -66,7 +66,7 @@ export function Contact() {
                 </a>
               </div>
             </div>
-            <div className="mt-5">
+            <div className="mt-auto pt-5">
               <div className="mb-2 text-xs uppercase tracking-wider text-gold/80">Theo dõi chúng tôi</div>
               <div className="flex gap-2">
                 {socials.map((s) => {
