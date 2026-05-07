@@ -15,7 +15,7 @@ export function Reveal({
   children,
   variant = "up",
   delay = 0,
-  duration = 700,
+  duration = 1200,
   className = "",
   once = true,
 }: {
