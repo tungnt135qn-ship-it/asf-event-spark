@@ -71,12 +71,12 @@ export function Agenda() {
             >
               <div className="flex items-center gap-2">
                 <div className={`text-xs font-bold uppercase tracking-wider ${isActive ? "text-gold" : "text-white/60"}`}>
-                  Day {d.index}
+                  {t("agenda.day", { n: d.index })}
                 </div>
                 <StatusPill status={status} />
               </div>
               <div className="mt-1 text-sm font-semibold text-white">
-                {d.date.toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+                {d.date.toLocaleDateString(locale, { day: "numeric", month: "short" })}
               </div>
             </button>
           );
