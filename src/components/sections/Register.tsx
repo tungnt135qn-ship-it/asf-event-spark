@@ -5,7 +5,6 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -13,15 +12,25 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { hotels } from "@/lib/hotels";
+import { countries, customerTypes } from "@/lib/countries";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your full name").max(100),
   email: z.string().trim().email("Invalid email").max(255),
-  phone: z.string().trim().min(6, "Invalid phone number").max(30),
+  nationality: z.string().trim().min(1, "Please select your nationality"),
+  phoneCountry: z.string().trim().min(1, "Select country code"),
+  phone: z.string().trim().min(4, "Invalid phone number").max(30),
   organisation: z.string().trim().min(2, "Please enter your organisation").max(150),
   title: z.string().trim().max(150).optional(),
-  notes: z.string().trim().max(500).optional(),
+  customerType: z.string().trim().min(1, "Please select customer type"),
 });
 
 type FormState = z.infer<typeof schema>;
@@ -29,10 +38,12 @@ type FormState = z.infer<typeof schema>;
 const empty: FormState = {
   name: "",
   email: "",
+  nationality: "VN",
+  phoneCountry: "VN",
   phone: "",
   organisation: "",
   title: "",
-  notes: "",
+  customerType: "",
 };
 
 export function Register() {
