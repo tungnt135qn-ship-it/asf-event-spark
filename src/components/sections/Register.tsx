@@ -110,6 +110,8 @@ export function Register() {
     setSubmittedName(r.data.name);
     setOpen(true);
     setForm(empty);
+    setPassport(null);
+    if (passportRef.current) passportRef.current.value = "";
     toast.success("Registration submitted successfully");
   };
 
