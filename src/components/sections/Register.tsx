@@ -51,7 +51,9 @@ export function Register() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
   const [submittedName, setSubmittedName] = useState("");
+  const [passport, setPassport] = useState<File | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const passportRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const scrollToCenter = (behavior: ScrollBehavior = "auto") => {
