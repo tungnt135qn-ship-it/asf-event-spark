@@ -155,6 +155,121 @@ export const en = {
 
   // Lang switcher
   "lang.switch": "Language",
+
+  // Hero
+  "hero.tagline": "Asian Securities Forum",
+  "hero.lead": "Shaping the future of Asia's capital markets. Hosted by VBMA in Vietnam, ASF 2026 convenes regulators, market leaders and global investors.",
+  "hero.date": "1 – 4 October 2026",
+  "hero.location": "Hanoi, Vietnam",
+  "hero.cd.days": "Days",
+  "hero.cd.hours": "Hours",
+  "hero.cd.minutes": "Minutes",
+  "hero.cd.seconds": "Seconds",
+  "hero.status.upcoming": "Upcoming",
+  "hero.status.live": "Live Now",
+  "hero.status.completed": "Completed",
+
+  // Agenda
+  "agenda.all": "All",
+  "agenda.allDays": "All days",
+  "agenda.day": "Day {n}",
+  "agenda.sessions": "{n} sessions",
+  "agenda.note": "Note:",
+  "agenda.noteText": "Agenda is preliminary and may be updated.",
+  "agenda.lastUpdated": "Last updated:",
+  "agenda.status.completed": "Completed",
+  "agenda.status.live": "Live Today",
+  "agenda.status.upcoming": "Upcoming",
+
+  // Speakers
+  "speakers.eyebrow": "Speakers",
+  "speakers.title": "Voices Shaping the Future",
+  "speakers.topics": "Topics",
+
+  // KeyContent / Topics
+  "topics.eyebrow": "Key Topics",
+  "topics.title": "What We'll Discuss",
+  "topics.detail": "Detail",
+
+  // News
+  "news.eyebrow": "News",
+  "news.title": "Latest Updates",
+  "news.readMore": "Read more",
+
+  // Press
+  "press.eyebrow": "Press Release",
+  "press.title": "Official Press Releases",
+  "press.readFull": "Read full release",
+  "press.default": "Press Release",
+
+  // FAQ items
+  "faq.q1": "Who can attend ASF 2026?",
+  "faq.a1": "ASF 2026 is open to institutional members of the securities and bond industry — regulators, dealers, asset managers, exchanges, custodians and accredited investors. Registration is invitation-based; please contact VBMA to request an invitation.",
+  "faq.q2": "How do I register?",
+  "faq.a2": "Click the Register button at the top of this page or contact the ASF 2026 secretariat at asf2026@vbma.org.vn. Early-bird registration closes 15 August 2026.",
+  "faq.q3": "Where will ASF 2026 be held?",
+  "faq.a3": "The forum will take place at Meliá Hanoi Hotel, Hanoi, Vietnam from 1 – 4 October 2026.",
+  "faq.q4": "Do I need a visa to enter Vietnam?",
+  "faq.a4": "Most delegates will need a visa or e-visa to enter Vietnam. Citizens of select countries enjoy visa exemption for short stays. A detailed visa & travel guide is available in the Documents section.",
+  "faq.q5": "What is the dress code?",
+  "faq.a5": "Business attire is required for all conference sessions. Smart casual is acceptable for the city tour and Halong Bay day tour.",
+  "faq.q6": "Is accommodation included?",
+  "faq.a6": "Accommodation is not included in the registration fee. VBMA has secured preferential rates with partner hotels — booking links will be sent upon registration confirmation.",
+  "faq.q7": "What language will sessions be conducted in?",
+  "faq.a7": "All plenary and panel sessions will be conducted in English. Simultaneous interpretation in Vietnamese, Japanese and Korean will be available.",
+  "faq.q8": "Can I sponsor or exhibit at ASF 2026?",
+  "faq.a8": "Yes — please download the Sponsorship Pack from the Documents section or contact sponsorship@vbma.org.vn for tailored packages.",
+
+  // Documents
+  "docs.eyebrow": "Documents",
+  "docs.title": "Resources & Downloads",
+
+  // Location
+  "loc.eyebrow": "Location",
+  "loc.title": "Where to Find Us",
+  "loc.venue": "Venue",
+  "loc.venueName": "Meliá Hanoi Hotel",
+  "loc.address": "44B Ly Thuong Kiet, Hoan Kiem District, Hanoi, Vietnam",
+  "loc.openMaps": "Open in Google Maps",
+  "loc.gettingHere": "Getting Here",
+  "loc.t1": "40 min drive from Noi Bai International Airport (HAN)",
+  "loc.t2": "5 min walk to Hoan Kiem Lake & Old Quarter",
+  "loc.t3": "Shuttle service provided for registered delegates",
+
+  // Footer
+  "footer.about": "The Asian Securities Forum 2026 — hosted by VBMA in Hanoi, Vietnam.",
+  "footer.quickLinks": "Quick Links",
+  "footer.contact": "Contact (VBMA)",
+  "footer.location": "Hanoi, Vietnam",
+  "footer.follow": "Follow",
+  "footer.rights": "© 2026 ASF 2026 / Vietnam Bond Market Association. All rights reserved.",
+  "footer.privacy": "Privacy",
+  "footer.terms": "Terms",
+  "footer.coc": "Code of Conduct",
+
+  // Floating
+  "fa.hotline": "Hotline",
+  "fa.email": "Email",
+  "fa.contact": "Contact",
+  "fa.backTop": "Back to top",
+
+  // Hotels room types
+  "room.deluxe": "Deluxe Room",
+  "room.executive": "Executive Room",
+  "room.suite": "Suite",
+  "room.twin": "Twin Room",
+
+  // Register success dialog
+  "reg.dlg.congrats": "Congratulations",
+  "reg.dlg.desc": "Your ASF 2026 registration has been received. A confirmation email is on the way.",
+  "reg.dlg.stayTitle": "Need a place to stay?",
+  "reg.dlg.stayLead": "Enjoy exclusive ASF 2026 rates at our partner hotels in Hanoi. Reserve early — rooms are limited.",
+  "reg.dlg.book": "Book",
+  "reg.dlg.viewAll": "View All Partner Hotels",
+  "reg.dlg.maybe": "Maybe later",
+  "reg.form.phonePh": "Phone number",
+  "reg.form.country.search": "Search country...",
+  "reg.form.country.empty": "No country found.",
 };
 
 export type Dict = typeof en;
