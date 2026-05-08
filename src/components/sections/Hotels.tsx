@@ -250,6 +250,7 @@ function DetailsDialog({ hotel }: { hotel: Hotel }) {
 }
 
 export function HotelCard({ h }: { h: Hotel }) {
+  const { t } = useT();
   return (
     <article
       className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-md transition hover:border-gold/30 sm:p-6"
@@ -278,7 +279,7 @@ export function HotelCard({ h }: { h: Hotel }) {
 
           <div className="mt-4 rounded-xl border border-gold/30 bg-gold/5 p-4">
             <div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gold">
-              <BadgePercent size={14} /> Delegate offers
+              <BadgePercent size={14} /> {t("hotels.perks")}
             </div>
             <ul className="space-y-1 text-sm text-white/85">
               {h.perks.map((p) => (
