@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Section } from "./Overview";
-import { ArrowRight, Calendar, MapPin, Users, Mail, CheckCircle2, ExternalLink } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Users, Mail, CheckCircle2, ExternalLink, Paperclip } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
