@@ -291,19 +291,16 @@ export function Register() {
               <CheckCircle2 size={32} />
             </div>
             <DialogTitle className="text-center text-2xl text-white">
-              Congratulations{submittedName ? `, ${submittedName.split(" ")[0]}` : ""}!
+              {t("reg.dlg.congrats")}{submittedName ? `, ${submittedName.split(" ")[0]}` : ""}!
             </DialogTitle>
             <DialogDescription className="text-center text-white/75">
-              Your ASF 2026 registration has been received. A confirmation email is on the way.
+              {t("reg.dlg.desc")}
             </DialogDescription>
           </DialogHeader>
 
           <div className="mt-2 rounded-2xl border border-gold/30 bg-gold/5 p-5">
-            <div className="text-sm font-bold text-gold">Need a place to stay?</div>
-            <p className="mt-1 text-sm text-white/80">
-              Enjoy exclusive ASF 2026 rates at our partner hotels in Hanoi. Reserve early — rooms
-              are limited.
-            </p>
+            <div className="text-sm font-bold text-gold">{t("reg.dlg.stayTitle")}</div>
+            <p className="mt-1 text-sm text-white/80">{t("reg.dlg.stayLead")}</p>
 
             <div className="mt-4 grid gap-3">
               {hotels.map((h) => (
@@ -321,7 +318,7 @@ export function Register() {
                     onClick={() => setOpen(false)}
                     className="inline-flex shrink-0 items-center gap-1 rounded-full border border-gold/50 px-3 py-1.5 text-xs font-semibold text-gold hover:bg-gold/10"
                   >
-                    Book <ExternalLink size={12} />
+                    {t("reg.dlg.book")} <ExternalLink size={12} />
                   </a>
                 </div>
               ))}
@@ -333,13 +330,13 @@ export function Register() {
                 onClick={() => setOpen(false)}
                 className="flex-1 inline-flex items-center justify-center rounded-full bg-gold px-5 py-2.5 text-sm font-bold text-navy-deep hover:opacity-90"
               >
-                View All Partner Hotels
+                {t("reg.dlg.viewAll")}
               </a>
               <button
                 onClick={() => setOpen(false)}
                 className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white/80 hover:bg-white/5"
               >
-                Maybe later
+                {t("reg.dlg.maybe")}
               </button>
             </div>
           </div>
