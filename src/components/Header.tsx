@@ -145,12 +145,15 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => goToHash("documents")}
-            className="hidden items-center justify-center rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold leading-none text-gold transition hover:bg-gold/10 sm:inline-flex"
-          >
-            Event Handbook
-          </button>
+          {isAuthenticated && (
+            <button
+              onClick={() => goToHash("documents")}
+              className="hidden items-center justify-center rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold leading-none text-gold transition hover:bg-gold/10 sm:inline-flex"
+            >
+              Event Handbook
+            </button>
+          )}
+          <AuthButton />
           <button
             onClick={() => goToHash("register")}
             className="hidden items-center justify-center rounded-full bg-destructive px-4 py-1.5 text-[13px] font-semibold leading-none text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
