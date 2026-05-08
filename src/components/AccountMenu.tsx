@@ -53,23 +53,23 @@ export function AccountMenu() {
         <DropdownMenuSeparator className="bg-white/10" />
         <DropdownMenuItem asChild className="focus:bg-gold/10 focus:text-gold">
           <Link to="/account/registrations" className="cursor-pointer">
-            <ClipboardList size={14} /> Lịch sử đăng ký
+            <ClipboardList size={14} /> {t("account.history")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="focus:bg-gold/10 focus:text-gold">
           <Link to="/account/bookings" className="cursor-pointer">
-            <HotelIcon size={14} /> Khách sạn đã booking
+            <HotelIcon size={14} /> {t("account.bookings")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="bg-white/10" />
         <DropdownMenuItem
           onClick={() => {
             logout();
-            toast("Đã đăng xuất");
+            toast(t("auth.signedOut"));
           }}
           className="cursor-pointer focus:bg-destructive/20 focus:text-destructive"
         >
-          <LogOut size={14} /> Đăng xuất
+          <LogOut size={14} /> {t("auth.logout")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
