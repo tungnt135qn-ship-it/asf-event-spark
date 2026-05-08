@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Starfield } from "@/components/Starfield";
 import { Footer } from "@/components/sections/Footer";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import { ClipboardList, Calendar, Mail, Building2, Phone, Globe } from "lucide-react";
 
 export const Route = createFileRoute("/account/registrations")({
