@@ -143,7 +143,7 @@ export function Agenda() {
           <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
             <h3 className="text-2xl font-bold text-white">{day!.label}</h3>
             <div className="text-sm text-white/60">
-              {day!.date.toLocaleDateString("en-GB", {
+              {day!.date.toLocaleDateString(locale, {
                 weekday: "long",
                 day: "numeric",
                 month: "long",
@@ -161,8 +161,8 @@ export function Agenda() {
           </ol>
 
           <div className="mt-8 rounded-lg border border-gold/20 bg-gold/5 p-4 text-xs text-white/70">
-            <strong className="text-gold">Note:</strong> Agenda is preliminary and may be updated.
-            Last updated: {new Date().toLocaleDateString("en-GB")}
+            <strong className="text-gold">{t("agenda.note")}</strong> {t("agenda.noteText")}{" "}
+            {t("agenda.lastUpdated")} {new Date().toLocaleDateString(locale)}
           </div>
         </div>
       )}
