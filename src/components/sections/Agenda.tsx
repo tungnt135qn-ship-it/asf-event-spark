@@ -51,10 +51,10 @@ export function Agenda() {
           <div className="flex items-center gap-2">
             <LayoutGrid size={14} className={active === -1 ? "text-gold" : "text-white/60"} />
             <div className={`text-xs font-bold uppercase tracking-wider ${active === -1 ? "text-gold" : "text-white/60"}`}>
-              All
+              {t("agenda.all")}
             </div>
           </div>
-          <div className="mt-1 text-sm font-semibold text-white">All days</div>
+          <div className="mt-1 text-sm font-semibold text-white">{t("agenda.allDays")}</div>
         </button>
         {EVENT_DAYS.map((d, i) => {
           const status = getDayStatus(d.date);
