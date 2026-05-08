@@ -26,7 +26,7 @@ const primaryContacts = [
 ];
 
 const socials = [
-  { icon: Facebook, label: "Facebook", href: "#" },
+  { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/p/Vietnam-Bond-Market-Association-100064838944642/" },
   { icon: Linkedin, label: "LinkedIn", href: "#" },
   { icon: MessageCircle, label: "Zalo", href: "#" },
 ];
