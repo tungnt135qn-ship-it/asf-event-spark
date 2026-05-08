@@ -34,7 +34,7 @@ export const news: NewsItem[] = [
     body: [
       {
         type: "p",
-        text: "The Vietnam Bond Market Association (VBMA) has officially unveiled the preliminary programme for the Asian Securities Forum (ASF) 2026, taking place 14–17 April 2026 at the National Convention Center, Hanoi. The four-day programme features more than 60 speakers from across Asia and beyond — the largest line-up in ASF's history.",
+        text: "The Vietnam Bond Market Association (VBMA), together with the Vietnam Association of Securities Business (VASB), has officially unveiled the preliminary programme for the Asian Securities Forum (ASF) 2026, taking place 1–4 October 2026 at Meliá Hanoi Hotel, Hà Nội. The four-day programme covers three core ASF themes plus a dedicated Vietnam special session.",
       },
       { type: "h", text: "A regional dialogue at scale" },
       {
