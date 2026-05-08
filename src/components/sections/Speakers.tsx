@@ -82,6 +82,24 @@ function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
             <span className="text-gold/90">{s.title}</span> {s.name}
           </h3>
           <div className="mt-1 text-xs text-gold">{s.role}</div>
+          {s.topics.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {s.topics.slice(0, 3).map((t) => (
+                <span
+                  key={t.abbr}
+                  title={t.full}
+                  className="rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] font-bold tracking-wide text-gold"
+                >
+                  {t.abbr}
+                </span>
+              ))}
+              {s.topics.length > 3 && (
+                <span className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-semibold text-white/70">
+                  +{s.topics.length - 3}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -93,6 +111,21 @@ function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
         <div className="mt-1 text-sm font-semibold text-gold">{s.role}</div>
         <div className="mt-0.5 text-xs text-white/70">{s.org}</div>
         <p className="mt-3 text-sm leading-relaxed text-white/85">{s.bio}</p>
+        {s.topics.length > 0 && (
+          <div className="mt-3">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-gold/80">Topics</div>
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
+              {s.topics.map((t) => (
+                <span
+                  key={t.abbr}
+                  className="rounded-full border border-gold/40 bg-gold/10 px-2.5 py-0.5 text-[11px] font-semibold text-gold"
+                >
+                  {t.full}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
