@@ -67,9 +67,10 @@ export function Header() {
 
   const goToHash = (hash: string) => {
     if (isHome) {
-      const el = document.getElementById(hash);
+      const el = document.getElementById(hash) || document.getElementById(hash === "register" ? "registration" : "");
       if (el) el.scrollIntoView({ behavior: "smooth" });
       history.replaceState(null, "", `#${hash}`);
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
     } else {
       router.navigate({ to: "/", hash });
     }
