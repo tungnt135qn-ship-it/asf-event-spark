@@ -24,9 +24,9 @@ const NAV: NavItem[] = [
     items: [
       { hash: "news", labelKey: "nav.news" },
       { hash: "press", labelKey: "nav.press" },
+      { hash: "faq", labelKey: "nav.faq" },
     ],
   },
-  { kind: "link", hash: "faq", labelKey: "nav.faq" },
 ];
 
 export function Header() {
@@ -148,6 +148,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <LanguageSwitcher className="hidden sm:inline-flex" />
           {isAuthenticated && (
             <button
               onClick={() => goToHash("documents")}
@@ -156,7 +157,6 @@ export function Header() {
               {t("header.handbook")}
             </button>
           )}
-          <LanguageSwitcher className="hidden sm:inline-flex" />
           <button
             onClick={() => goToHash("register")}
             className="hidden items-center justify-center rounded-full bg-destructive px-4 py-1.5 text-[13px] font-semibold leading-none text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
