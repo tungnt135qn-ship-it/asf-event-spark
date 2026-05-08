@@ -363,3 +363,58 @@ function Field({
     </div>
   );
 }
+
+function CountryCodeCombo({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const { t } = useT();
+  const [open, setOpen] = useState(false);
+  const selected = countries.find((c) => c.code === value);
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          role="combobox"
+          aria-expanded={open}
+          className="flex h-10 w-[140px] items-center justify-between rounded-md border border-white/15 bg-white/5 px-3 text-sm text-white"
+        >
+          <span className="truncate">
+            {selected ? `${selected.flag} ${selected.dial}` : "—"}
+          </span>
+          <ChevronsUpDown size={14} className="ml-2 shrink-0 opacity-60" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[260px] p-0" align="start">
+        <Command
+          filter={(val, search) => {
+            const c = countries.find((x) => x.code === val);
+            if (!c) return 0;
+            const q = search.toLowerCase();
+            return c.name.toLowerCase().includes(q) || c.dial.includes(q) || c.code.toLowerCase().includes(q) ? 1 : 0;
+          }}
+        >
+          <CommandInput placeholder={t("reg.form.country.search")} />
+          <CommandList>
+            <CommandEmpty>{t("reg.form.country.empty")}</CommandEmpty>
+            <CommandGroup>
+              {countries.map((c) => (
+                <CommandItem
+                  key={c.code}
+                  value={c.code}
+                  onSelect={(v) => {
+                    onChange(v);
+                    setOpen(false);
+                  }}
+                >
+                  <span className="mr-2">{c.flag}</span>
+                  <span className="flex-1 truncate">{c.name}</span>
+                  <span className="ml-2 text-xs text-muted-foreground">{c.dial}</span>
+                  <Check className={cn("ml-2 h-4 w-4", value === c.code ? "opacity-100" : "opacity-0")} />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
