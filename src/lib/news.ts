@@ -34,12 +34,12 @@ export const news: NewsItem[] = [
     body: [
       {
         type: "p",
-        text: "The Vietnam Bond Market Association (VBMA) has officially unveiled the preliminary programme for the Asian Securities Forum (ASF) 2026, taking place 14–17 April 2026 at the National Convention Center, Hanoi. The four-day programme features more than 60 speakers from across Asia and beyond — the largest line-up in ASF's history.",
+        text: "The Vietnam Bond Market Association (VBMA), together with the Vietnam Association of Securities Business (VASB), has officially unveiled the preliminary programme for the Asian Securities Forum (ASF) 2026, taking place 1–4 October 2026 at Meliá Hanoi Hotel, Hà Nội. The four-day programme covers three core ASF themes plus a dedicated Vietnam special session.",
       },
       { type: "h", text: "A regional dialogue at scale" },
       {
         type: "p",
-        text: "ASF 2026 brings together regulators, exchanges, dealers, asset managers and institutional investors representing more than 20 capital markets. Plenary sessions will focus on Asia's bond market outlook, sustainable finance, cross-border capital flows and the next generation of market infrastructure.",
+        text: "ASF 2026 brings together regulators, exchanges, dealers and institutional investors representing more than 30 securities associations across Asia – Oceania. Plenary sessions will focus on Asian equity outlook, bond market development, digitalization & AI in capital markets, plus a dedicated Vietnam special session 'New Era for Vietnam Capital Markets'.",
       },
       { type: "img", src: n2, caption: "Hanoi — host city of ASF 2026" },
       { type: "h", text: "Speaker highlights" },
@@ -49,12 +49,12 @@ export const news: NewsItem[] = [
       },
       {
         type: "quote",
-        text: "ASF 2026 is the most ambitious edition we have hosted. Our goal is to make Hanoi the regional hub for capital-markets dialogue this April.",
+        text: "ASF 2026 is the most ambitious edition we have hosted. Our goal is to make Hanoi the regional hub for capital-markets dialogue this October.",
         author: "VBMA Secretary General",
       },
       {
         type: "p",
-        text: "The full agenda, side events and Vietnam Investment Conference programme will be published in the Documents section in the coming weeks. Early-bird registration closes 15 February 2026.",
+        text: "The full agenda, side events and Vietnam special session programme will be published in the Documents section in the coming weeks. Early-bird registration closes 15 August 2026.",
       },
     ],
   },
@@ -71,7 +71,7 @@ export const news: NewsItem[] = [
     body: [
       {
         type: "p",
-        text: "The Vietnam Investment Conference (VIC) will be integrated into the ASF 2026 programme as a dedicated half-day track on 17 April 2026, closing the forum with a deep-dive into Vietnam's rapidly developing capital markets.",
+        text: "The Vietnam Special Session — 'Vietnam Capital Markets: A New Era' — will be integrated into the ASF 2026 programme as a dedicated half-day track on 3 October 2026, closing the official ASF agenda with a deep-dive into Vietnam's rapidly developing capital markets.",
       },
       { type: "img", src: n2 },
       { type: "h", text: "Why Vietnam, why now" },

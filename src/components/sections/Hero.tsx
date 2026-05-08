@@ -73,7 +73,7 @@ export function Hero() {
         <a href="#location" className="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-md transition hover:border-gold/50 hover:bg-white/10">
           <span className="inline-flex items-center gap-2 text-sm text-white">
             <Calendar size={16} className="text-gold" />
-            14 – 17 April 2026
+            1 – 4 October 2026
           </span>
           <span className="h-4 w-px bg-white/20" />
           <span className="inline-flex items-center gap-2 text-sm text-white">

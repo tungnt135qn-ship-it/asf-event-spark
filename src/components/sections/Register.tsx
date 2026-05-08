@@ -125,19 +125,19 @@ export function Register() {
           {/* Left info */}
           <div>
             <h3 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
-              Join 1,000+ delegates shaping{" "}
-              <span className="text-gradient-gold">Asia's capital markets</span>
+              Cùng 100–150 đại biểu định hình{" "}
+              <span className="text-gradient-gold">thị trường vốn Châu Á</span>
             </h3>
             <p className="mt-4 text-base leading-relaxed text-white/80">
-              Early-bird registration is open until 15 February 2026. Secure your delegate pass,
-              optional gala dinner and Halong Bay day tour today.
+              Early-bird registration is open until 15 August 2026. Secure your delegate pass,
+              welcome dinner and Halong Bay day tour today.
             </p>
 
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {[
-                { Icon: Calendar, text: "14 – 17 April 2026" },
-                { Icon: MapPin, text: "National Convention Center, Hanoi" },
-                { Icon: Users, text: "20+ markets · 60+ speakers" },
+                { Icon: Calendar, text: "1 – 4 October 2026" },
+                { Icon: MapPin, text: "Meliá Hanoi Hotel, Hà Nội" },
+                { Icon: Users, text: "30+ hiệp hội · 100–150 đại biểu" },
                 { Icon: Mail, text: "asf2026@vbma.org.vn" },
               ].map(({ Icon, text }) => (
                 <li

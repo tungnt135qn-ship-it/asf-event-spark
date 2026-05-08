@@ -28,10 +28,10 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Asian Securities Forum 2026 — hosted by VBMA in Hanoi, Vietnam, 14–17 April 2026. Shaping Asia's capital markets.",
+          "Asian Securities Forum 2026 — co-hosted by VBMA & VASB in Hà Nội, Vietnam, 1–4 October 2026. Shaping Asia's capital markets.",
       },
       { property: "og:title", content: "ASF 2026 — Asian Securities Forum" },
-      { property: "og:description", content: "Hosted by VBMA in Hanoi, 14–17 April 2026." },
+      { property: "og:description", content: "Co-hosted by VBMA & VASB in Hà Nội, 1–4 October 2026." },
       { property: "og:type", content: "website" },
     ],
   }),

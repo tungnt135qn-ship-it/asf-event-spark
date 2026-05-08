@@ -30,7 +30,7 @@ const items: PressItem[] = [
     date: "18 Feb 2026",
     title: "Early-bird registration for ASF 2026 now open",
     description:
-      "Delegate registration is open with early-bird pricing for member institutions until 15 February 2026.",
+      "Delegate registration is open with early-bird pricing for member institutions until 15 August 2026.",
     url: "https://example.com/press/asf-2026-registration-open",
     source: "VBMA Secretariat",
   },

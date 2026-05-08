@@ -40,9 +40,9 @@ function Section({
 
 export function Overview() {
   const highlights = [
-    { icon: Globe2, text: "20+ thị trường vốn châu Á cùng quy tụ" },
-    { icon: Calendar, text: "4 ngày sự kiện chính thức tại Hà Nội" },
-    { icon: CheckCircle2, text: "Quy tụ regulators, exchanges, dealers & investors" },
+    { icon: Globe2, text: "30+ hiệp hội chứng khoán khu vực Châu Á – Châu Đại Dương" },
+    { icon: Calendar, text: "4 ngày sự kiện chính thức (1–4/10/2026) tại Hà Nội" },
+    { icon: CheckCircle2, text: "Quy tụ regulators, exchanges, dealers & investors — quy mô 100–150 đại biểu" },
   ];
 
   return (
@@ -72,10 +72,11 @@ export function Overview() {
         {/* Right: Content + Highlights */}
         <div className="space-y-6 text-white/85">
           <p className="text-lg leading-relaxed">
-            <strong className="text-gold">Asian Securities Forum (ASF) 2026</strong> là diễn đàn
-            thường niên của các thị trường vốn châu Á, quy tụ cơ quan quản lý, sở giao dịch, nhà
-            phát hành, đại lý và nhà đầu tư hàng đầu khu vực để cùng định hình tương lai của thị
-            trường thu nhập cố định, cổ phiếu và tài chính bền vững.
+            <strong className="text-gold">Asian Securities Forum (ASF)</strong> là diễn đàn hợp tác
+            khu vực được thành lập năm 1995, quy tụ trên 30 hiệp hội chứng khoán và tổ chức thị
+            trường vốn khu vực Châu Á – Châu Đại Dương. Hội nghị thường niên ASF 2026 diễn ra ngày
+            <strong className="text-white"> 1 – 4 tháng 10 năm 2026 tại Hà Nội</strong>, do VBMA và
+            VASB đồng đăng cai tổ chức với quy mô 100–150 đại biểu cấp cao.
           </p>
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
