@@ -24,7 +24,7 @@ export function FloatingActions() {
   }, []);
 
   return (
-    <div ref={wrapRef} className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div ref={wrapRef} className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
       {open && (
         <div className="animate-fade-in flex flex-col gap-2 rounded-2xl border border-gold/30 bg-navy-deep/95 p-3 shadow-2xl backdrop-blur-md">
           <a
