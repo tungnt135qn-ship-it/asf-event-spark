@@ -67,9 +67,10 @@ export function Header() {
 
   const goToHash = (hash: string) => {
     if (isHome) {
-      const el = document.getElementById(hash);
+      const el = document.getElementById(hash) || document.getElementById(hash === "register" ? "registration" : "");
       if (el) el.scrollIntoView({ behavior: "smooth" });
       history.replaceState(null, "", `#${hash}`);
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
     } else {
       router.navigate({ to: "/", hash });
     }
@@ -153,13 +154,13 @@ export function Header() {
               Event Handbook
             </button>
           )}
-          <AuthButton />
           <button
             onClick={() => goToHash("register")}
             className="hidden items-center justify-center rounded-full bg-destructive px-4 py-1.5 text-[13px] font-semibold leading-none text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
           >
             Register Now
           </button>
+          <AuthButton />
           <button
             onClick={() => setOpen((v) => !v)}
             className="rounded-md p-2 text-white xl:hidden"

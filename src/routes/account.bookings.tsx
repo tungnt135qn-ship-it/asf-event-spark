@@ -3,7 +3,8 @@ import { Header } from "@/components/Header";
 import { Starfield } from "@/components/Starfield";
 import { Footer } from "@/components/sections/Footer";
 import { useAuth } from "@/lib/auth";
-import { Hotel as HotelIcon, Calendar, Mail, Phone, Users, BedDouble } from "lucide-react";
+import { hotels } from "@/lib/hotels";
+import { Hotel as HotelIcon, Calendar, Mail, Phone, Users, BedDouble, MapPin, ExternalLink, BadgePercent } from "lucide-react";
 
 export const Route = createFileRoute("/account/bookings")({
   head: () => ({
@@ -81,6 +82,48 @@ function BookingsPage() {
             ))}
           </div>
         )}
+
+        <section className="mt-16">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <div className="text-[11px] font-bold uppercase tracking-[0.25em] text-gold">Partner Hotels</div>
+              <h2 className="mt-1 text-2xl font-extrabold">Khách sạn đối tác ASF 2026</h2>
+            </div>
+            <Link
+              to="/"
+              hash="hotels"
+              className="hidden shrink-0 items-center gap-1 rounded-full border border-gold/50 px-4 py-1.5 text-xs font-semibold text-gold hover:bg-gold/10 sm:inline-flex"
+            >
+              Xem tất cả <ExternalLink size={12} />
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {hotels.map((h) => (
+              <article key={h.id} className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md transition hover:border-gold/30">
+                <img src={h.images[0]} alt={h.name} className="h-40 w-full object-cover" />
+                <div className="p-4">
+                  <div className="mb-1 inline-flex items-center gap-1 rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold">
+                    {h.tier}
+                  </div>
+                  <h3 className="text-base font-bold">{h.name}</h3>
+                  <div className="mt-1 inline-flex items-center gap-1.5 text-xs text-white/65">
+                    <MapPin size={12} className="text-gold" /> {h.address}
+                  </div>
+                  <div className="mt-2 inline-flex items-center gap-1.5 text-xs text-white/80">
+                    <BadgePercent size={12} className="text-gold" /> {h.perks[0]}
+                  </div>
+                  <Link
+                    to="/"
+                    hash="hotels"
+                    className="mt-3 inline-flex items-center gap-1 rounded-full bg-destructive px-4 py-1.5 text-xs font-bold text-destructive-foreground"
+                  >
+                    Đặt phòng <ExternalLink size={11} />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
