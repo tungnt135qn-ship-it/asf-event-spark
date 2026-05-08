@@ -8,6 +8,7 @@ type NavItem =
   | { kind: "group"; label: string; items: { hash: string; label: string }[] };
 
 const NAV: NavItem[] = [
+  { kind: "link", hash: "overview", label: "Overview" },
   { kind: "link", hash: "agenda", label: "Agenda" },
   { kind: "link", hash: "hotels", label: "Hotels" },
   { kind: "link", hash: "speakers", label: "Speakers" },
