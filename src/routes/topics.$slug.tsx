@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Starfield } from "@/components/Starfield";
 import { Footer } from "@/components/sections/Footer";
 import { getTopic, topics, type Topic } from "@/lib/topics";
+import { getSpeakersForTopic } from "@/lib/speakers";
 
 export const Route = createFileRoute("/topics/$slug")({
   loader: ({ params }) => {
