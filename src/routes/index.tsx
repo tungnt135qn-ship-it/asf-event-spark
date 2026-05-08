@@ -20,6 +20,7 @@ import { Contact } from "@/components/sections/Contact";
 import { FloatingActions } from "@/components/FloatingActions";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
+import { Gated, LockedSection } from "@/components/LockedSection";
 
 export const Route = createFileRoute("/")({
   head: () => ({
