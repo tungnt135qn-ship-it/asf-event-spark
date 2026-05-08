@@ -33,6 +33,7 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 
 function HotelGallery({ images, alt }: { images: string[]; alt: string }) {
   const [idx, setIdx] = useState(0);
