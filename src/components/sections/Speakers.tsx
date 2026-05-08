@@ -81,10 +81,11 @@ function SpeakerCard({ s }: { s: Speaker }) {
 }
 
 export function Speakers() {
+  const { t } = useT();
   const autoplay = useRef(Autoplay({ delay: 3500, stopOnInteraction: true }));
 
   return (
-    <Section id="speakers" eyebrow="Speakers" title="Voices Shaping the Future">
+    <Section id="speakers" eyebrow={t("speakers.eyebrow")} title={t("speakers.title")}>
       <Carousel
         opts={{ align: "start", loop: true }}
         plugins={[autoplay.current]}
