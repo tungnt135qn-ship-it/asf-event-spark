@@ -3,7 +3,8 @@ import { Header } from "@/components/Header";
 import { Starfield } from "@/components/Starfield";
 import { Footer } from "@/components/sections/Footer";
 import { useAuth } from "@/lib/auth";
-import { Hotel as HotelIcon, Calendar, Mail, Phone, Users, BedDouble } from "lucide-react";
+import { hotels } from "@/lib/hotels";
+import { Hotel as HotelIcon, Calendar, Mail, Phone, Users, BedDouble, MapPin, ExternalLink, BadgePercent } from "lucide-react";
 
 export const Route = createFileRoute("/account/bookings")({
   head: () => ({
