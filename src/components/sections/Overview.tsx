@@ -40,9 +40,9 @@ function Section({
 
 export function Overview() {
   const highlights = [
-    { icon: Globe2, text: "20+ thị trường vốn châu Á cùng quy tụ" },
-    { icon: Calendar, text: "4 ngày sự kiện chính thức tại Hà Nội" },
-    { icon: CheckCircle2, text: "Quy tụ regulators, exchanges, dealers & investors" },
+    { icon: Globe2, text: "30+ hiệp hội chứng khoán khu vực Châu Á – Châu Đại Dương" },
+    { icon: Calendar, text: "4 ngày sự kiện chính thức (1–4/10/2026) tại Hà Nội" },
+    { icon: CheckCircle2, text: "Quy tụ regulators, exchanges, dealers & investors — quy mô 100–150 đại biểu" },
   ];
 
   return (
