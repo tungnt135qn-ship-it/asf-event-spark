@@ -63,9 +63,16 @@ export function Overview() {
             <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/70 via-transparent to-transparent" />
           </div>
 
-          {/* Floating VBMA logo card */}
-          <div className="absolute -bottom-6 -right-4 hidden rounded-2xl border border-gold/30 bg-white p-4 shadow-xl sm:block">
-            <img src={vbmaLogo} alt="VBMA" className="h-12 w-auto" />
+          {/* Floating organizer logos */}
+          <div className="absolute -bottom-6 -right-4 hidden items-center gap-3 rounded-2xl border border-gold/30 bg-white p-3 shadow-xl sm:flex">
+            <img src={vbmaLogo} alt="VBMA" className="h-10 w-auto" />
+            <span className="h-8 w-px bg-navy-deep/15" />
+            <img
+              src="https://vasb.vn/_zyro-images/logo-vasb-2-YBgb6zn65eFgVR5a.png"
+              alt="VASB"
+              className="h-10 w-auto"
+              loading="lazy"
+            />
           </div>
         </div>
 
@@ -80,21 +87,38 @@ export function Overview() {
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
             <div className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gold">
-              <Building2 size={16} /> Đơn vị tổ chức
+              <Building2 size={16} /> Đơn vị tổ chức & đồng tổ chức
             </div>
-            <p className="text-sm leading-relaxed text-white/85">
-              <strong className="text-white">Hiệp hội Thị trường Trái phiếu Việt Nam (VBMA)</strong>{" "}
-              — thành lập năm 2009, là tổ chức đại diện cho các thành viên định chế trên thị
-              trường trái phiếu Việt Nam, thúc đẩy thị trường minh bạch, hiệu quả và bền vững.
-            </p>
-            <a
-              href="https://vbma.org.vn/vi"
-              target="_blank"
-              rel="noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-gold underline-offset-4 hover:underline"
-            >
-              Truy cập VBMA <ExternalLink size={14} />
-            </a>
+            <div className="space-y-3 text-sm leading-relaxed text-white/85">
+              <p>
+                <strong className="text-white">Hiệp hội Thị trường Trái phiếu Việt Nam (VBMA)</strong>{" "}
+                — thành lập năm 2009, đại diện các thành viên định chế trên thị trường trái phiếu
+                Việt Nam, thúc đẩy thị trường minh bạch, hiệu quả và bền vững.
+              </p>
+              <p>
+                <strong className="text-white">Hiệp hội Kinh doanh Chứng khoán Việt Nam (VASB)</strong>{" "}
+                — đồng tổ chức, đại diện cộng đồng công ty chứng khoán, kết nối thành viên thị
+                trường vốn Việt Nam với khu vực.
+              </p>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-4">
+              <a
+                href="https://vbma.org.vn/vi"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-gold underline-offset-4 hover:underline"
+              >
+                VBMA <ExternalLink size={14} />
+              </a>
+              <a
+                href="https://vasb.vn/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-gold underline-offset-4 hover:underline"
+              >
+                VASB <ExternalLink size={14} />
+              </a>
+            </div>
           </div>
 
           <ul className="space-y-3">
