@@ -144,4 +144,118 @@ export const vi: Dict = {
   "reg.hero.scale": "30+ hiệp hội · 100–150 đại biểu",
 
   "lang.switch": "Ngôn ngữ",
+
+  // Hero
+  "hero.tagline": "Asian Securities Forum",
+  "hero.lead": "Định hình tương lai thị trường vốn Châu Á. Do VBMA đăng cai tại Việt Nam, ASF 2026 quy tụ cơ quan quản lý, lãnh đạo thị trường và nhà đầu tư toàn cầu.",
+  "hero.date": "1 – 4 tháng 10, 2026",
+  "hero.location": "Hà Nội, Việt Nam",
+  "hero.cd.days": "Ngày",
+  "hero.cd.hours": "Giờ",
+  "hero.cd.minutes": "Phút",
+  "hero.cd.seconds": "Giây",
+  "hero.status.upcoming": "Sắp diễn ra",
+  "hero.status.live": "Đang diễn ra",
+  "hero.status.completed": "Đã kết thúc",
+
+  // Agenda
+  "agenda.all": "Tất cả",
+  "agenda.allDays": "Tất cả các ngày",
+  "agenda.sessions": "{n} phiên",
+  "agenda.note": "Lưu ý:",
+  "agenda.noteText": "Chương trình mang tính sơ bộ và có thể cập nhật.",
+  "agenda.lastUpdated": "Cập nhật lần cuối:",
+  "agenda.status.completed": "Đã kết thúc",
+  "agenda.status.live": "Diễn ra hôm nay",
+  "agenda.status.upcoming": "Sắp diễn ra",
+
+  // Speakers
+  "speakers.eyebrow": "Diễn giả",
+  "speakers.title": "Tiếng nói định hình tương lai",
+  "speakers.topics": "Chủ đề",
+
+  // KeyContent / Topics
+  "topics.eyebrow": "Chủ đề trọng tâm",
+  "topics.title": "Nội dung thảo luận chính",
+  "topics.detail": "Chi tiết",
+
+  // News
+  "news.eyebrow": "Tin tức",
+  "news.title": "Cập nhật mới nhất",
+  "news.readMore": "Đọc thêm",
+
+  // Press
+  "press.eyebrow": "Thông cáo báo chí",
+  "press.title": "Thông cáo báo chí chính thức",
+  "press.readFull": "Đọc thông cáo đầy đủ",
+  "press.default": "Thông cáo báo chí",
+
+  // FAQ items
+  "faq.q1": "Ai có thể tham dự ASF 2026?",
+  "faq.a1": "ASF 2026 dành cho các thành viên định chế trong ngành chứng khoán và trái phiếu — cơ quan quản lý, công ty kinh doanh, quỹ đầu tư, sở giao dịch, lưu ký và nhà đầu tư đủ điều kiện. Đăng ký theo lời mời; vui lòng liên hệ VBMA để được mời tham dự.",
+  "faq.q2": "Đăng ký tham dự như thế nào?",
+  "faq.a2": "Nhấn nút Đăng ký ở đầu trang hoặc liên hệ ban thư ký ASF 2026 tại asf2026@vbma.org.vn. Đăng ký sớm kết thúc ngày 15/08/2026.",
+  "faq.q3": "ASF 2026 được tổ chức ở đâu?",
+  "faq.a3": "Hội nghị diễn ra tại Khách sạn Meliá Hanoi, Hà Nội, Việt Nam từ ngày 1 – 4 tháng 10 năm 2026.",
+  "faq.q4": "Tôi có cần visa để vào Việt Nam không?",
+  "faq.a4": "Hầu hết đại biểu cần visa hoặc e-visa để nhập cảnh Việt Nam. Công dân một số quốc gia được miễn visa cho lưu trú ngắn hạn. Hướng dẫn visa & du lịch chi tiết có trong mục Tài liệu.",
+  "faq.q5": "Quy định trang phục như thế nào?",
+  "faq.a5": "Trang phục công sở cho tất cả phiên hội nghị. Smart casual phù hợp cho tour thành phố và tour Vịnh Hạ Long.",
+  "faq.q6": "Lưu trú có được bao gồm không?",
+  "faq.a6": "Lưu trú không bao gồm trong phí đăng ký. VBMA đã thoả thuận giá ưu đãi với các khách sạn đối tác — link đặt phòng sẽ được gửi sau khi xác nhận đăng ký.",
+  "faq.q7": "Phiên thảo luận sử dụng ngôn ngữ nào?",
+  "faq.a7": "Tất cả các phiên toàn thể và panel sử dụng tiếng Anh. Có phiên dịch song song tiếng Việt, tiếng Nhật và tiếng Hàn.",
+  "faq.q8": "Tôi có thể tài trợ hoặc trưng bày tại ASF 2026 không?",
+  "faq.a8": "Có — vui lòng tải Sponsorship Pack từ mục Tài liệu hoặc liên hệ sponsorship@vbma.org.vn để được tư vấn gói phù hợp.",
+
+  // Documents
+  "docs.eyebrow": "Tài liệu",
+  "docs.title": "Tài nguyên & Tải xuống",
+
+  // Location
+  "loc.eyebrow": "Địa điểm",
+  "loc.title": "Nơi tổ chức",
+  "loc.venue": "Địa điểm tổ chức",
+  "loc.venueName": "Khách sạn Meliá Hanoi",
+  "loc.address": "44B Lý Thường Kiệt, Quận Hoàn Kiếm, Hà Nội, Việt Nam",
+  "loc.openMaps": "Mở trên Google Maps",
+  "loc.gettingHere": "Hướng dẫn di chuyển",
+  "loc.t1": "40 phút lái xe từ Sân bay quốc tế Nội Bài (HAN)",
+  "loc.t2": "5 phút đi bộ tới Hồ Hoàn Kiếm & Phố cổ",
+  "loc.t3": "Có dịch vụ đưa đón cho đại biểu đã đăng ký",
+
+  // Footer
+  "footer.about": "Asian Securities Forum 2026 — do VBMA đăng cai tại Hà Nội, Việt Nam.",
+  "footer.quickLinks": "Liên kết nhanh",
+  "footer.contact": "Liên hệ (VBMA)",
+  "footer.location": "Hà Nội, Việt Nam",
+  "footer.follow": "Theo dõi",
+  "footer.rights": "© 2026 ASF 2026 / Hiệp hội Thị trường Trái phiếu Việt Nam. Bảo lưu mọi quyền.",
+  "footer.privacy": "Bảo mật",
+  "footer.terms": "Điều khoản",
+  "footer.coc": "Quy tắc ứng xử",
+
+  // Floating
+  "fa.hotline": "Đường dây nóng",
+  "fa.email": "Email",
+  "fa.contact": "Liên hệ",
+  "fa.backTop": "Lên đầu trang",
+
+  // Hotels room types
+  "room.deluxe": "Phòng Deluxe",
+  "room.executive": "Phòng Executive",
+  "room.suite": "Phòng Suite",
+  "room.twin": "Phòng Twin",
+
+  // Register success dialog
+  "reg.dlg.congrats": "Chúc mừng",
+  "reg.dlg.desc": "Đăng ký ASF 2026 của bạn đã được tiếp nhận. Email xác nhận sẽ được gửi sớm.",
+  "reg.dlg.stayTitle": "Cần nơi lưu trú?",
+  "reg.dlg.stayLead": "Tận hưởng giá ưu đãi đặc biệt cho ASF 2026 tại các khách sạn đối tác ở Hà Nội. Đặt sớm — số phòng có hạn.",
+  "reg.dlg.book": "Đặt phòng",
+  "reg.dlg.viewAll": "Xem tất cả khách sạn đối tác",
+  "reg.dlg.maybe": "Để sau",
+  "reg.form.phonePh": "Số điện thoại",
+  "reg.form.country.search": "Tìm quốc gia...",
+  "reg.form.country.empty": "Không tìm thấy quốc gia.",
 };
