@@ -84,6 +84,7 @@ function HotelGallery({ images, alt }: { images: string[]; alt: string }) {
 function BookingDialog({ hotel }: { hotel: Hotel }) {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const { user } = useAuth();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
