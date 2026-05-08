@@ -13,6 +13,7 @@ import { KeyContent } from "@/components/sections/KeyContent";
 import { Documents } from "@/components/sections/Documents";
 import { Library } from "@/components/sections/Library";
 import { News } from "@/components/sections/News";
+import { PressRelease } from "@/components/sections/PressRelease";
 import { Sponsors } from "@/components/sections/Sponsors";
 import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
