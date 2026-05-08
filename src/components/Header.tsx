@@ -37,6 +37,7 @@ export function Header() {
   const location = useLocation();
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const { t } = useT();
   const isHome = location.pathname === "/";
   const groupRef = useRef<HTMLDivElement>(null);
 
