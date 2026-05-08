@@ -8,62 +8,9 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
-import s1 from "@/assets/speakers/s1.jpg";
-import s2 from "@/assets/speakers/s2.jpg";
-import s3 from "@/assets/speakers/s3.jpg";
-import s4 from "@/assets/speakers/s4.jpg";
-import s5 from "@/assets/speakers/s5.jpg";
-import s6 from "@/assets/speakers/s6.jpg";
-import s7 from "@/assets/speakers/s7.jpg";
-import s8 from "@/assets/speakers/s8.jpg";
+import { speakers, type Speaker } from "@/lib/speakers";
 
-type SpeakerTopic = { abbr: string; full: string };
-
-const speakers: {
-  img: string; title: string; name: string; role: string; org: string; bio: string; topics: SpeakerTopic[];
-}[] = [
-  { img: s1, title: "Dr.", name: "Christine Laurent", role: "President", org: "European Central Bank", bio: "Steering Europe's monetary policy and championing global financial stability.", topics: [
-    { abbr: "SGF", full: "Sustainable & Green Finance" },
-    { abbr: "ABM", full: "Asia Bond Market Outlook" },
-    { abbr: "CCF", full: "Cross-border Capital Flows" },
-    { abbr: "MIR", full: "Market Infrastructure & Resilience" },
-  ]},
-  { img: s2, title: "Mr.", name: "James Dorman", role: "CEO", org: "JP Morgan Asia", bio: "Leading one of the world's largest investment banks across Asia-Pacific markets.", topics: [
-    { abbr: "ABM", full: "Asia Bond Market Outlook" },
-    { abbr: "CCF", full: "Cross-border Capital Flows" },
-    { abbr: "DAT", full: "Digital Assets & Tokenization" },
-  ]},
-  { img: s3, title: "Prof.", name: "Hiroshi Tanaka", role: "Managing Director", org: "Japan Securities Dealers Assoc.", bio: "Expert on cross-border fixed income flows across Asia.", topics: [
-    { abbr: "CCF", full: "Cross-border Capital Flows" },
-    { abbr: "ABM", full: "Asia Bond Market Outlook" },
-  ]},
-  { img: s4, title: "Ms.", name: "Le Thi Minh Anh", role: "Deputy Director", org: "State Securities Commission", bio: "Architect of Vietnam's market reform and ESG disclosure framework.", topics: [
-    { abbr: "SGF", full: "Sustainable & Green Finance" },
-    { abbr: "MIR", full: "Market Infrastructure & Resilience" },
-    { abbr: "CCF", full: "Cross-border Capital Flows" },
-    { abbr: "ABM", full: "Asia Bond Market Outlook" },
-  ]},
-  { img: s5, title: "Mr.", name: "Raj Mehta", role: "CEO", org: "Asia Capital Markets", bio: "Pioneer of digital bond issuance platforms in Southeast Asia.", topics: [
-    { abbr: "DAT", full: "Digital Assets & Tokenization" },
-    { abbr: "MIR", full: "Market Infrastructure & Resilience" },
-  ]},
-  { img: s6, title: "Dr.", name: "Kim Soo-jin", role: "Chief Economist", org: "Korea Financial Investment", bio: "Authority on Asian monetary policy and rate cycles.", topics: [
-    { abbr: "ABM", full: "Asia Bond Market Outlook" },
-    { abbr: "SGF", full: "Sustainable & Green Finance" },
-  ]},
-  { img: s7, title: "Mr.", name: "Andrew Lim", role: "Partner", org: "Singapore Exchange", bio: "Drives SGX's regional debt listing and clearing initiatives.", topics: [
-    { abbr: "MIR", full: "Market Infrastructure & Resilience" },
-    { abbr: "DAT", full: "Digital Assets & Tokenization" },
-    { abbr: "CCF", full: "Cross-border Capital Flows" },
-    { abbr: "ABM", full: "Asia Bond Market Outlook" },
-  ]},
-  { img: s8, title: "Ms.", name: "Maria Santos", role: "Head of ESG", org: "ASEAN Capital Markets Forum", bio: "Champion of sustainable finance and green bond standards.", topics: [
-    { abbr: "SGF", full: "Sustainable & Green Finance" },
-    { abbr: "CCF", full: "Cross-border Capital Flows" },
-  ]},
-];
-
-function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
+function SpeakerCard({ s }: { s: Speaker }) {
   return (
     <div className="group relative h-[480px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:border-gold/40 hover:shadow-[var(--shadow-glow)]">
       <img

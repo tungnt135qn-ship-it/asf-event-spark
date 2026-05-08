@@ -66,13 +66,6 @@ export function Overview() {
           {/* Floating organizer logos */}
           <div className="absolute -bottom-6 -right-4 hidden items-center gap-3 rounded-2xl border border-gold/30 bg-white p-3 shadow-xl sm:flex">
             <img src={vbmaLogo} alt="VBMA" className="h-10 w-auto" />
-            <span className="h-8 w-px bg-navy-deep/15" />
-            <img
-              src="https://vasb.vn/_zyro-images/logo-vasb-2-YBgb6zn65eFgVR5a.png"
-              alt="VASB"
-              className="h-10 w-auto"
-              loading="lazy"
-            />
           </div>
         </div>
 

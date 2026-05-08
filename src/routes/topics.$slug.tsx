@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Starfield } from "@/components/Starfield";
 import { Footer } from "@/components/sections/Footer";
 import { getTopic, topics, type Topic } from "@/lib/topics";
+import { getSpeakersForTopic } from "@/lib/speakers";
 
 export const Route = createFileRoute("/topics/$slug")({
   loader: ({ params }) => {
@@ -41,6 +42,7 @@ export const Route = createFileRoute("/topics/$slug")({
 function TopicDetail() {
   const t = Route.useLoaderData() as Topic;
   const others = topics.filter((x) => x.slug !== t.slug).slice(0, 3);
+  const topicSpeakers = getSpeakersForTopic(t.slug);
 
   return (
     <div className="min-h-screen text-white">
@@ -136,6 +138,34 @@ function TopicDetail() {
               </ul>
             </div>
           </div>
+
+          {topicSpeakers.length > 0 && (
+            <div className="mt-16">
+              <h2 className="mb-6 text-2xl font-bold">Speakers on this topic</h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {topicSpeakers.map((sp) => (
+                  <div
+                    key={sp.id}
+                    className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-gold/40"
+                  >
+                    <img
+                      src={sp.img}
+                      alt={`${sp.title} ${sp.name}`}
+                      className="h-16 w-16 shrink-0 rounded-full border-2 border-gold/40 object-cover"
+                      loading="lazy"
+                    />
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-bold text-white">
+                        <span className="text-gold/90">{sp.title}</span> {sp.name}
+                      </div>
+                      <div className="truncate text-xs text-gold">{sp.role}</div>
+                      <div className="truncate text-[11px] text-white/60">{sp.org}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="mt-16">
             <h2 className="mb-6 text-2xl font-bold">Explore More Topics</h2>

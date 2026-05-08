@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
-import { EVENT_DAYS, getDayStatus, type DayStatus } from "@/lib/event";
-import { Clock, MapPin, CheckCircle2, Radio, CalendarClock, ChevronDown, LayoutGrid } from "lucide-react";
+import { EVENT_DAYS, getDayStatus, type DayStatus, type EventDay } from "@/lib/event";
+import { speakers as ALL_SPEAKERS } from "@/lib/speakers";
+import { topics as ALL_TOPICS } from "@/lib/topics";
+import { Clock, MapPin, CheckCircle2, Radio, CalendarClock, ChevronDown, LayoutGrid, Users, Tag } from "lucide-react";
 
 const STATUS_CFG: Record<DayStatus, { text: string; cls: string; Icon: typeof Clock }> = {
   completed: {
@@ -127,6 +130,9 @@ export function Agenda() {
                     />
                   </div>
                 </button>
+                <div className="border-t border-white/10 px-5 pb-4 pt-4">
+                  <DayMeta day={d} />
+                </div>
                 {isOpen && (
                   <div className="border-t border-white/10 p-5 sm:p-8">
                     <ol className="relative space-y-6 border-l-2 border-gold/30 pl-6">
@@ -154,6 +160,8 @@ export function Agenda() {
               })}
             </div>
           </div>
+
+          <DayMeta day={day!} className="mb-6" />
 
           <ol className="relative space-y-6 border-l-2 border-gold/30 pl-6">
             {day!.sessions.map((s, idx) => (
@@ -195,6 +203,58 @@ function SessionItem({ s }: { s: Session }) {
         <p className="mt-2 text-sm leading-relaxed text-white/75">{s.description}</p>
       </div>
     </li>
+  );
+}
+
+function DayMeta({ day, className = "" }: { day: EventDay; className?: string }) {
+  const dayTopics = ALL_TOPICS.filter((t) => day.topicSlugs.includes(t.slug));
+  const daySpeakers = day.speakerIds
+    .map((id) => ALL_SPEAKERS.find((s) => s.id === id))
+    .filter(Boolean) as typeof ALL_SPEAKERS;
+
+  if (dayTopics.length === 0 && daySpeakers.length === 0) return null;
+
+  return (
+    <div className={`flex flex-wrap items-center gap-x-6 gap-y-3 ${className}`}>
+      {daySpeakers.length > 0 && (
+        <div className="flex items-center gap-2">
+          <Users size={14} className="text-gold/80" />
+          <div className="flex -space-x-2">
+            {daySpeakers.slice(0, 6).map((s) => (
+              <img
+                key={s.id}
+                src={s.img}
+                alt={s.name}
+                title={`${s.title} ${s.name} — ${s.role}`}
+                className="h-8 w-8 rounded-full border-2 border-navy-deep object-cover"
+                loading="lazy"
+              />
+            ))}
+            {daySpeakers.length > 6 && (
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-navy-deep bg-white/10 text-[10px] font-bold text-white/80">
+                +{daySpeakers.length - 6}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {dayTopics.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2">
+          <Tag size={14} className="text-gold/80" />
+          {dayTopics.map((t) => (
+            <Link
+              key={t.slug}
+              to="/topics/$slug"
+              params={{ slug: t.slug }}
+              className="rounded-full border border-gold/40 bg-gold/10 px-2.5 py-0.5 text-[11px] font-semibold text-gold transition hover:bg-gold/20"
+            >
+              {t.title}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
