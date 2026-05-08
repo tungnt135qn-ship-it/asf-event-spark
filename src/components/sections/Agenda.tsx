@@ -130,6 +130,9 @@ export function Agenda() {
                     />
                   </div>
                 </button>
+                <div className="border-t border-white/10 px-5 pb-4 pt-4">
+                  <DayMeta day={d} />
+                </div>
                 {isOpen && (
                   <div className="border-t border-white/10 p-5 sm:p-8">
                     <ol className="relative space-y-6 border-l-2 border-gold/30 pl-6">
