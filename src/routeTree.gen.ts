@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as TopicsSlugRouteImport } from './routes/topics.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as AccountRegistrationsRouteImport } from './routes/account.registrations'
+import { Route as AccountBookingsRouteImport } from './routes/account.bookings'
 
 const LibraryRoute = LibraryRouteImport.update({
   id: '/library',
@@ -40,10 +41,16 @@ const AccountRegistrationsRoute = AccountRegistrationsRouteImport.update({
   path: '/account/registrations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountBookingsRoute = AccountBookingsRouteImport.update({
+  id: '/account/bookings',
+  path: '/account/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/library': typeof LibraryRoute
+  '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/library': typeof LibraryRoute
+  '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
@@ -59,6 +67,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/library': typeof LibraryRoute
+  '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
@@ -68,6 +77,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/library'
+    | '/account/bookings'
     | '/account/registrations'
     | '/news/$slug'
     | '/topics/$slug'
@@ -75,6 +85,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/library'
+    | '/account/bookings'
     | '/account/registrations'
     | '/news/$slug'
     | '/topics/$slug'
@@ -82,6 +93,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/library'
+    | '/account/bookings'
     | '/account/registrations'
     | '/news/$slug'
     | '/topics/$slug'
@@ -90,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LibraryRoute: typeof LibraryRoute
+  AccountBookingsRoute: typeof AccountBookingsRoute
   AccountRegistrationsRoute: typeof AccountRegistrationsRoute
   NewsSlugRoute: typeof NewsSlugRoute
   TopicsSlugRoute: typeof TopicsSlugRoute
@@ -132,12 +145,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountRegistrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account/bookings': {
+      id: '/account/bookings'
+      path: '/account/bookings'
+      fullPath: '/account/bookings'
+      preLoaderRoute: typeof AccountBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LibraryRoute: LibraryRoute,
+  AccountBookingsRoute: AccountBookingsRoute,
   AccountRegistrationsRoute: AccountRegistrationsRoute,
   NewsSlugRoute: NewsSlugRoute,
   TopicsSlugRoute: TopicsSlugRoute,
