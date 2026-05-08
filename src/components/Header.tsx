@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { AsfLogo } from "./AsfLogo";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { AuthButton } from "./AuthButton";
+import { useAuth } from "@/lib/auth";
+import { Menu, X, ChevronDown, Lock } from "lucide-react";
 
 type NavItem =
   | { kind: "link"; hash: string; label: string }
