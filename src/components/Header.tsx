@@ -6,16 +6,17 @@ import { useAuth } from "@/lib/auth";
 import { Menu, X, ChevronDown, Lock } from "lucide-react";
 
 type NavItem =
-  | { kind: "link"; hash: string; label: string }
-  | { kind: "group"; label: string; items: { hash: string; label: string }[] };
+  | { kind: "link"; hash: string; label: string; protected?: boolean }
+  | { kind: "group"; label: string; items: { hash: string; label: string; protected?: boolean }[] };
 
 const NAV: NavItem[] = [
   { kind: "link", hash: "overview", label: "Overview" },
   { kind: "link", hash: "agenda", label: "Agenda" },
-  { kind: "link", hash: "hotels", label: "Hotels" },
+  { kind: "link", hash: "hotels", label: "Hotels", protected: true },
   { kind: "link", hash: "speakers", label: "Speakers" },
   { kind: "link", hash: "topics", label: "Topics" },
-  { kind: "link", hash: "library", label: "Library" },
+  { kind: "link", hash: "library", label: "Library", protected: true },
+  { kind: "link", hash: "documents", label: "Documents", protected: true },
   {
     kind: "group",
     label: "News",
