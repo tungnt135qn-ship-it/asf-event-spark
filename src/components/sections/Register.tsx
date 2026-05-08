@@ -50,7 +50,7 @@ const empty: FormState = {
 };
 
 export function Register() {
-  const { user } = useAuth();
+  const { user, addRegistration } = useAuth();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
