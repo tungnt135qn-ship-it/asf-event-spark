@@ -170,7 +170,7 @@ export function Header() {
       {open && (
         <div className="glass border-t border-white/10 xl:hidden">
           <div className="mx-auto flex max-w-7xl flex-col px-4 py-4">
-            {NAV.map((n) =>
+            {navItems.map((n) =>
               n.kind === "link" ? (
                 <button
                   key={n.hash}
