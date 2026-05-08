@@ -11,8 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useAuth, ACCESS_CODES } from "@/lib/auth";
-import { LogIn, LogOut, KeyRound, User as UserIcon } from "lucide-react";
+import { LogIn, KeyRound, User as UserIcon } from "lucide-react";
 import { toast } from "sonner";
+import { AccountMenu } from "./AccountMenu";
 
 export function AuthButton({ compact = false }: { compact?: boolean }) {
   const { user, isAuthenticated, loginWithCode, logout } = useAuth();
