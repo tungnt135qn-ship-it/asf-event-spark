@@ -19,6 +19,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { hotels } from "@/lib/hotels";
 import { countries, customerTypes } from "@/lib/countries";
 import { useAuth } from "@/lib/auth";
@@ -212,17 +223,11 @@ export function Register() {
               </div>
               <Field label={t("reg.form.phone")} error={errors.phoneCountry || errors.phone}>
                 <div className="flex gap-2">
-                  <Select value={form.phoneCountry} onValueChange={(v) => setForm((f) => ({ ...f, phoneCountry: v }))}>
-                    <SelectTrigger className="w-[140px] bg-white/5 text-white border-white/15">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-72">
-                      {countries.map((c) => (
-                        <SelectItem key={c.code} value={c.code}>{c.flag} {c.dial}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Input value={form.phone} onChange={update("phone")} placeholder="Phone number" className="flex-1 bg-white/5 text-white placeholder:text-white/40 border-white/15" />
+                  <CountryCodeCombo
+                    value={form.phoneCountry}
+                    onChange={(v) => setForm((f) => ({ ...f, phoneCountry: v }))}
+                  />
+                  <Input value={form.phone} onChange={update("phone")} placeholder={t("reg.form.phonePh")} className="flex-1 bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </div>
               </Field>
               <div className="grid gap-3 sm:grid-cols-2">
@@ -286,19 +291,16 @@ export function Register() {
               <CheckCircle2 size={32} />
             </div>
             <DialogTitle className="text-center text-2xl text-white">
-              Congratulations{submittedName ? `, ${submittedName.split(" ")[0]}` : ""}!
+              {t("reg.dlg.congrats")}{submittedName ? `, ${submittedName.split(" ")[0]}` : ""}!
             </DialogTitle>
             <DialogDescription className="text-center text-white/75">
-              Your ASF 2026 registration has been received. A confirmation email is on the way.
+              {t("reg.dlg.desc")}
             </DialogDescription>
           </DialogHeader>
 
           <div className="mt-2 rounded-2xl border border-gold/30 bg-gold/5 p-5">
-            <div className="text-sm font-bold text-gold">Need a place to stay?</div>
-            <p className="mt-1 text-sm text-white/80">
-              Enjoy exclusive ASF 2026 rates at our partner hotels in Hanoi. Reserve early — rooms
-              are limited.
-            </p>
+            <div className="text-sm font-bold text-gold">{t("reg.dlg.stayTitle")}</div>
+            <p className="mt-1 text-sm text-white/80">{t("reg.dlg.stayLead")}</p>
 
             <div className="mt-4 grid gap-3">
               {hotels.map((h) => (
@@ -316,7 +318,7 @@ export function Register() {
                     onClick={() => setOpen(false)}
                     className="inline-flex shrink-0 items-center gap-1 rounded-full border border-gold/50 px-3 py-1.5 text-xs font-semibold text-gold hover:bg-gold/10"
                   >
-                    Book <ExternalLink size={12} />
+                    {t("reg.dlg.book")} <ExternalLink size={12} />
                   </a>
                 </div>
               ))}
@@ -328,13 +330,13 @@ export function Register() {
                 onClick={() => setOpen(false)}
                 className="flex-1 inline-flex items-center justify-center rounded-full bg-gold px-5 py-2.5 text-sm font-bold text-navy-deep hover:opacity-90"
               >
-                View All Partner Hotels
+                {t("reg.dlg.viewAll")}
               </a>
               <button
                 onClick={() => setOpen(false)}
                 className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white/80 hover:bg-white/5"
               >
-                Maybe later
+                {t("reg.dlg.maybe")}
               </button>
             </div>
           </div>
@@ -359,5 +361,60 @@ function Field({
       {children}
       {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
+  );
+}
+
+function CountryCodeCombo({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const { t } = useT();
+  const [open, setOpen] = useState(false);
+  const selected = countries.find((c) => c.code === value);
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          role="combobox"
+          aria-expanded={open}
+          className="flex h-10 w-[140px] items-center justify-between rounded-md border border-white/15 bg-white/5 px-3 text-sm text-white"
+        >
+          <span className="truncate">
+            {selected ? `${selected.flag} ${selected.dial}` : "—"}
+          </span>
+          <ChevronsUpDown size={14} className="ml-2 shrink-0 opacity-60" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[260px] p-0" align="start">
+        <Command
+          filter={(val, search) => {
+            const c = countries.find((x) => x.code === val);
+            if (!c) return 0;
+            const q = search.toLowerCase();
+            return c.name.toLowerCase().includes(q) || c.dial.includes(q) || c.code.toLowerCase().includes(q) ? 1 : 0;
+          }}
+        >
+          <CommandInput placeholder={t("reg.form.country.search")} />
+          <CommandList>
+            <CommandEmpty>{t("reg.form.country.empty")}</CommandEmpty>
+            <CommandGroup>
+              {countries.map((c) => (
+                <CommandItem
+                  key={c.code}
+                  value={c.code}
+                  onSelect={(v) => {
+                    onChange(v);
+                    setOpen(false);
+                  }}
+                >
+                  <span className="mr-2">{c.flag}</span>
+                  <span className="flex-1 truncate">{c.name}</span>
+                  <span className="ml-2 text-xs text-muted-foreground">{c.dial}</span>
+                  <Check className={cn("ml-2 h-4 w-4", value === c.code ? "opacity-100" : "opacity-0")} />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 }

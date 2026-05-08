@@ -160,10 +160,10 @@ function BookingDialog({ hotel }: { hotel: Hotel }) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="deluxe">Deluxe Room</SelectItem>
-                  <SelectItem value="executive">Executive Room</SelectItem>
-                  <SelectItem value="suite">Suite</SelectItem>
-                  <SelectItem value="twin">Twin Room</SelectItem>
+                  <SelectItem value="deluxe">{t("room.deluxe")}</SelectItem>
+                  <SelectItem value="executive">{t("room.executive")}</SelectItem>
+                  <SelectItem value="suite">{t("room.suite")}</SelectItem>
+                  <SelectItem value="twin">{t("room.twin")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>

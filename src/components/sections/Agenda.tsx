@@ -4,27 +4,16 @@ import { Section } from "./Overview";
 import { EVENT_DAYS, getDayStatus, type DayStatus, type EventDay } from "@/lib/event";
 import { speakers as ALL_SPEAKERS } from "@/lib/speakers";
 import { topics as ALL_TOPICS } from "@/lib/topics";
+import { useT } from "@/lib/i18n";
 import { Clock, MapPin, CheckCircle2, Radio, CalendarClock, ChevronDown, LayoutGrid, Users, Tag } from "lucide-react";
 
-const STATUS_CFG: Record<DayStatus, { text: string; cls: string; Icon: typeof Clock }> = {
-  completed: {
-    text: "Completed",
-    cls: "bg-white/10 text-white/60 border-white/20",
-    Icon: CheckCircle2,
-  },
-  live: {
-    text: "Live Today",
-    cls: "bg-destructive/20 text-destructive border-destructive/40 animate-pulse",
-    Icon: Radio,
-  },
-  upcoming: {
-    text: "Upcoming",
-    cls: "bg-gold/15 text-gold border-gold/40",
-    Icon: CalendarClock,
-  },
-};
-
 function StatusPill({ status }: { status: DayStatus }) {
+  const { t } = useT();
+  const STATUS_CFG: Record<DayStatus, { text: string; cls: string; Icon: typeof Clock }> = {
+    completed: { text: t("agenda.status.completed"), cls: "bg-white/10 text-white/60 border-white/20", Icon: CheckCircle2 },
+    live: { text: t("agenda.status.live"), cls: "bg-destructive/20 text-destructive border-destructive/40 animate-pulse", Icon: Radio },
+    upcoming: { text: t("agenda.status.upcoming"), cls: "bg-gold/15 text-gold border-gold/40", Icon: CalendarClock },
+  };
   const cfg = STATUS_CFG[status];
   return (
     <span
@@ -37,16 +26,18 @@ function StatusPill({ status }: { status: DayStatus }) {
 }
 
 export function Agenda() {
+  const { t, lang } = useT();
   // active: -1 = "All" tab, otherwise day index
   const [active, setActive] = useState(0);
   const [openDays, setOpenDays] = useState<Record<number, boolean>>({});
   const day = active >= 0 ? EVENT_DAYS[active] : null;
+  const locale = lang === "vi" ? "vi-VN" : "en-GB";
 
   const toggleDay = (idx: number) =>
     setOpenDays((s) => ({ ...s, [idx]: !s[idx] }));
 
   return (
-    <Section id="agenda" eyebrow="Agenda" title="Four Days of Insight">
+    <Section id="agenda" eyebrow={t("agenda.eyebrow")} title={t("agenda.title")}>
       {/* Day tabs */}
       <div className="mb-8 flex flex-wrap justify-center gap-3">
         <button
@@ -60,10 +51,10 @@ export function Agenda() {
           <div className="flex items-center gap-2">
             <LayoutGrid size={14} className={active === -1 ? "text-gold" : "text-white/60"} />
             <div className={`text-xs font-bold uppercase tracking-wider ${active === -1 ? "text-gold" : "text-white/60"}`}>
-              All
+              {t("agenda.all")}
             </div>
           </div>
-          <div className="mt-1 text-sm font-semibold text-white">All days</div>
+          <div className="mt-1 text-sm font-semibold text-white">{t("agenda.allDays")}</div>
         </button>
         {EVENT_DAYS.map((d, i) => {
           const status = getDayStatus(d.date);
@@ -80,12 +71,12 @@ export function Agenda() {
             >
               <div className="flex items-center gap-2">
                 <div className={`text-xs font-bold uppercase tracking-wider ${isActive ? "text-gold" : "text-white/60"}`}>
-                  Day {d.index}
+                  {t("agenda.day", { n: d.index })}
                 </div>
                 <StatusPill status={status} />
               </div>
               <div className="mt-1 text-sm font-semibold text-white">
-                {d.date.toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+                {d.date.toLocaleDateString(locale, { day: "numeric", month: "short" })}
               </div>
             </button>
           );
@@ -109,21 +100,21 @@ export function Agenda() {
                 >
                   <div className="flex flex-wrap items-center gap-3">
                     <span className="text-xs font-bold uppercase tracking-wider text-gold">
-                      Day {d.index}
+                      {t("agenda.day", { n: d.index })}
                     </span>
                     <StatusPill status={status} />
                     <h3 className="text-base font-bold text-white sm:text-lg">{d.label}</h3>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="hidden text-xs text-white/60 sm:inline">
-                      {d.date.toLocaleDateString("en-GB", {
+                      {d.date.toLocaleDateString(locale, {
                         weekday: "short",
                         day: "numeric",
                         month: "short",
                         year: "numeric",
                       })}
                     </span>
-                    <span className="text-xs text-white/50">{d.sessions.length} sessions</span>
+                    <span className="text-xs text-white/50">{t("agenda.sessions", { n: d.sessions.length })}</span>
                     <ChevronDown
                       size={18}
                       className={`text-white/70 transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -152,7 +143,7 @@ export function Agenda() {
           <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
             <h3 className="text-2xl font-bold text-white">{day!.label}</h3>
             <div className="text-sm text-white/60">
-              {day!.date.toLocaleDateString("en-GB", {
+              {day!.date.toLocaleDateString(locale, {
                 weekday: "long",
                 day: "numeric",
                 month: "long",
@@ -170,8 +161,8 @@ export function Agenda() {
           </ol>
 
           <div className="mt-8 rounded-lg border border-gold/20 bg-gold/5 p-4 text-xs text-white/70">
-            <strong className="text-gold">Note:</strong> Agenda is preliminary and may be updated.
-            Last updated: {new Date().toLocaleDateString("en-GB")}
+            <strong className="text-gold">{t("agenda.note")}</strong> {t("agenda.noteText")}{" "}
+            {t("agenda.lastUpdated")} {new Date().toLocaleDateString(locale)}
           </div>
         </div>
       )}

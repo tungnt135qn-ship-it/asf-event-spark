@@ -1,5 +1,6 @@
 import { Section } from "./Overview";
 import { ExternalLink, FileText } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 type PressItem = {
   date: string;
@@ -45,8 +46,9 @@ const items: PressItem[] = [
 ];
 
 export function PressRelease() {
+  const { t } = useT();
   return (
-    <Section id="press" eyebrow="Press Release" title="Official Press Releases">
+    <Section id="press" eyebrow={t("press.eyebrow")} title={t("press.title")}>
       <div className="grid gap-4 md:grid-cols-2">
         {items.map((p) => (
           <a
@@ -59,7 +61,7 @@ export function PressRelease() {
             <div className="flex items-center justify-between text-xs text-white/60">
               <span className="inline-flex items-center gap-2">
                 <FileText size={14} className="text-gold" />
-                {p.source ?? "Press Release"}
+                {p.source ?? t("press.default")}
               </span>
               <span>{p.date}</span>
             </div>
@@ -68,7 +70,7 @@ export function PressRelease() {
             </h3>
             <p className="text-sm leading-relaxed text-white/75">{p.description}</p>
             <span className="mt-auto inline-flex items-center gap-1.5 text-xs font-semibold text-gold">
-              Read full release <ExternalLink size={12} />
+              {t("press.readFull")} <ExternalLink size={12} />
             </span>
           </a>
         ))}

@@ -1,5 +1,6 @@
 import { Section } from "./Overview";
 import { FileText, Download } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 const docs = [
   { name: "ASF 2026 Brochure", size: "2.4 MB", type: "PDF" },
@@ -11,8 +12,9 @@ const docs = [
 ];
 
 export function Documents() {
+  const { t } = useT();
   return (
-    <Section id="documents" eyebrow="Documents" title="Resources & Downloads">
+    <Section id="documents" eyebrow={t("docs.eyebrow")} title={t("docs.title")}>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {docs.map((d) => (
           <a
@@ -25,9 +27,7 @@ export function Documents() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-semibold text-white">{d.name}</div>
-              <div className="text-xs text-white/55">
-                {d.type} · {d.size}
-              </div>
+              <div className="text-xs text-white/55">{d.type} · {d.size}</div>
             </div>
             <Download size={18} className="shrink-0 text-white/50 transition group-hover:text-gold" />
           </a>

@@ -9,8 +9,10 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 import { speakers, type Speaker } from "@/lib/speakers";
+import { useT } from "@/lib/i18n";
 
 function SpeakerCard({ s }: { s: Speaker }) {
+  const { t } = useT();
   return (
     <div className="group relative h-[480px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:border-gold/40 hover:shadow-[var(--shadow-glow)]">
       <img
@@ -60,7 +62,7 @@ function SpeakerCard({ s }: { s: Speaker }) {
         <p className="mt-3 text-sm leading-relaxed text-white/85">{s.bio}</p>
         {s.topics.length > 0 && (
           <div className="mt-3">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-gold/80">Topics</div>
+            <div className="text-[10px] font-bold uppercase tracking-wider text-gold/80">{t("speakers.topics")}</div>
             <div className="mt-1.5 flex flex-wrap gap-1.5">
               {s.topics.map((t) => (
                 <span
@@ -79,10 +81,11 @@ function SpeakerCard({ s }: { s: Speaker }) {
 }
 
 export function Speakers() {
+  const { t } = useT();
   const autoplay = useRef(Autoplay({ delay: 3500, stopOnInteraction: true }));
 
   return (
-    <Section id="speakers" eyebrow="Speakers" title="Voices Shaping the Future">
+    <Section id="speakers" eyebrow={t("speakers.eyebrow")} title={t("speakers.title")}>
       <Carousel
         opts={{ align: "start", loop: true }}
         plugins={[autoplay.current]}
