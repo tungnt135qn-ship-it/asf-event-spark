@@ -34,6 +34,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 
 function HotelGallery({ images, alt }: { images: string[]; alt: string }) {
   const [idx, setIdx] = useState(0);
