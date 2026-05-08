@@ -34,8 +34,19 @@ export function Header() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const location = useLocation();
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const isHome = location.pathname === "/";
   const groupRef = useRef<HTMLDivElement>(null);
+
+  // Filter nav items: hide protected items if not authenticated
+  const navItems = NAV
+    .map((n) => {
+      if (n.kind === "link") return n;
+      const items = n.items.filter((it) => isAuthenticated || !it.protected);
+      return items.length ? { ...n, items } : null;
+    })
+    .filter((n): n is NavItem => n !== null)
+    .filter((n) => n.kind === "group" || isAuthenticated || !n.protected);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
