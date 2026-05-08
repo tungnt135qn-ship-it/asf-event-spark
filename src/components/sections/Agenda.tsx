@@ -4,27 +4,16 @@ import { Section } from "./Overview";
 import { EVENT_DAYS, getDayStatus, type DayStatus, type EventDay } from "@/lib/event";
 import { speakers as ALL_SPEAKERS } from "@/lib/speakers";
 import { topics as ALL_TOPICS } from "@/lib/topics";
+import { useT } from "@/lib/i18n";
 import { Clock, MapPin, CheckCircle2, Radio, CalendarClock, ChevronDown, LayoutGrid, Users, Tag } from "lucide-react";
 
-const STATUS_CFG: Record<DayStatus, { text: string; cls: string; Icon: typeof Clock }> = {
-  completed: {
-    text: "Completed",
-    cls: "bg-white/10 text-white/60 border-white/20",
-    Icon: CheckCircle2,
-  },
-  live: {
-    text: "Live Today",
-    cls: "bg-destructive/20 text-destructive border-destructive/40 animate-pulse",
-    Icon: Radio,
-  },
-  upcoming: {
-    text: "Upcoming",
-    cls: "bg-gold/15 text-gold border-gold/40",
-    Icon: CalendarClock,
-  },
-};
-
 function StatusPill({ status }: { status: DayStatus }) {
+  const { t } = useT();
+  const STATUS_CFG: Record<DayStatus, { text: string; cls: string; Icon: typeof Clock }> = {
+    completed: { text: t("agenda.status.completed"), cls: "bg-white/10 text-white/60 border-white/20", Icon: CheckCircle2 },
+    live: { text: t("agenda.status.live"), cls: "bg-destructive/20 text-destructive border-destructive/40 animate-pulse", Icon: Radio },
+    upcoming: { text: t("agenda.status.upcoming"), cls: "bg-gold/15 text-gold border-gold/40", Icon: CalendarClock },
+  };
   const cfg = STATUS_CFG[status];
   return (
     <span
