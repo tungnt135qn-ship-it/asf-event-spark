@@ -1,19 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { AsfLogo } from "./AsfLogo";
+import { AuthButton } from "./AuthButton";
+import { useAuth } from "@/lib/auth";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 type NavItem =
-  | { kind: "link"; hash: string; label: string }
-  | { kind: "group"; label: string; items: { hash: string; label: string }[] };
+  | { kind: "link"; hash: string; label: string; protected?: boolean }
+  | { kind: "group"; label: string; items: { hash: string; label: string; protected?: boolean }[] };
 
 const NAV: NavItem[] = [
   { kind: "link", hash: "overview", label: "Overview" },
   { kind: "link", hash: "agenda", label: "Agenda" },
-  { kind: "link", hash: "hotels", label: "Hotels" },
+  { kind: "link", hash: "hotels", label: "Hotels", protected: true },
   { kind: "link", hash: "speakers", label: "Speakers" },
   { kind: "link", hash: "topics", label: "Topics" },
-  { kind: "link", hash: "library", label: "Library" },
+  { kind: "link", hash: "library", label: "Library", protected: true },
+  { kind: "link", hash: "documents", label: "Documents", protected: true },
   {
     kind: "group",
     label: "News",
@@ -31,8 +34,19 @@ export function Header() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const location = useLocation();
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const isHome = location.pathname === "/";
   const groupRef = useRef<HTMLDivElement>(null);
+
+  // Filter nav items: hide protected items if not authenticated
+  const navItems = NAV
+    .map((n) => {
+      if (n.kind === "link") return n;
+      const items = n.items.filter((it) => isAuthenticated || !it.protected);
+      return items.length ? { ...n, items } : null;
+    })
+    .filter((n): n is NavItem => n !== null)
+    .filter((n) => n.kind === "group" || isAuthenticated || !n.protected);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -94,7 +108,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 xl:flex" ref={groupRef}>
-          {NAV.map((n) =>
+          {navItems.map((n) =>
             n.kind === "link" ? (
               <button
                 key={n.hash}
@@ -131,12 +145,15 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => goToHash("documents")}
-            className="hidden items-center justify-center rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold leading-none text-gold transition hover:bg-gold/10 sm:inline-flex"
-          >
-            Event Handbook
-          </button>
+          {isAuthenticated && (
+            <button
+              onClick={() => goToHash("documents")}
+              className="hidden items-center justify-center rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold leading-none text-gold transition hover:bg-gold/10 sm:inline-flex"
+            >
+              Event Handbook
+            </button>
+          )}
+          <AuthButton />
           <button
             onClick={() => goToHash("register")}
             className="hidden items-center justify-center rounded-full bg-destructive px-4 py-1.5 text-[13px] font-semibold leading-none text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
@@ -156,7 +173,7 @@ export function Header() {
       {open && (
         <div className="glass border-t border-white/10 xl:hidden">
           <div className="mx-auto flex max-w-7xl flex-col px-4 py-4">
-            {NAV.map((n) =>
+            {navItems.map((n) =>
               n.kind === "link" ? (
                 <button
                   key={n.hash}

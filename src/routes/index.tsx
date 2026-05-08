@@ -20,6 +20,7 @@ import { Contact } from "@/components/sections/Contact";
 import { FloatingActions } from "@/components/FloatingActions";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
+import { Gated, LockedSection } from "@/components/LockedSection";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,12 +50,24 @@ function Index() {
         <Reveal variant="up"><WhyAttend /></Reveal>
         <Reveal variant="up"><Agenda /></Reveal>
         <Reveal variant="zoom"><Register /></Reveal>
-        <Reveal variant="up"><Hotels /></Reveal>
+        <Reveal variant="up">
+          <Gated fallback={<LockedSection id="hotels" eyebrow="Hotels" title="Partner Hotels" hint="Đăng nhập để xem giá ưu đãi và đặt phòng tại các khách sạn đối tác của ASF 2026." />}>
+            <Hotels />
+          </Gated>
+        </Reveal>
         <Reveal variant="fade"><Location /></Reveal>
         <Reveal variant="up"><Speakers /></Reveal>
         <Reveal variant="up"><KeyContent /></Reveal>
-        <Reveal variant="up"><Library preview /></Reveal>
-        <Reveal variant="up"><Documents /></Reveal>
+        <Reveal variant="up">
+          <Gated fallback={<LockedSection id="library" eyebrow="Library" title="Photos & Videos" hint="Thư viện ảnh và video chính thức của ASF 2026 chỉ dành cho đại biểu đã đăng nhập." />}>
+            <Library preview />
+          </Gated>
+        </Reveal>
+        <Reveal variant="up">
+          <Gated fallback={<LockedSection id="documents" eyebrow="Documents" title="Event Documents" hint="Tải xuống brochure, agenda, báo cáo và travel guide chính thức sau khi đăng nhập bằng mã đại biểu." />}>
+            <Documents />
+          </Gated>
+        </Reveal>
         <Reveal variant="up"><News /></Reveal>
         <Reveal variant="up"><PressRelease /></Reveal>
         <Reveal variant="fade"><Sponsors /></Reveal>

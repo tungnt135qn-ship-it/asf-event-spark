@@ -33,6 +33,7 @@ import {
   ChevronRight,
   Sparkles,
 } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 
 function HotelGallery({ images, alt }: { images: string[]; alt: string }) {
   const [idx, setIdx] = useState(0);
@@ -84,6 +85,7 @@ function HotelGallery({ images, alt }: { images: string[]; alt: string }) {
 function BookingDialog({ hotel }: { hotel: Hotel }) {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const { user } = useAuth();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -116,15 +118,15 @@ function BookingDialog({ hotel }: { hotel: Hotel }) {
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="passport">Full name (as in passport) *</Label>
-              <Input id="passport" name="passport" required maxLength={100} />
+              <Input id="passport" name="passport" required maxLength={100} defaultValue={user?.name ?? ""} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="org">Organisation *</Label>
-              <Input id="org" name="org" required maxLength={120} />
+              <Input id="org" name="org" required maxLength={120} defaultValue={user?.organisation ?? ""} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email *</Label>
-              <Input id="email" name="email" type="email" required maxLength={150} />
+              <Input id="email" name="email" type="email" required maxLength={150} defaultValue={user?.email ?? ""} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone *</Label>

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { hotels } from "@/lib/hotels";
 import { countries, customerTypes } from "@/lib/countries";
+import { useAuth } from "@/lib/auth";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your full name").max(100),
@@ -47,6 +48,7 @@ const empty: FormState = {
 };
 
 export function Register() {
+  const { user } = useAuth();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
@@ -54,6 +56,18 @@ export function Register() {
   const [passport, setPassport] = useState<File | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const passportRef = useRef<HTMLInputElement>(null);
+
+  // Auto-fill from logged-in user (code + customer type + name/email/org)
+  useEffect(() => {
+    if (!user) return;
+    setForm((f) => ({
+      ...f,
+      name: f.name || user.name,
+      email: f.email || user.email,
+      organisation: f.organisation || user.organisation,
+      customerType: user.role,
+    }));
+  }, [user]);
 
   useEffect(() => {
     const scrollToCenter = (behavior: ScrollBehavior = "auto") => {
