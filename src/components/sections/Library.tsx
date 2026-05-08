@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
 import { EVENT_DAYS } from "@/lib/event";
 import { Image as ImageIcon, Play, Calendar, X, ArrowRight } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export type MediaType = "photo" | "video";
 export type MediaItem = {
