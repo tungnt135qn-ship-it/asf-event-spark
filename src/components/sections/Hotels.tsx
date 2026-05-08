@@ -248,83 +248,73 @@ function DetailsDialog({ hotel }: { hotel: Hotel }) {
   );
 }
 
+export function HotelCard({ h }: { h: Hotel }) {
+  return (
+    <article
+      className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-md transition hover:border-gold/30 sm:p-6"
+    >
+      <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+        <HotelGallery images={h.images} alt={h.name} />
+
+        <div className="flex flex-col">
+          <div className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full bg-gold/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-gold">
+            {h.tier}
+          </div>
+          <h3 className="text-2xl font-bold text-white">{h.name}</h3>
+
+          <div className="mt-3 space-y-2 text-sm text-white/80">
+            <a href={h.mapUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-gold">
+              <MapPin size={14} className="text-gold" />
+              {h.address}
+              <ExternalLink size={12} />
+            </a>
+            <a href={h.website} target="_blank" rel="noreferrer" className="block inline-flex items-center gap-2 hover:text-gold">
+              <Globe2 size={14} className="text-gold" />
+              {h.website.replace(/^https?:\/\//, "")}
+              <ExternalLink size={12} />
+            </a>
+          </div>
+
+          <div className="mt-4 rounded-xl border border-gold/30 bg-gold/5 p-4">
+            <div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gold">
+              <BadgePercent size={14} /> Delegate offers
+            </div>
+            <ul className="space-y-1 text-sm text-white/85">
+              {h.perks.map((p) => (
+                <li key={p}>• {p}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-4 grid gap-1 text-xs text-white/70">
+            <div className="font-semibold text-white/85">{h.contact.name}</div>
+            <a href={`mailto:${h.contact.email}`} className="inline-flex items-center gap-1.5 hover:text-gold">
+              <Mail size={12} /> {h.contact.email}
+            </a>
+            <a href={`tel:${h.contact.phone}`} className="inline-flex items-center gap-1.5 hover:text-gold">
+              <Phone size={12} /> {h.contact.phone}
+            </a>
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-3">
+            <DetailsDialog hotel={h} />
+            <BookingDialog hotel={h} />
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export function Hotels() {
   return (
-    <Section
-      id="hotels"
-      eyebrow="Accommodation"
-      title="Official Partner Hotels"
-    >
+    <Section id="hotels" eyebrow="Accommodation" title="Official Partner Hotels">
       <p className="mx-auto -mt-6 mb-12 max-w-2xl text-center text-base text-white/70">
         Preferential rates and perks negotiated exclusively for ASF 2026 delegates.
       </p>
-
       <div className="space-y-10">
         {hotels.map((h) => (
-          <article
-            key={h.id}
-            className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-md transition hover:border-gold/30 sm:p-6"
-          >
-            <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-              <HotelGallery images={h.images} alt={h.name} />
-
-              <div className="flex flex-col">
-                <div className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full bg-gold/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-gold">
-                  {h.tier}
-                </div>
-                <h3 className="text-2xl font-bold text-white">{h.name}</h3>
-
-                <div className="mt-3 space-y-2 text-sm text-white/80">
-                  <a
-                    href={h.mapUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 hover:text-gold"
-                  >
-                    <MapPin size={14} className="text-gold" />
-                    {h.address}
-                    <ExternalLink size={12} />
-                  </a>
-                  <a
-                    href={h.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block inline-flex items-center gap-2 hover:text-gold"
-                  >
-                    <Globe2 size={14} className="text-gold" />
-                    {h.website.replace(/^https?:\/\//, "")}
-                    <ExternalLink size={12} />
-                  </a>
-                </div>
-
-                <div className="mt-4 rounded-xl border border-gold/30 bg-gold/5 p-4">
-                  <div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gold">
-                    <BadgePercent size={14} /> Delegate offers
-                  </div>
-                  <ul className="space-y-1 text-sm text-white/85">
-                    {h.perks.map((p) => (
-                      <li key={p}>• {p}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-4 grid gap-1 text-xs text-white/70">
-                  <div className="font-semibold text-white/85">{h.contact.name}</div>
-                  <a href={`mailto:${h.contact.email}`} className="inline-flex items-center gap-1.5 hover:text-gold">
-                    <Mail size={12} /> {h.contact.email}
-                  </a>
-                  <a href={`tel:${h.contact.phone}`} className="inline-flex items-center gap-1.5 hover:text-gold">
-                    <Phone size={12} /> {h.contact.phone}
-                  </a>
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <DetailsDialog hotel={h} />
-                  <BookingDialog hotel={h} />
-                </div>
-              </div>
-            </div>
-          </article>
+          <HotelCard key={h.id} h={h} />
         ))}
       </div>
     </Section>
