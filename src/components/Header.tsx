@@ -1,23 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { AsfLogo } from "./AsfLogo";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
-const NAV = [
-  { href: "#overview", label: "Overview" },
-  { href: "#agenda", label: "Agenda" },
-  { href: "#hotels", label: "Hotels" },
-  { href: "#speakers", label: "Speakers" },
-  { href: "#topics", label: "Topics" },
-  { href: "#library", label: "Library" },
-  { href: "#news", label: "News" },
-  { href: "#press", label: "Press Release" },
-  { href: "#sponsors", label: "Sponsors" },
-  { href: "#faq", label: "FAQ" },
+type NavItem =
+  | { kind: "link"; hash: string; label: string }
+  | { kind: "group"; label: string; items: { hash: string; label: string }[] };
+
+const NAV: NavItem[] = [
+  { kind: "link", hash: "agenda", label: "Agenda" },
+  { kind: "link", hash: "hotels", label: "Hotels" },
+  { kind: "link", hash: "speakers", label: "Speakers" },
+  { kind: "link", hash: "topics", label: "Topics" },
+  { kind: "link", hash: "library", label: "Library" },
+  {
+    kind: "group",
+    label: "News",
+    items: [
+      { hash: "news", label: "News" },
+      { hash: "press", label: "Press Release" },
+    ],
+  },
+  { kind: "link", hash: "faq", label: "FAQ" },
 ];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const location = useLocation();
+  const router = useRouter();
+  const isHome = location.pathname === "/";
+  const groupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -26,6 +40,28 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (groupRef.current && !groupRef.current.contains(e.target as Node)) {
+        setOpenGroup(null);
+      }
+    };
+    window.addEventListener("click", onClick);
+    return () => window.removeEventListener("click", onClick);
+  }, []);
+
+  const goToHash = (hash: string) => {
+    if (isHome) {
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      history.replaceState(null, "", `#${hash}`);
+    } else {
+      router.navigate({ to: "/", hash });
+    }
+    setOpen(false);
+    setOpenGroup(null);
+  };
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
@@ -33,13 +69,15 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-        <a
-          href="#top"
+        <Link
+          to="/"
           onClick={(e) => {
-            e.preventDefault();
-            history.replaceState(null, "", window.location.pathname + window.location.search);
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            setOpen(false);
+            if (isHome) {
+              e.preventDefault();
+              history.replaceState(null, "", window.location.pathname + window.location.search);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setOpen(false);
+            }
           }}
           className="flex shrink-0 items-center gap-3 cursor-pointer"
         >
@@ -52,33 +90,58 @@ export function Header() {
               Asian Securities Forum
             </span>
           </div>
-        </a>
+        </Link>
 
-        <nav className="hidden items-center gap-6 xl:flex">
-          {NAV.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className="text-sm font-medium text-white/85 transition hover:text-gold"
-            >
-              {n.label}
-            </a>
-          ))}
+        <nav className="hidden items-center gap-6 xl:flex" ref={groupRef}>
+          {NAV.map((n) =>
+            n.kind === "link" ? (
+              <button
+                key={n.hash}
+                onClick={() => goToHash(n.hash)}
+                className="text-sm font-medium text-white/85 transition hover:text-gold"
+              >
+                {n.label}
+              </button>
+            ) : (
+              <div key={n.label} className="relative">
+                <button
+                  onClick={() => setOpenGroup((g) => (g === n.label ? null : n.label))}
+                  className="inline-flex items-center gap-1 text-sm font-medium text-white/85 transition hover:text-gold"
+                >
+                  {n.label}
+                  <ChevronDown size={14} />
+                </button>
+                {openGroup === n.label && (
+                  <div className="absolute left-1/2 top-full mt-2 w-44 -translate-x-1/2 overflow-hidden rounded-xl border border-white/10 bg-navy-deep/95 shadow-xl backdrop-blur">
+                    {n.items.map((it) => (
+                      <button
+                        key={it.hash}
+                        onClick={() => goToHash(it.hash)}
+                        className="block w-full px-4 py-2.5 text-left text-sm text-white/85 hover:bg-gold/10 hover:text-gold"
+                      >
+                        {it.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ),
+          )}
         </nav>
 
         <div className="flex items-center gap-3">
-          <a
-            href="#documents"
+          <button
+            onClick={() => goToHash("documents")}
             className="hidden items-center justify-center rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold leading-none text-gold transition hover:bg-gold/10 sm:inline-flex"
           >
             Event Handbook
-          </a>
-          <a
-            href="#register"
+          </button>
+          <button
+            onClick={() => goToHash("register")}
             className="hidden items-center justify-center rounded-full bg-destructive px-4 py-1.5 text-[13px] font-semibold leading-none text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
           >
             Register Now
-          </a>
+          </button>
           <button
             onClick={() => setOpen((v) => !v)}
             className="rounded-md p-2 text-white xl:hidden"
@@ -92,16 +155,32 @@ export function Header() {
       {open && (
         <div className="glass border-t border-white/10 xl:hidden">
           <div className="mx-auto flex max-w-7xl flex-col px-4 py-4">
-            {NAV.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                onClick={() => setOpen(false)}
-                className="border-b border-white/5 py-3 text-sm font-medium text-white/85 hover:text-gold"
-              >
-                {n.label}
-              </a>
-            ))}
+            {NAV.map((n) =>
+              n.kind === "link" ? (
+                <button
+                  key={n.hash}
+                  onClick={() => goToHash(n.hash)}
+                  className="border-b border-white/5 py-3 text-left text-sm font-medium text-white/85 hover:text-gold"
+                >
+                  {n.label}
+                </button>
+              ) : (
+                <div key={n.label} className="border-b border-white/5 py-2">
+                  <div className="py-1 text-xs uppercase tracking-wider text-white/50">
+                    {n.label}
+                  </div>
+                  {n.items.map((it) => (
+                    <button
+                      key={it.hash}
+                      onClick={() => goToHash(it.hash)}
+                      className="block w-full py-2 text-left text-sm font-medium text-white/85 hover:text-gold"
+                    >
+                      {it.label}
+                    </button>
+                  ))}
+                </div>
+              ),
+            )}
           </div>
         </div>
       )}

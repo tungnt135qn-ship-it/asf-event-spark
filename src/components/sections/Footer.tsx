@@ -53,10 +53,16 @@ export function Footer() {
           <div>
             <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-gold">Follow</h4>
             <div className="flex gap-3">
-              {[Linkedin, Facebook, Youtube].map((Icon, i) => (
+              {[
+                { Icon: Linkedin, href: "#" },
+                { Icon: Facebook, href: "https://www.facebook.com/p/Vietnam-Bond-Market-Association-100064838944642/" },
+                { Icon: Youtube, href: "#" },
+              ].map(({ Icon, href }, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noreferrer"
                   className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 text-white/70 transition hover:border-gold hover:text-gold"
                 >
                   <Icon size={18} />

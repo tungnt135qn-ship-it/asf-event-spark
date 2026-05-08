@@ -26,7 +26,7 @@ const primaryContacts = [
 ];
 
 const socials = [
-  { icon: Facebook, label: "Facebook", href: "#" },
+  { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/p/Vietnam-Bond-Market-Association-100064838944642/" },
   { icon: Linkedin, label: "LinkedIn", href: "#" },
   { icon: MessageCircle, label: "Zalo", href: "#" },
 ];
@@ -75,6 +75,8 @@ export function Contact() {
                     <a
                       key={s.label}
                       href={s.href}
+                      target={s.href.startsWith("http") ? "_blank" : undefined}
+                      rel="noreferrer"
                       aria-label={s.label}
                       className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition hover:border-gold/50 hover:bg-gold/15 hover:text-gold"
                     >
