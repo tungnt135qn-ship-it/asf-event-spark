@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "How do I register?",
-    a: "Click the Register button at the top of this page or contact the ASF 2026 secretariat at asf2026@vbma.org.vn. Early-bird registration closes 15 February 2026.",
+    a: "Click the Register button at the top of this page or contact the ASF 2026 secretariat at asf2026@vbma.org.vn. Early-bird registration closes 15 August 2026.",
   },
   {
     q: "Where will ASF 2026 be held?",
