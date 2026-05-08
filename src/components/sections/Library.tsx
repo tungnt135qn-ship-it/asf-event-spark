@@ -46,8 +46,7 @@ export function Library({ preview = false }: { preview?: boolean }) {
 
   return (
     <Section id="library" eyebrow="Library" title="Photos & Videos">
-      {!preview && (
-        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap gap-2">
             {(
               [
@@ -96,7 +95,6 @@ export function Library({ preview = false }: { preview?: boolean }) {
             ))}
           </div>
         </div>
-      )}
 
       {items.length === 0 ? (
         <div className="rounded-2xl border border-white/10 bg-white/5 p-10 text-center text-sm text-white/60">
