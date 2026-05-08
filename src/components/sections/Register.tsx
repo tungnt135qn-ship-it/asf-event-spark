@@ -193,7 +193,7 @@ export function Register() {
             ref={formRef}
             aria-label="Delegate Registration"
             onSubmit={onSubmit}
-            className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
+            className="rounded-2xl border border-white/15 bg-white/5 p-4 backdrop-blur-md sm:p-6 lg:p-8"
           >
             <h4 className="text-xl font-bold text-white">{t("reg.form.title")}</h4>
             <p className="mt-1 text-sm text-white/60">{t("reg.form.sub")}</p>
