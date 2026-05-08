@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import { LogOut, ClipboardList, Hotel as HotelIcon, BadgeCheck } from "lucide-react";
 import { toast } from "sonner";
 
@@ -23,6 +24,7 @@ function initials(name: string) {
 
 export function AccountMenu() {
   const { user, logout } = useAuth();
+  const { t } = useT();
   if (!user) return null;
 
   return (
