@@ -17,17 +17,17 @@ function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={`relative px-4 py-20 lg:py-28 ${className}`}>
+    <section id={id} className={`relative px-4 py-14 sm:px-6 sm:py-20 lg:py-28 ${className}`}>
       <div className="mx-auto max-w-7xl">
         {(eyebrow || title) && (
-          <div className="mb-12 text-center">
+          <div className="mb-8 text-center sm:mb-12">
             {eyebrow && (
-              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
+              <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-gold sm:text-xs sm:tracking-[0.3em]">
                 {eyebrow}
               </div>
             )}
             {title && (
-              <h2 className="text-3xl font-extrabold sm:text-5xl">
+              <h2 className="text-2xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
                 <span className="text-gradient-gold">{title}</span>
               </h2>
             )}

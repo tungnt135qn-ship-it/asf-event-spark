@@ -22,12 +22,12 @@ function StatusBadge() {
 function CountdownUnit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="min-w-[72px] rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-center backdrop-blur-md sm:min-w-[96px]">
-        <div className="text-gradient-gold text-3xl font-black tabular-nums sm:text-5xl">
+      <div className="min-w-[64px] rounded-xl border border-white/15 bg-white/5 px-2 py-2.5 text-center backdrop-blur-md sm:min-w-[96px] sm:px-4 sm:py-3">
+        <div className="text-gradient-gold text-2xl font-black tabular-nums sm:text-5xl">
           {value.toString().padStart(2, "0")}
         </div>
       </div>
-      <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/70 sm:text-xs">{label}</div>
+      <div className="mt-2 text-[9px] uppercase tracking-[0.18em] text-white/70 sm:text-xs sm:tracking-[0.2em]">{label}</div>
     </div>
   );
 }
@@ -57,33 +57,33 @@ export function Hero() {
           <img
             src={logoUrl}
             alt="ASF 2026 Hanoi"
-            className="h-48 w-auto drop-shadow-[0_0_60px_oklch(0.86_0.16_90_/_0.35)] sm:h-64 lg:h-80"
+            className="h-36 w-auto drop-shadow-[0_0_60px_oklch(0.86_0.16_90_/_0.35)] sm:h-64 lg:h-80"
           />
         </div>
         <h1 className="sr-only">ASF 2026 — Asian Securities Forum, Hanoi</h1>
-        <div className="mt-2 text-sm font-semibold uppercase tracking-[0.3em] text-white/80 sm:text-base">
+        <div className="mt-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/80 sm:text-base sm:tracking-[0.3em]">
           Asian Securities Forum
         </div>
 
-        <p className="mx-auto mt-6 max-w-2xl text-base text-white/80 sm:text-lg">
+        <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/80 sm:mt-6 sm:text-lg">
           Shaping the future of Asia's capital markets. Hosted by VBMA in Vietnam, ASF 2026
           convenes regulators, market leaders and global investors.
         </p>
 
-        <a href="#location" className="mt-8 inline-flex flex-wrap items-center justify-center gap-4 rounded-full border border-white/15 bg-white/5 px-6 py-3 backdrop-blur-md transition hover:border-gold/50 hover:bg-white/10">
-          <span className="inline-flex items-center gap-2 text-sm text-white">
-            <Calendar size={16} className="text-gold" />
+        <a href="#location" className="mt-6 inline-flex flex-wrap items-center justify-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 backdrop-blur-md transition hover:border-gold/50 hover:bg-white/10 sm:mt-8 sm:gap-4 sm:px-6 sm:py-3">
+          <span className="inline-flex items-center gap-2 text-xs text-white sm:text-sm">
+            <Calendar size={14} className="text-gold" />
             1 – 4 October 2026
           </span>
           <span className="h-4 w-px bg-white/20" />
-          <span className="inline-flex items-center gap-2 text-sm text-white">
-            <MapPin size={16} className="text-gold" />
+          <span className="inline-flex items-center gap-2 text-xs text-white sm:text-sm">
+            <MapPin size={14} className="text-gold" />
             Hanoi, Vietnam
           </span>
         </a>
 
         {/* Countdown */}
-        <div className="mt-10 flex justify-center gap-3 sm:gap-5">
+        <div className="mt-8 flex justify-center gap-2 sm:mt-10 sm:gap-5">
           <CountdownUnit value={c.days} label="Days" />
           <CountdownUnit value={c.hours} label="Hours" />
           <CountdownUnit value={c.minutes} label="Minutes" />
