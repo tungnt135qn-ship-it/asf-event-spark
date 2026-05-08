@@ -1,90 +1,80 @@
-# ASF 2026 Landing Page — Kế hoạch triển khai
+## Mục tiêu
 
-## Tóm tắt
-Xây dựng landing page demo cho sự kiện **ASF 2026 (Asian Securities Forum 2026)** — một sự kiện thường niên của hiệp hội thị trường trái phiếu châu Á, do **VBMA (Vietnam Bond Market Association)** đăng cai. Phong cách lấy cảm hứng từ `fdn20y.fptsoftware.com`: hero full-screen điện ảnh, header trong suốt → glass khi scroll, bố cục section rõ ràng.
+Đồng bộ toàn bộ thông tin mock của site với nội dung chính thức từ Tờ trình VBMA về ASF 2026.
 
-## Bảng màu & Design tokens
-- **Nền chính**: xanh navy đậm (`oklch(~0.20 0.10 250)`) + gradient xanh sâu hơn cho hero
-- **Chữ**: vàng gold (`oklch(~0.85 0.15 90)`) cho heading nhấn, trắng cho body
-- **Button CTA**: đỏ (`oklch(~0.58 0.22 25)`) với hover sáng hơn
-- **Glass overlay**: `backdrop-blur` + nền trắng 8-10% cho header sticky
-- Tất cả định nghĩa trong `src/styles.css` qua oklch tokens (`--primary`, `--accent` = vàng, `--destructive` = đỏ CTA, `--background` = navy).
+## Khác biệt phát hiện giữa mock hiện tại và Tờ trình
 
-## Cấu trúc routes (TanStack)
-Single landing page → tất cả section nằm trong `src/routes/index.tsx`. Dùng anchor scroll cho menu (vì user yêu cầu nội dung chảy theo flow một trang). Mỗi section là 1 component riêng trong `src/components/sections/`.
+| Hạng mục | Mock hiện tại | Theo Tờ trình | Hành động |
+|---|---|---|---|
+| Ngày tổ chức | 14–17/04/2026 | **01–04/10/2026** | Sửa toàn bộ |
+| Địa điểm | National Convention Center | **Khách sạn 5 sao tại Hà Nội** (đã chọn Meliá Hanoi) | Sửa FAQ, đồng bộ Meliá |
+| Quy mô | "500+ delegates", "20+ markets" | **100–150 đại biểu**, ~30 hiệp hội thành viên | Sửa WhyAttend, Overview |
+| Agenda Day 1 | City tour + Welcome reception | City tour + **ASF Pre-meeting** + Welcome Dinner | Cập nhật sessions |
+| Agenda Day 2 | Generic "Main Conference" | 3 chủ đề sáng + Báo cáo thị trường thành viên P1 | Viết lại sessions + topics |
+| Agenda Day 3 | Closing + Vietnam Investment Conference | Báo cáo P2/P3 (kết thúc 12:00) + **Hội thảo "TTCK Việt Nam — Kỷ nguyên mới"** chiều 13:30 với 5 nội dung | Viết lại sessions |
+| Agenda Day 4 | Halong Bay Day Tour | Tour Hạ Long trong ngày | Giữ nguyên, chỉnh ngày |
+| Topics | 5 topic generic | 3 chủ đề ASF + 1 chủ đề VN Kỷ nguyên mới (5 sub-topics) | Cập nhật topics.ts |
+| Thành phần tham dự | Không nêu rõ | 4 nhóm: ICMA/ASIFMA/ICSA; 30+ hiệp hội; cơ quan QL VN; NĐT | Bổ sung trong Overview/WhyAttend |
+| Đồng tổ chức | VBMA + VASB (đã có) | VBMA + VASB ✓ | Giữ nguyên |
 
-## Sections (theo đúng thứ tự yêu cầu)
+## Thay đổi chi tiết theo file
 
-1. **Header** (`Header.tsx`)
-   - Trong suốt khi ở top, chuyển sang glass (`backdrop-blur-xl bg-white/8 border-b`) khi scroll > 50px (dùng `useEffect` + scroll listener).
-   - Logo ASF 2026 (placeholder text-logo gradient vàng) + nav: Overview, Why Attend, Agenda, Location, Speakers, Content, Documents, News, Sponsors, FAQ + CTA "Register" (đỏ).
+### `src/lib/event.ts`
+- `EVENT_START` → `2026-10-01T09:00:00+07:00`
+- `EVENT_END` → `2026-10-04T18:00:00+07:00`
+- Cập nhật 4 `EventDay` với `date` mới và sessions:
+  - **Day 1 (01/10):** City tour Hà Nội · ASF Pre-meeting · Welcome Dinner
+  - **Day 2 (02/10):** Sáng — 3 chủ đề (Asian Equity Markets Outlook, Asian Bond Markets Development, Digitalization/AI/Online Trading); Chiều — Báo cáo thị trường thành viên Phần 1
+  - **Day 3 (03/10):** Sáng — Báo cáo thị trường thành viên Phần 2 & 3 (kết 12:00); Chiều 13:30 — Hội thảo "Thị trường Chứng khoán Việt Nam — Kỷ nguyên mới" với 5 chủ đề con
+  - **Day 4 (04/10):** Tour Hạ Long trong ngày
 
-2. **Hero** (`Hero.tsx`) — luôn full viewport (`min-h-screen`)
-   - Background gradient navy + hiệu ứng particles/glow nhẹ (CSS radial gradient, không cần lib).
-   - Logo lớn "ASF 2026" + tagline.
-   - **Countdown timer** đếm ngược tới ngày sự kiện (Days/Hours/Minutes/Seconds — `useEffect` với `setInterval`).
-   - Pill chip ngày + địa điểm (Vietnam, dự kiến Hà Nội — sẽ đặt mock).
-   - 2 CTA: "Register Now" (đỏ) + "Event Handbook" (outline vàng).
+### `src/lib/topics.ts`
+Thay 5 topic hiện tại bằng 4 topic chính khớp Tờ trình:
+1. `asian-equity-outlook` — Recent Developments and Outlook for Asian Equity Markets
+2. `asian-bond-markets` — Development of Asian Bond Markets
+3. `digital-ai-capital-markets` — Digitalization, Online Trading and AI: Transforming Capital Markets
+4. `vietnam-new-era` — Thị trường Chứng khoán Việt Nam — Kỷ nguyên mới (5 sub-bullets từ mục 3.3)
 
-3. **Overview** (`Overview.tsx`)
-   - Giới thiệu chung về ASF 2026 + giới thiệu **VBMA** (đơn vị tổ chức): "Vietnam Bond Market Association — established 2009, member of ASIFMA, đại diện cho các thành viên thị trường trái phiếu Việt Nam…" (lấy ý từ vbma.org.vn).
-   - 3 stat counters (Delegates, Countries, Speakers).
-   - Logo VBMA + link.
+Cập nhật `topicSlugs` trong event.ts khớp slug mới.
 
-4. **Why Attend** (`WhyAttend.tsx`)
-   - Grid 4 cards với icon (Lucide): Networking, Market Insights, Policy Dialogue, Investment Opportunities.
+### `src/components/sections/Hero.tsx`
+- Sửa "14 – 17 April 2026" → **"1 – 4 October 2026"**
 
-5. **Agenda** (`Agenda.tsx`)
-   - Tabs 4 ngày. Mỗi tab có **status badge** tự tính theo ngày thực (Upcoming / Live Today / Completed) so sánh với ngày event mock.
-   - **Day 1 (chi tiết đầy đủ)**: 09:00–12:00 City Tour · 15:00–17:00 Pre-meeting (timeline với mô tả, địa điểm, speakers).
-   - Day 2: Main Event ASF2026 (chỉ tiêu đề + thời gian — "To be finalized").
-   - Day 3: 09:00–12:00 ASF2026 · 14:00–17:00 Vietnam Investment Conference.
-   - Day 4: Day Tour Halong Bay.
-   - Note "Agenda may be updated" + last-updated timestamp.
+### `src/components/sections/FAQ.tsx`
+- Q location: "Meliá Hanoi Hotel, Hà Nội — 1–4/10/2026"
+- Cập nhật câu trả lời liên quan ngày tháng/visa nếu có
 
-6. **Location / Map** (`Location.tsx`)
-   - Iframe Google Maps embed (URL `maps.google.com/maps?q=...&output=embed` — không cần API key) trỏ tới venue mock (Hanoi).
-   - Card thông tin venue, địa chỉ, hướng dẫn di chuyển, nút "Open in Google Maps".
+### `src/components/sections/WhyAttend.tsx`
+- "500+ senior delegates" → **"100–150 đại biểu cấp cao"**
+- Giữ "20+" hoặc đổi thành "30+ hiệp hội chứng khoán khu vực"
+- Bổ sung 4 nhóm thành phần tham dự nếu phù hợp layout
 
-7. **Speakers** (`Speakers.tsx`)
-   - Grid 6–8 speaker cards (avatar placeholder, tên, chức vụ, tổ chức). Hover hiện bio ngắn.
+### `src/components/sections/Overview.tsx`
+- Highlight "20+ thị trường vốn châu Á" → **"30+ hiệp hội chứng khoán khu vực Châu Á – Châu Đại Dương"**
+- Highlight "4 ngày sự kiện chính thức tại Hà Nội" → **"4 ngày (1–4/10/2026) tại Hà Nội"**
+- Cập nhật mô tả ASF: "thành lập 1995, mạng lưới hiệp hội chứng khoán Châu Á – Châu Đại Dương"
 
-8. **Key Content / Topics** (`KeyContent.tsx`)
-   - 4–5 chủ đề chính (Sustainable Finance, Green Bonds, ESG, Market Infrastructure, Digital Assets) dạng feature blocks.
+### `src/components/sections/KeyContent.tsx` (kiểm tra)
+- Đồng bộ các mốc nội dung chính (3 chủ đề ASF + chủ đề VN)
 
-9. **Documents** (`Documents.tsx`)
-   - Danh sách file tải về: Agenda PDF, Brochure, Sponsorship Pack, Past Reports — card với icon file + nút download.
+### `src/components/sections/Footer.tsx`
+- Nếu có ngày tháng → cập nhật
 
-10. **News & Activities** (`News.tsx`)
-    - Grid 3 news card (ảnh placeholder, ngày, tiêu đề, excerpt, "Read more").
+### `src/components/sections/Register.tsx` & countdown
+- Tự động dùng `EVENT_START` mới → không cần sửa code
 
-11. **Sponsors / Partners** (`Sponsors.tsx`)
-    - Tier: Diamond, Gold, Silver, Partners. Logo grid (placeholder boxes có tên).
+## Phạm vi KHÔNG đổi
+- Speakers (mock placeholder, giữ nguyên)
+- Hotels (Meliá/InterContinental/Sheraton — phù hợp "khách sạn 5 sao Hà Nội")
+- Sponsors/News/Press/Library (mock UI)
+- Logo/branding VBMA + VASB
 
-12. **FAQ** (`FAQ.tsx`)
-    - Accordion shadcn (`@/components/ui/accordion`) với 6–8 Q&A (registration, venue, visa, dress code, language, accommodation…).
+## Thứ tự thực hiện
+1. Sửa `event.ts` (ngày + sessions) và `topics.ts` (4 topic mới) — nguồn dữ liệu trung tâm
+2. Sửa Hero, Overview, WhyAttend, FAQ — UI phụ thuộc
+3. Quét lại bằng `rg` xem còn chuỗi "April" hoặc "14"/"17" cứng nào không
+4. Kiểm tra preview các trang: Home, /topics/$slug, /library
 
-13. **Footer** (`Footer.tsx`)
-    - 4 cột: About ASF, Quick Links, Contact (VBMA), Social. Copyright + link VBMA.
-
-## Chi tiết kỹ thuật
-- **Stack**: TanStack Start (đã có), Tailwind v4, shadcn ui (Accordion, Tabs, Button, Card đã có sẵn).
-- **Logo**: dùng placeholder text-logo "ASF 2026" với gradient vàng/trắng + có thể swap dễ dàng khi user gửi file thật. Sẽ tạo component `<AsfLogo />` riêng để 1 chỗ thay là xong.
-- **Smooth scroll**: thêm `scroll-behavior: smooth` vào `html` + anchor link `#overview`, `#agenda`…
-- **Countdown / Status**: hằng số `EVENT_DATE` (mock 2026-04-15) trong `src/lib/event.ts`. Helper `getEventStatus()`, `getDayStatus(dayDate)`.
-- **SEO**: `head()` trong route index với title "ASF 2026 — Asian Securities Forum | Vietnam", description, og tags.
-- **Responsive**: mobile-first, header chuyển hamburger menu < md.
-- **Performance**: hình ảnh placeholder dùng gradient/CSS, chỉ generate vài ảnh nếu cần (có thể bỏ qua cho demo nhanh).
-
-## Files sẽ tạo
-- `src/styles.css` — update tokens (navy/gold/red).
-- `src/lib/event.ts` — config ngày + helpers status.
-- `src/components/AsfLogo.tsx`
-- `src/components/Header.tsx`
-- `src/components/sections/{Hero, Overview, WhyAttend, Agenda, Location, Speakers, KeyContent, Documents, News, Sponsors, FAQ, Footer}.tsx`
-- `src/routes/index.tsx` — compose tất cả section.
-
-## Ngoài scope (cần user xác nhận sau)
-- Logo thật của ASF 2026 (đang dùng text placeholder).
-- Ảnh speaker, venue, news thật.
-- Form đăng ký kết nối backend (hiện chỉ button demo).
+## Câu hỏi xác nhận trước khi triển khai
+- Có giữ thêm các speaker placeholder hiện tại, hay chờ danh sách chính thức?
+- Có cần dịch toàn bộ agenda sang tiếng Anh (cho khách quốc tế) song song bản tiếng Việt, hay giữ tiếng Anh như hiện tại?
