@@ -114,7 +114,9 @@ html {
     color: var(--color-foreground);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     position: relative;
+    overflow-x: clip;
   }
+  html { overflow-x: clip; }
 
   @keyframes star-twinkle {
     0%, 100% { opacity: 0.2; transform: scale(0.85); }
