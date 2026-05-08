@@ -22,12 +22,12 @@ function StatusBadge() {
 function CountdownUnit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="min-w-[72px] rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-center backdrop-blur-md sm:min-w-[96px]">
-        <div className="text-gradient-gold text-3xl font-black tabular-nums sm:text-5xl">
+      <div className="min-w-[64px] rounded-xl border border-white/15 bg-white/5 px-2 py-2.5 text-center backdrop-blur-md sm:min-w-[96px] sm:px-4 sm:py-3">
+        <div className="text-gradient-gold text-2xl font-black tabular-nums sm:text-5xl">
           {value.toString().padStart(2, "0")}
         </div>
       </div>
-      <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/70 sm:text-xs">{label}</div>
+      <div className="mt-2 text-[9px] uppercase tracking-[0.18em] text-white/70 sm:text-xs sm:tracking-[0.2em]">{label}</div>
     </div>
   );
 }
