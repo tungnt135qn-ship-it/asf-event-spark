@@ -9,8 +9,10 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 import { speakers, type Speaker } from "@/lib/speakers";
+import { useT } from "@/lib/i18n";
 
 function SpeakerCard({ s }: { s: Speaker }) {
+  const { t } = useT();
   return (
     <div className="group relative h-[480px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:border-gold/40 hover:shadow-[var(--shadow-glow)]">
       <img
