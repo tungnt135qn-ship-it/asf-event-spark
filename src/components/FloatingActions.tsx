@@ -37,7 +37,7 @@ export function FloatingActions() {
               <Phone size={14} />
             </span>
             <div>
-              <div className="text-[10px] uppercase tracking-wider text-gold/80">Hotline</div>
+              <div className="text-[10px] uppercase tracking-wider text-gold/80">{t("fa.hotline")}</div>
               <div className="font-medium">+84 24 3974 8506</div>
             </div>
           </a>
@@ -49,7 +49,7 @@ export function FloatingActions() {
               <Mail size={14} />
             </span>
             <div>
-              <div className="text-[10px] uppercase tracking-wider text-gold/80">Email</div>
+              <div className="text-[10px] uppercase tracking-wider text-gold/80">{t("fa.email")}</div>
               <div className="font-medium">asf2026@vbma.org.vn</div>
             </div>
           </a>
@@ -58,7 +58,7 @@ export function FloatingActions() {
 
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label="Contact"
+        aria-label={t("fa.contact")}
         className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-gold/30 to-gold/10 shadow-2xl shadow-gold/30 ring-2 ring-gold/40 transition hover:scale-105 sm:h-16 sm:w-16"
       >
         <DotLottieReact src={callLottie} loop autoplay style={{ width: 48, height: 48 }} />
@@ -67,7 +67,7 @@ export function FloatingActions() {
       {show && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          aria-label="Back to top"
+          aria-label={t("fa.backTop")}
           className="flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 bg-navy-deep/80 text-gold shadow-xl backdrop-blur-md transition hover:bg-gold hover:text-navy-deep"
         >
           <ArrowUp size={18} />
