@@ -10,7 +10,7 @@ export const en = {
   "nav.news": "News",
   "nav.press": "Press Release",
   "nav.faq": "FAQ",
-  "nav.newsGroup": "News",
+  "nav.newsGroup": "Newsroom",
   "header.handbook": "Event Handbook",
   "header.register": "Register Now",
 
@@ -51,12 +51,46 @@ export const en = {
   "hotels.lead": "Preferential rates and perks negotiated exclusively for ASF 2026 delegates.",
   "library.eyebrow": "Library",
   "library.title": "Photos & Videos",
+  "library.viewAll": "View all",
   "documents.eyebrow": "Documents",
   "documents.title": "Event Documents",
   "faq.eyebrow": "FAQ",
   "faq.title": "Frequently Asked Questions",
   "contact.eyebrow": "Contact",
-  "contact.title": "Organizing Committee",
+  "contact.title": "Contact the Organizing Committee",
+
+  // Overview content
+  "overview.lead": "<strong>Asian Securities Forum (ASF)</strong> is a regional cooperation forum founded in 1995, bringing together over 30 securities associations and capital-market organizations across the Asia – Oceania region. The annual ASF 2026 conference will take place on <strong>1 – 4 October 2026 in Hanoi</strong>, co-hosted by VBMA and VASB with 100–150 senior delegates.",
+  "overview.orgsTitle": "Host & Co-host",
+  "overview.vbma": "<strong>Vietnam Bond Market Association (VBMA)</strong> — established in 2009, representing institutional members of Vietnam's bond market, promoting a transparent, efficient and sustainable market.",
+  "overview.vasb": "<strong>Vietnam Association of Securities Business (VASB)</strong> — co-host, representing the community of securities companies and connecting Vietnam's capital-market participants with the region.",
+  "overview.h1": "30+ securities associations across Asia – Oceania",
+  "overview.h2": "4 official conference days (1–4 Oct 2026) in Hanoi",
+  "overview.h3": "Regulators, exchanges, dealers & investors — 100–150 delegates",
+
+  // Why attend
+  "why.eyebrow": "Why Attend",
+  "why.title": "Why ASF 2026",
+  "why.learnMore": "Learn more",
+  "why.1.title": "Network with Industry Leaders",
+  "why.1.desc": "Connect with 100–150 senior delegates from regulators, exchanges, securities firms and investors across Asia – Oceania.",
+  "why.1.statLabel": "Delegates",
+  "why.2.title": "Regional Association Network",
+  "why.2.desc": "Meet 30+ ASF member securities associations from Japan, Korea, China, Singapore, Thailand, Indonesia, Malaysia, India, Australia and more.",
+  "why.2.statLabel": "Associations",
+  "why.3.title": "Policy Dialogue",
+  "why.3.desc": "Direct dialogue with the Ministry of Finance, SSC, SBV, Vietnam Stock Exchange, HOSE, HNX and VSDC.",
+  "why.3.statLabel": "Global partners",
+  "why.4.title": "Vietnam Investment Opportunities",
+  "why.4.desc": "Special session 'Vietnam Securities Market — A New Era' connecting international investors with Vietnamese regulators and corporates.",
+  "why.4.statLabel": "Meetings",
+
+  // Contact section
+  "contact.org.eyebrow": "Organizing Committee",
+  "contact.org.desc": "Vietnam Bond Market Association (VBMA) — lead organizer of Asian Securities Forum 2026.",
+  "contact.address": "Address",
+  "contact.addressValue": "7F, 35 Hang Voi, Hoan Kiem, Hanoi",
+  "contact.follow": "Follow us",
 
   // Register form
   "reg.form.title": "Delegate Registration",
@@ -110,6 +144,14 @@ export const en = {
   "acc.book.partnerEyebrow": "Partner Hotels",
   "acc.book.partnerTitle": "ASF 2026 partner hotels",
   "acc.book.viewAll": "View all",
+
+  // Register hero
+  "reg.hero.title1": "Join 100–150 delegates shaping",
+  "reg.hero.title2": "Asia's capital markets",
+  "reg.hero.lead": "Early-bird registration is open until 15 August 2026. Secure your delegate pass, welcome dinner and Halong Bay day tour today.",
+  "reg.hero.dates": "1 – 4 October 2026",
+  "reg.hero.venue": "Meliá Hanoi Hotel, Hanoi",
+  "reg.hero.scale": "30+ associations · 100–150 delegates",
 
   // Lang switcher
   "lang.switch": "Language",

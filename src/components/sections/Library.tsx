@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
 import { EVENT_DAYS } from "@/lib/event";
 import { Image as ImageIcon, Play, Calendar, X, ArrowRight } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export type MediaType = "photo" | "video";
 export type MediaItem = {
@@ -31,6 +32,7 @@ export const MEDIA: MediaItem[] = [
 type TypeFilter = "all" | MediaType;
 
 export function Library({ preview = false }: { preview?: boolean }) {
+  const { t } = useT();
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
   const [dayFilter, setDayFilter] = useState<number | "all">("all");
   const [previewItem, setPreviewItem] = useState<MediaItem | null>(null);
@@ -45,7 +47,7 @@ export function Library({ preview = false }: { preview?: boolean }) {
   }, [typeFilter, dayFilter, preview]);
 
   return (
-    <Section id="library" eyebrow="Library" title="Photos & Videos">
+    <Section id="library" eyebrow={t("library.eyebrow")} title={t("library.title")}>
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap gap-2">
             {(
@@ -141,7 +143,7 @@ export function Library({ preview = false }: { preview?: boolean }) {
             to="/library"
             className="inline-flex items-center gap-2 rounded-full border-2 border-gold/60 px-6 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
           >
-            Xem tất cả <ArrowRight size={16} />
+            {t("library.viewAll")} <ArrowRight size={16} />
           </Link>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { Section } from "./Overview";
 import { Mail, Phone, MapPin, Globe, User, Facebook, Linkedin, MessageCircle } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 const primaryContacts = [
   {
@@ -32,8 +33,9 @@ const socials = [
 ];
 
 export function Contact() {
+  const { t } = useT();
   return (
-    <Section id="contact" eyebrow="Contact" title="Liên hệ Ban tổ chức">
+    <Section id="contact" eyebrow={t("contact.eyebrow")} title={t("contact.title")}>
       <div className="grid gap-6 lg:grid-cols-5">
         {/* Left: Org card + socials */}
         <div className="lg:col-span-2 flex">
@@ -44,30 +46,29 @@ export function Contact() {
                 <User size={22} />
               </div>
               <div>
-                <div className="text-xs uppercase tracking-wider text-gold/80">Ban tổ chức</div>
+                <div className="text-xs uppercase tracking-wider text-gold/80">{t("contact.org.eyebrow")}</div>
                 <div className="text-lg font-semibold text-white">VBMA</div>
               </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-white/75">
-              Hiệp hội Thị trường Trái phiếu Việt Nam (VBMA) — đơn vị chủ trì tổ chức
-              Asian Securities Forum 2026.
+              {t("contact.org.desc")}
             </p>
             <div className="mt-5 flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
               <MapPin className="mt-0.5 shrink-0 text-gold" size={18} />
               <div>
-                <div className="text-xs uppercase tracking-wider text-gold/80">Địa chỉ</div>
+                <div className="text-xs uppercase tracking-wider text-gold/80">{t("contact.address")}</div>
                 <a
                   href="https://maps.google.com/?q=35+Hang+Voi,+Hoan+Kiem,+Hanoi"
                   target="_blank"
                   rel="noreferrer"
                   className="text-sm font-medium text-white hover:text-gold"
                 >
-                  Tầng 7, 35 Hàng Vôi, Hoàn Kiếm, Hà Nội
+                  {t("contact.addressValue")}
                 </a>
               </div>
             </div>
             <div className="mt-auto pt-5">
-              <div className="mb-2 text-xs uppercase tracking-wider text-gold/80">Theo dõi chúng tôi</div>
+              <div className="mb-2 text-xs uppercase tracking-wider text-gold/80">{t("contact.follow")}</div>
               <div className="flex gap-2">
                 {socials.map((s) => {
                   const Icon = s.icon;
