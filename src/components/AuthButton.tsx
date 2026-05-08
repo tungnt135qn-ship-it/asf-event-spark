@@ -15,8 +15,8 @@ import { LogIn, KeyRound, User as UserIcon } from "lucide-react";
 import { toast } from "sonner";
 import { AccountMenu } from "./AccountMenu";
 
-export function AuthButton({ compact = false }: { compact?: boolean }) {
-  const { user, isAuthenticated, loginWithCode, logout } = useAuth();
+export function AuthButton({ compact: _compact = false }: { compact?: boolean }) {
+  const { user, isAuthenticated, loginWithCode } = useAuth();
   const [open, setOpen] = useState(false);
   const [code, setCode] = useState("");
   const [err, setErr] = useState<string | null>(null);
