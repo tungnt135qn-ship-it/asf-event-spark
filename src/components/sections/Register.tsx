@@ -48,6 +48,7 @@ const empty: FormState = {
 };
 
 export function Register() {
+  const { user } = useAuth();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
@@ -55,6 +56,18 @@ export function Register() {
   const [passport, setPassport] = useState<File | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const passportRef = useRef<HTMLInputElement>(null);
+
+  // Auto-fill from logged-in user (code + customer type + name/email/org)
+  useEffect(() => {
+    if (!user) return;
+    setForm((f) => ({
+      ...f,
+      name: f.name || user.name,
+      email: f.email || user.email,
+      organisation: f.organisation || user.organisation,
+      customerType: user.role,
+    }));
+  }, [user]);
 
   useEffect(() => {
     const scrollToCenter = (behavior: ScrollBehavior = "auto") => {
