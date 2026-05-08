@@ -22,6 +22,7 @@ import {
 import { hotels } from "@/lib/hotels";
 import { countries, customerTypes } from "@/lib/countries";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import signupLottie from "@/assets/signup.lottie?url";
 
@@ -51,6 +52,7 @@ const empty: FormState = {
 
 export function Register() {
   const { user, addRegistration } = useAuth();
+  const { t } = useT();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
