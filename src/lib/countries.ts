@@ -24,17 +24,8 @@ export const countries: Country[] = [
 ];
 
 export const customerTypes = [
-  "Issuer",
-  "Investor (Institutional)",
-  "Investor (Individual)",
-  "Bank / Financial Institution",
-  "Securities Company",
-  "Fund Management",
-  "Insurance",
-  "Regulator / Government",
-  "Rating Agency",
-  "Law Firm / Consultant",
-  "Media / Press",
-  "Academic / Research",
-  "Other",
+  "AFF member",
+  "Sponsor",
+  "Speaker",
+  "Guest",
 ] as const;
