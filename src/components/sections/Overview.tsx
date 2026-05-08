@@ -41,7 +41,6 @@ function Section({
 export function Overview() {
   const highlights = [
     { icon: Globe2, text: "20+ thị trường vốn châu Á cùng quy tụ" },
-    { icon: Building2, text: "Tổ chức bởi VBMA — Hiệp hội Thị trường Trái phiếu Việt Nam" },
     { icon: Calendar, text: "4 ngày sự kiện chính thức tại Hà Nội" },
     { icon: CheckCircle2, text: "Quy tụ regulators, exchanges, dealers & investors" },
   ];
