@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Calendar, MapPin } from "lucide-react";
 import { EVENT_START, getCountdown, getEventStatus } from "@/lib/event";
+import { useT } from "@/lib/i18n";
 import logoUrl from "@/assets/asf-logo.png";
 
 function StatusBadge() {
