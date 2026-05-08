@@ -178,12 +178,12 @@ export function Register() {
               ))}
             </ul>
 
-            <div className="mt-6 flex justify-center lg:justify-start">
+            <div className="mt-6 hidden justify-center sm:flex lg:justify-start">
               <DotLottieReact
                 src={signupLottie}
                 loop
                 autoplay
-                className="w-full max-w-md"
+                className="w-full max-w-sm"
               />
             </div>
           </div>
