@@ -161,6 +161,8 @@ export function Agenda() {
             </div>
           </div>
 
+          <DayMeta day={day!} className="mb-6" />
+
           <ol className="relative space-y-6 border-l-2 border-gold/30 pl-6">
             {day!.sessions.map((s, idx) => (
               <SessionItem key={idx} s={s} />
