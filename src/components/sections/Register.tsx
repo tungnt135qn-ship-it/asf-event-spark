@@ -22,6 +22,8 @@ import {
 import { hotels } from "@/lib/hotels";
 import { countries, customerTypes } from "@/lib/countries";
 import { useAuth } from "@/lib/auth";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import signupLottie from "@/assets/signup.lottie?url";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your full name").max(100),
@@ -164,6 +166,14 @@ export function Register() {
               ))}
             </ul>
 
+            <div className="mt-6 flex justify-center lg:justify-start">
+              <DotLottieReact
+                src={signupLottie}
+                loop
+                autoplay
+                className="w-full max-w-md"
+              />
+            </div>
           </div>
 
           {/* Right form */}
