@@ -209,38 +209,6 @@ export function Header() {
               ),
             )}
           </div>
-      </div>
-
-      {open && (
-        <div className="glass border-t border-white/10 xl:hidden">
-          <div className="mx-auto flex max-w-7xl flex-col px-4 py-4">
-            {navItems.map((n) =>
-              n.kind === "link" ? (
-                <button
-                  key={n.hash}
-                  onClick={() => goToHash(n.hash)}
-                  className="border-b border-white/5 py-3 text-left text-sm font-medium text-white/85 hover:text-gold"
-                >
-                  {n.label}
-                </button>
-              ) : (
-                <div key={n.label} className="border-b border-white/5 py-2">
-                  <div className="py-1 text-xs uppercase tracking-wider text-white/50">
-                    {n.label}
-                  </div>
-                  {n.items.map((it) => (
-                    <button
-                      key={it.hash}
-                      onClick={() => goToHash(it.hash)}
-                      className="block w-full py-2 text-left text-sm font-medium text-white/85 hover:text-gold"
-                    >
-                      {it.label}
-                    </button>
-                  ))}
-                </div>
-              ),
-            )}
-          </div>
         </div>
       )}
     </header>
