@@ -1,80 +1,105 @@
-## Mục tiêu
+# Kế hoạch i18n Anh / Việt cho ASF 2026
 
-Đồng bộ toàn bộ thông tin mock của site với nội dung chính thức từ Tờ trình VBMA về ASF 2026.
+## 1. Mục tiêu
 
-## Khác biệt phát hiện giữa mock hiện tại và Tờ trình
+- Người dùng có nút chuyển EN ↔ VI trên header (cạnh avatar/Register).
+- Lưu lựa chọn vào `localStorage` (`asf2026.lang`), mặc định `vi`.
+- Toàn bộ chữ tĩnh (UI labels, tiêu đề section, nội dung mock) dịch được.
+- Không gọi API; tất cả là mock JSON tại frontend.
 
-| Hạng mục | Mock hiện tại | Theo Tờ trình | Hành động |
-|---|---|---|---|
-| Ngày tổ chức | 14–17/04/2026 | **01–04/10/2026** | Sửa toàn bộ |
-| Địa điểm | National Convention Center | **Khách sạn 5 sao tại Hà Nội** (đã chọn Meliá Hanoi) | Sửa FAQ, đồng bộ Meliá |
-| Quy mô | "500+ delegates", "20+ markets" | **100–150 đại biểu**, ~30 hiệp hội thành viên | Sửa WhyAttend, Overview |
-| Agenda Day 1 | City tour + Welcome reception | City tour + **ASF Pre-meeting** + Welcome Dinner | Cập nhật sessions |
-| Agenda Day 2 | Generic "Main Conference" | 3 chủ đề sáng + Báo cáo thị trường thành viên P1 | Viết lại sessions + topics |
-| Agenda Day 3 | Closing + Vietnam Investment Conference | Báo cáo P2/P3 (kết thúc 12:00) + **Hội thảo "TTCK Việt Nam — Kỷ nguyên mới"** chiều 13:30 với 5 nội dung | Viết lại sessions |
-| Agenda Day 4 | Halong Bay Day Tour | Tour Hạ Long trong ngày | Giữ nguyên, chỉnh ngày |
-| Topics | 5 topic generic | 3 chủ đề ASF + 1 chủ đề VN Kỷ nguyên mới (5 sub-topics) | Cập nhật topics.ts |
-| Thành phần tham dự | Không nêu rõ | 4 nhóm: ICMA/ASIFMA/ICSA; 30+ hiệp hội; cơ quan QL VN; NĐT | Bổ sung trong Overview/WhyAttend |
-| Đồng tổ chức | VBMA + VASB (đã có) | VBMA + VASB ✓ | Giữ nguyên |
+## 2. Kiến trúc
 
-## Thay đổi chi tiết theo file
+Tự build một i18n provider gọn nhẹ (không cần thư viện ngoài), tránh phình bundle.
 
-### `src/lib/event.ts`
-- `EVENT_START` → `2026-10-01T09:00:00+07:00`
-- `EVENT_END` → `2026-10-04T18:00:00+07:00`
-- Cập nhật 4 `EventDay` với `date` mới và sessions:
-  - **Day 1 (01/10):** City tour Hà Nội · ASF Pre-meeting · Welcome Dinner
-  - **Day 2 (02/10):** Sáng — 3 chủ đề (Asian Equity Markets Outlook, Asian Bond Markets Development, Digitalization/AI/Online Trading); Chiều — Báo cáo thị trường thành viên Phần 1
-  - **Day 3 (03/10):** Sáng — Báo cáo thị trường thành viên Phần 2 & 3 (kết 12:00); Chiều 13:30 — Hội thảo "Thị trường Chứng khoán Việt Nam — Kỷ nguyên mới" với 5 chủ đề con
-  - **Day 4 (04/10):** Tour Hạ Long trong ngày
+```text
+src/lib/i18n/
+  index.tsx         -> LanguageProvider, useT(), useLang()
+  dictionaries/
+    en.ts           -> object phẳng dạng { "header.register": "Register Now", ... }
+    vi.ts           -> bản dịch tương ứng
+```
 
-### `src/lib/topics.ts`
-Thay 5 topic hiện tại bằng 4 topic chính khớp Tờ trình:
-1. `asian-equity-outlook` — Recent Developments and Outlook for Asian Equity Markets
-2. `asian-bond-markets` — Development of Asian Bond Markets
-3. `digital-ai-capital-markets` — Digitalization, Online Trading and AI: Transforming Capital Markets
-4. `vietnam-new-era` — Thị trường Chứng khoán Việt Nam — Kỷ nguyên mới (5 sub-bullets từ mục 3.3)
+API dự kiến:
 
-Cập nhật `topicSlugs` trong event.ts khớp slug mới.
+```ts
+const { t, lang, setLang } = useT();
+t("header.register")          // "Register Now" / "Đăng ký ngay"
+t("agenda.day", { n: 2 })     // "Day 2" / "Ngày 2"
+```
 
-### `src/components/sections/Hero.tsx`
-- Sửa "14 – 17 April 2026" → **"1 – 4 October 2026"**
+`LanguageProvider` bọc trong `__root.tsx` (sau `AuthProvider`).
 
-### `src/components/sections/FAQ.tsx`
-- Q location: "Meliá Hanoi Hotel, Hà Nội — 1–4/10/2026"
-- Cập nhật câu trả lời liên quan ngày tháng/visa nếu có
+## 3. Component chuyển ngôn ngữ
 
-### `src/components/sections/WhyAttend.tsx`
-- "500+ senior delegates" → **"100–150 đại biểu cấp cao"**
-- Giữ "20+" hoặc đổi thành "30+ hiệp hội chứng khoán khu vực"
-- Bổ sung 4 nhóm thành phần tham dự nếu phù hợp layout
+- `src/components/LanguageSwitcher.tsx`: 2 pill `EN | VI`, hiệu ứng active = gold.
+- Đặt trong `Header.tsx` ngay trước nút "Register Now".
+- Mobile drawer cũng có 1 hàng switch.
 
-### `src/components/sections/Overview.tsx`
-- Highlight "20+ thị trường vốn châu Á" → **"30+ hiệp hội chứng khoán khu vực Châu Á – Châu Đại Dương"**
-- Highlight "4 ngày sự kiện chính thức tại Hà Nội" → **"4 ngày (1–4/10/2026) tại Hà Nội"**
-- Cập nhật mô tả ASF: "thành lập 1995, mạng lưới hiệp hội chứng khoán Châu Á – Châu Đại Dương"
+## 4. Phạm vi nội dung cần dịch (chia 4 nhóm để làm tuần tự)
 
-### `src/components/sections/KeyContent.tsx` (kiểm tra)
-- Đồng bộ các mốc nội dung chính (3 chủ đề ASF + chủ đề VN)
+**Nhóm A — Khung điều hướng & layout (ưu tiên 1)**
 
-### `src/components/sections/Footer.tsx`
-- Nếu có ngày tháng → cập nhật
+- `Header` (NAV labels, Register Now, Event Handbook, dropdown News)
+- `Footer`
+- `AccountMenu`, `AuthButton`, dialog đăng nhập
+- `LockedSection` (text khóa)
+- 404 / error page trong `__root.tsx`
 
-### `src/components/sections/Register.tsx` & countdown
-- Tự động dùng `EVENT_START` mới → không cần sửa code
+**Nhóm B — Section trang chủ (ưu tiên 2)**
+Hero, Overview, WhyAttend, Agenda, Register (form labels + success dialog),
+Hotels (card + dialog booking), Location, Speakers, KeyContent, Documents,
+Library, News, PressRelease, Sponsors, FAQ, Contact.
 
-## Phạm vi KHÔNG đổi
-- Speakers (mock placeholder, giữ nguyên)
-- Hotels (Meliá/InterContinental/Sheraton — phù hợp "khách sạn 5 sao Hà Nội")
-- Sponsors/News/Press/Library (mock UI)
-- Logo/branding VBMA + VASB
+**Nhóm C — Trang phụ**
+`/library`, `/account/registrations`, `/account/bookings`,
+`/news/$slug`, `/topics/$slug`.
 
-## Thứ tự thực hiện
-1. Sửa `event.ts` (ngày + sessions) và `topics.ts` (4 topic mới) — nguồn dữ liệu trung tâm
-2. Sửa Hero, Overview, WhyAttend, FAQ — UI phụ thuộc
-3. Quét lại bằng `rg` xem còn chuỗi "April" hoặc "14"/"17" cứng nào không
-4. Kiểm tra preview các trang: Home, /topics/$slug, /library
+**Nhóm D — Dữ liệu mock có nội dung dài**
 
-## Câu hỏi xác nhận trước khi triển khai
-- Có giữ thêm các speaker placeholder hiện tại, hay chờ danh sách chính thức?
-- Có cần dịch toàn bộ agenda sang tiếng Anh (cho khách quốc tế) song song bản tiếng Việt, hay giữ tiếng Anh như hiện tại?
+- `src/lib/event.ts` (agenda từng ngày, mô tả phiên)
+- `src/lib/news.ts` (tin tức)
+- `src/lib/topics.ts`, `src/lib/speakers.ts` (bio, mô tả chủ đề)
+- `src/lib/hotels.ts` (mô tả, perks)
+- `src/lib/countries.ts` (`customerTypes`)
+
+→ Đổi shape: thay vì `title: string`, dùng `title: { en: string; vi: string }`,
+hoặc thêm hàm helper `pickLocale(value, lang)`.
+
+## 5. Quy ước key dịch
+
+- Dạng dot-path theo vùng: `header.*`, `hero.*`, `agenda.*`, `register.form.*`, `auth.dialog.*`.
+- Chuỗi có biến dùng `{name}`: `t("hero.dateRange", { start, end })`.
+- Số ít/nhiều: dùng hàm `tn(key, count)` đơn giản (en: "1 day" / "{n} days"; vi: "{n} ngày").
+- Ngày tháng: format theo `lang` qua `Intl.DateTimeFormat`.
+
+## 6. Lộ trình triển khai (4 bước, làm dần)
+
+1. **Bước 1 — Hạ tầng**: tạo `i18n/index.tsx`, 2 file dictionary rỗng,
+  provider, `LanguageSwitcher`, gắn vào header & root. Mặc định `vi`.
+2. **Bước 2 — Nhóm A**: dịch toàn bộ khung navigation + auth UI.
+3. **Bước 3 — Nhóm B**: dịch các section trang chủ. Form Register/Hotels
+  chỉ dịch label, giữ giá trị nhập của user.
+4. **Bước 4 — Nhóm C + D**: chuyển mock data sang đa ngôn ngữ và dịch các
+  trang phụ.
+
+Mỗi bước có thể publish độc lập, không vỡ build.
+
+## 7. Rủi ro & lưu ý
+
+- **Bundle size**: 2 dictionary tải đồng bộ, ước < 30KB gzip — chấp nhận được.
+- **SEO**: `<title>` và meta `description` trong `head()` của từng route sẽ
+đọc theo lang lưu trong localStorage → SSR sẽ không biết. Giải pháp: vẫn
+giữ tiếng Anh ở `head()` (chuẩn quốc tế), đổi text in-page theo lang.
+- **Layout dài hơn**: tiếng Việt dài hơn ~15%, vài chỗ (button, badge) cần
+kiểm tra wrap; sẽ rà lại ở bước 2.
+- Không đụng tới logic Auth, route, dữ liệu submit — chỉ thay text hiển thị.
+
+## 8. Bạn cần quyết định trước khi bắt đầu
+
+- Ngôn ngữ mặc định khi vào lần đầu: **Tiếng Việt** (đề xuất) hay Tiếng Anh?
+- Có cần auto-detect theo `navigator.language` không, hay luôn theo mặc định?
+- Có muốn URL kèm tiền tố ngôn ngữ (`/vi/...`, `/en/...`) không? (Đề xuất:
+KHÔNG — đơn giản hơn, đủ cho phạm vi mock hiện tại.)
+  => Mặc định ngôn ngữ tiếng Việt.
+
+9, Lưu ý: Đây chỉ là mockup mặc định cho Front-end để demo khách hàng, không phải xây dựng cả BE.

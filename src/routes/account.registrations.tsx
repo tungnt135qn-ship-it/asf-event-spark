@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Starfield } from "@/components/Starfield";
 import { Footer } from "@/components/sections/Footer";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import { ClipboardList, Calendar, Mail, Building2, Phone, Globe } from "lucide-react";
 
 export const Route = createFileRoute("/account/registrations")({
@@ -18,6 +19,7 @@ function fmt(iso: string) {
 
 function RegistrationsPage() {
   const { isAuthenticated, registrations, user } = useAuth();
+  const { t } = useT();
   if (!isAuthenticated) return <Navigate to="/" />;
 
   const mine = registrations.filter((r) => r.code === user?.code);
@@ -29,21 +31,21 @@ function RegistrationsPage() {
       <main className="mx-auto max-w-5xl px-4 pb-24 pt-32 lg:px-8">
         <div className="mb-8 flex items-center gap-3">
           <ClipboardList className="text-gold" />
-          <h1 className="text-3xl font-extrabold">Lịch sử đăng ký</h1>
+          <h1 className="text-3xl font-extrabold">{t("acc.reg.title")}</h1>
         </div>
         <p className="mb-8 text-sm text-white/70">
-          Tất cả đăng ký tham dự ASF 2026 gắn với mã <span className="font-bold text-gold">{user?.code}</span>.
+          {t("acc.reg.desc", { code: user?.code ?? "" })}
         </p>
 
         {mine.length === 0 ? (
           <div className="rounded-2xl border border-white/10 bg-white/5 p-10 text-center">
-            <p className="text-white/70">Bạn chưa có đăng ký nào.</p>
+            <p className="text-white/70">{t("acc.reg.empty")}</p>
             <Link
               to="/"
               hash="register"
               className="mt-4 inline-flex items-center justify-center rounded-full bg-destructive px-5 py-2 text-sm font-bold text-destructive-foreground"
             >
-              Đăng ký ngay
+              {t("acc.reg.cta")}
             </Link>
           </div>
         ) : (

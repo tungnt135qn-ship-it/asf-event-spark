@@ -2,30 +2,32 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { AsfLogo } from "./AsfLogo";
 import { AuthButton } from "./AuthButton";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 type NavItem =
-  | { kind: "link"; hash: string; label: string; protected?: boolean }
-  | { kind: "group"; label: string; items: { hash: string; label: string; protected?: boolean }[] };
+  | { kind: "link"; hash: string; labelKey: string; protected?: boolean }
+  | { kind: "group"; labelKey: string; items: { hash: string; labelKey: string; protected?: boolean }[] };
 
 const NAV: NavItem[] = [
-  { kind: "link", hash: "overview", label: "Overview" },
-  { kind: "link", hash: "agenda", label: "Agenda" },
-  { kind: "link", hash: "hotels", label: "Hotels", protected: true },
-  { kind: "link", hash: "speakers", label: "Speakers" },
-  { kind: "link", hash: "topics", label: "Topics" },
-  { kind: "link", hash: "library", label: "Library", protected: true },
-  { kind: "link", hash: "documents", label: "Documents", protected: true },
+  { kind: "link", hash: "overview", labelKey: "nav.overview" },
+  { kind: "link", hash: "agenda", labelKey: "nav.agenda" },
+  { kind: "link", hash: "hotels", labelKey: "nav.hotels", protected: true },
+  { kind: "link", hash: "speakers", labelKey: "nav.speakers" },
+  { kind: "link", hash: "topics", labelKey: "nav.topics" },
+  { kind: "link", hash: "library", labelKey: "nav.library", protected: true },
+  { kind: "link", hash: "documents", labelKey: "nav.documents", protected: true },
   {
     kind: "group",
-    label: "News",
+    labelKey: "nav.newsGroup",
     items: [
-      { hash: "news", label: "News" },
-      { hash: "press", label: "Press Release" },
+      { hash: "news", labelKey: "nav.news" },
+      { hash: "press", labelKey: "nav.press" },
     ],
   },
-  { kind: "link", hash: "faq", label: "FAQ" },
+  { kind: "link", hash: "faq", labelKey: "nav.faq" },
 ];
 
 export function Header() {
@@ -35,6 +37,7 @@ export function Header() {
   const location = useLocation();
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const { t } = useT();
   const isHome = location.pathname === "/";
   const groupRef = useRef<HTMLDivElement>(null);
 
@@ -116,18 +119,18 @@ export function Header() {
                 onClick={() => goToHash(n.hash)}
                 className="text-sm font-medium text-white/85 transition hover:text-gold"
               >
-                {n.label}
+                {t(n.labelKey as never)}
               </button>
             ) : (
-              <div key={n.label} className="relative">
+              <div key={n.labelKey} className="relative">
                 <button
-                  onClick={() => setOpenGroup((g) => (g === n.label ? null : n.label))}
+                  onClick={() => setOpenGroup((g) => (g === n.labelKey ? null : n.labelKey))}
                   className="inline-flex items-center gap-1 text-sm font-medium text-white/85 transition hover:text-gold"
                 >
-                  {n.label}
+                  {t(n.labelKey as never)}
                   <ChevronDown size={14} />
                 </button>
-                {openGroup === n.label && (
+                {openGroup === n.labelKey && (
                   <div className="absolute left-1/2 top-full mt-2 w-44 -translate-x-1/2 overflow-hidden rounded-xl border border-white/10 bg-navy-deep/95 shadow-xl backdrop-blur">
                     {n.items.map((it) => (
                       <button
@@ -135,7 +138,7 @@ export function Header() {
                         onClick={() => goToHash(it.hash)}
                         className="block w-full px-4 py-2.5 text-left text-sm text-white/85 hover:bg-gold/10 hover:text-gold"
                       >
-                        {it.label}
+                        {t(it.labelKey as never)}
                       </button>
                     ))}
                   </div>
@@ -151,14 +154,15 @@ export function Header() {
               onClick={() => goToHash("documents")}
               className="hidden items-center justify-center rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold leading-none text-gold transition hover:bg-gold/10 sm:inline-flex"
             >
-              Event Handbook
+              {t("header.handbook")}
             </button>
           )}
+          <LanguageSwitcher className="hidden sm:inline-flex" />
           <button
             onClick={() => goToHash("register")}
             className="hidden items-center justify-center rounded-full bg-destructive px-4 py-1.5 text-[13px] font-semibold leading-none text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
           >
-            Register Now
+            {t("header.register")}
           </button>
           <AuthButton />
           <button
@@ -174,6 +178,10 @@ export function Header() {
       {open && (
         <div className="glass border-t border-white/10 xl:hidden">
           <div className="mx-auto flex max-w-7xl flex-col px-4 py-4">
+            <div className="flex items-center justify-between border-b border-white/5 py-2">
+              <span className="text-xs uppercase tracking-wider text-white/50">{t("lang.switch")}</span>
+              <LanguageSwitcher />
+            </div>
             {navItems.map((n) =>
               n.kind === "link" ? (
                 <button
@@ -181,12 +189,12 @@ export function Header() {
                   onClick={() => goToHash(n.hash)}
                   className="border-b border-white/5 py-3 text-left text-sm font-medium text-white/85 hover:text-gold"
                 >
-                  {n.label}
+                  {t(n.labelKey as never)}
                 </button>
               ) : (
-                <div key={n.label} className="border-b border-white/5 py-2">
+                <div key={n.labelKey} className="border-b border-white/5 py-2">
                   <div className="py-1 text-xs uppercase tracking-wider text-white/50">
-                    {n.label}
+                    {t(n.labelKey as never)}
                   </div>
                   {n.items.map((it) => (
                     <button
@@ -194,7 +202,7 @@ export function Header() {
                       onClick={() => goToHash(it.hash)}
                       className="block w-full py-2 text-left text-sm font-medium text-white/85 hover:text-gold"
                     >
-                      {it.label}
+                      {t(it.labelKey as never)}
                     </button>
                   ))}
                 </div>

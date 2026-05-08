@@ -22,6 +22,7 @@ import {
 import { hotels } from "@/lib/hotels";
 import { countries, customerTypes } from "@/lib/countries";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import signupLottie from "@/assets/signup.lottie?url";
 
@@ -51,6 +52,7 @@ const empty: FormState = {
 
 export function Register() {
   const { user, addRegistration } = useAuth();
+  const { t } = useT();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
@@ -139,11 +141,11 @@ export function Register() {
     setForm(empty);
     setPassport(null);
     if (passportRef.current) passportRef.current.value = "";
-    toast.success("Registration submitted successfully");
+    toast.success(t("reg.toast"));
   };
 
   return (
-    <Section id="registration" eyebrow="Registration" title="Reserve Your Seat at ASF 2026">
+    <Section id="registration" eyebrow={t("register.eyebrow")} title={t("register.title")}>
       <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-gradient-to-br from-navy via-secondary to-navy-deep p-8 sm:p-14">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gold/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-destructive/20 blur-3xl" />
@@ -194,22 +196,22 @@ export function Register() {
             onSubmit={onSubmit}
             className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
           >
-            <h4 className="text-xl font-bold text-white">Delegate Registration</h4>
-            <p className="mt-1 text-sm text-white/60">Fill in your details — we'll confirm by email.</p>
+            <h4 className="text-xl font-bold text-white">{t("reg.form.title")}</h4>
+            <p className="mt-1 text-sm text-white/60">{t("reg.form.sub")}</p>
 
             <div className="mt-5 grid gap-3">
-              <Field label="Full name *" error={errors.name}>
-                <Input value={form.name} onChange={update("name")} placeholder="As in your passport" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
+              <Field label={t("reg.form.name")} error={errors.name}>
+                <Input value={form.name} onChange={update("name")} placeholder={t("reg.form.namePh")} className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
               </Field>
               <div className="grid gap-3 sm:grid-cols-2">
-                <Field label="Email *" error={errors.email}>
+                <Field label={t("reg.form.email")} error={errors.email}>
                   <Input type="email" value={form.email} onChange={update("email")} placeholder="you@company.com" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
-                <Field label="Nationality *" error={errors.nationality}>
+                <Field label={t("reg.form.nationality")} error={errors.nationality}>
                   <Input value={form.nationality} onChange={update("nationality")} placeholder="e.g. Vietnamese" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
               </div>
-              <Field label="Phone *" error={errors.phoneCountry || errors.phone}>
+              <Field label={t("reg.form.phone")} error={errors.phoneCountry || errors.phone}>
                 <div className="flex gap-2">
                   <Select value={form.phoneCountry} onValueChange={(v) => setForm((f) => ({ ...f, phoneCountry: v }))}>
                     <SelectTrigger className="w-[140px] bg-white/5 text-white border-white/15">
@@ -225,26 +227,26 @@ export function Register() {
                 </div>
               </Field>
               <div className="grid gap-3 sm:grid-cols-2">
-                <Field label="Organisation *" error={errors.organisation}>
+                <Field label={t("reg.form.org")} error={errors.organisation}>
                   <Input value={form.organisation} onChange={update("organisation")} placeholder="Company / Institution" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
-                <Field label="Job title" error={errors.title}>
+                <Field label={t("reg.form.title2")} error={errors.title}>
                   <Input value={form.title} onChange={update("title")} placeholder="e.g. Head of Fixed Income" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
               </div>
-              <Field label="Customer type *" error={errors.customerType}>
+              <Field label={t("reg.form.customer")} error={errors.customerType}>
                 <Select value={form.customerType} onValueChange={(v) => setForm((f) => ({ ...f, customerType: v }))}>
                   <SelectTrigger className="bg-white/5 text-white border-white/15">
-                    <SelectValue placeholder="Select customer type" />
+                    <SelectValue placeholder={t("reg.form.customerPh")} />
                   </SelectTrigger>
                   <SelectContent className="max-h-72">
-                    {customerTypes.map((t) => (
-                      <SelectItem key={t} value={t}>{t}</SelectItem>
+                    {customerTypes.map((ct) => (
+                      <SelectItem key={ct} value={ct}>{ct}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </Field>
-              <Field label="Passport photo (optional)">
+              <Field label={t("reg.form.passport")}>
                 <div className="flex items-center gap-2">
                   <input
                     ref={passportRef}
@@ -258,7 +260,7 @@ export function Register() {
                     onClick={() => passportRef.current?.click()}
                     className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-white/85 hover:bg-white/10"
                   >
-                    <Paperclip size={14} /> Attach passport image
+                    <Paperclip size={14} /> {t("reg.form.attach")}
                   </button>
                   {passport && (
                     <span className="truncate text-xs text-white/70">{passport.name}</span>
@@ -271,7 +273,7 @@ export function Register() {
               type="submit"
               className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-destructive px-7 py-3 text-sm font-bold text-destructive-foreground shadow-lg transition hover:opacity-90"
             >
-              Complete Registration <ArrowRight size={16} className="ml-2" />
+              {t("reg.form.submit")} <ArrowRight size={16} className="ml-2" />
             </button>
           </form>
         </div>

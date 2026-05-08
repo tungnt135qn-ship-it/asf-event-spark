@@ -34,6 +34,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 
 function HotelGallery({ images, alt }: { images: string[]; alt: string }) {
   const [idx, setIdx] = useState(0);
@@ -86,6 +87,7 @@ function BookingDialog({ hotel }: { hotel: Hotel }) {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { user, addBooking } = useAuth();
+  const { t } = useT();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -110,8 +112,8 @@ function BookingDialog({ hotel }: { hotel: Hotel }) {
     setTimeout(() => {
       setSubmitting(false);
       setOpen(false);
-      toast.success("Booking request sent", {
-        description: `${hotel.name} will contact you shortly.`,
+      toast.success(t("book.toast"), {
+        description: t("book.toastDesc", { hotel: hotel.name }),
       });
     }, 600);
   };
@@ -120,41 +122,39 @@ function BookingDialog({ hotel }: { hotel: Hotel }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button className="inline-flex items-center justify-center rounded-full bg-destructive px-5 py-2 text-sm font-bold text-destructive-foreground shadow-lg transition hover:opacity-90">
-          Book Now
+          {t("hotels.book")}
         </button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Book a room — {hotel.name}</DialogTitle>
-          <DialogDescription>
-            Submit your details and the hotel reservation team will contact you to confirm.
-          </DialogDescription>
+          <DialogTitle>{t("book.title", { hotel: hotel.name })}</DialogTitle>
+          <DialogDescription>{t("book.desc")}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={onSubmit} className="grid gap-4 pt-2">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="passport">Full name (as in passport) *</Label>
+              <Label htmlFor="passport">{t("book.passport")}</Label>
               <Input id="passport" name="passport" required maxLength={100} defaultValue={user?.name ?? ""} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="org">Organisation *</Label>
+              <Label htmlFor="org">{t("book.org")}</Label>
               <Input id="org" name="org" required maxLength={120} defaultValue={user?.organisation ?? ""} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
+              <Label htmlFor="email">{t("book.email")}</Label>
               <Input id="email" name="email" type="email" required maxLength={150} defaultValue={user?.email ?? ""} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone *</Label>
+              <Label htmlFor="phone">{t("book.phone")}</Label>
               <Input id="phone" name="phone" type="tel" required maxLength={30} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="rooms">Number of rooms *</Label>
+              <Label htmlFor="rooms">{t("book.rooms")}</Label>
               <Input id="rooms" name="rooms" type="number" min={1} max={20} defaultValue={1} required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="roomType">Room type *</Label>
+              <Label htmlFor="roomType">{t("book.roomType")}</Label>
               <Select name="roomType" defaultValue="deluxe">
                 <SelectTrigger id="roomType">
                   <SelectValue />
@@ -168,30 +168,30 @@ function BookingDialog({ hotel }: { hotel: Hotel }) {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="guests">Number of guests *</Label>
+              <Label htmlFor="guests">{t("book.guests")}</Label>
               <Input id="guests" name="guests" type="number" min={1} max={20} defaultValue={1} required />
             </div>
             <div />
             <div className="space-y-2">
-              <Label htmlFor="checkin">Check-in *</Label>
+              <Label htmlFor="checkin">{t("book.checkin")}</Label>
               <Input id="checkin" name="checkin" type="date" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="checkout">Check-out *</Label>
+              <Label htmlFor="checkout">{t("book.checkout")}</Label>
               <Input id="checkout" name="checkout" type="date" required />
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="notes">Notes (optional)</Label>
-            <Textarea id="notes" name="notes" rows={3} maxLength={500} placeholder="Bed preference, dietary needs, late arrival, etc." />
+            <Label htmlFor="notes">{t("book.notes")}</Label>
+            <Textarea id="notes" name="notes" rows={3} maxLength={500} placeholder={t("book.notesPh")} />
           </div>
 
           <DialogFooter className="pt-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-              Cancel
+              {t("book.cancel")}
             </Button>
             <Button type="submit" disabled={submitting} className="rounded-full">
-              {submitting ? "Sending…" : "Submit booking request"}
+              {submitting ? t("book.sending") : t("book.submit")}
             </Button>
           </DialogFooter>
         </form>
@@ -201,11 +201,12 @@ function BookingDialog({ hotel }: { hotel: Hotel }) {
 }
 
 function DetailsDialog({ hotel }: { hotel: Hotel }) {
+  const { t } = useT();
   return (
     <Dialog>
       <DialogTrigger asChild>
         <button className="inline-flex items-center justify-center rounded-full border-2 border-gold/60 px-5 py-2 text-sm font-bold text-gold transition hover:bg-gold/10">
-          View Details
+          {t("hotels.details")}
         </button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
@@ -249,6 +250,7 @@ function DetailsDialog({ hotel }: { hotel: Hotel }) {
 }
 
 export function HotelCard({ h }: { h: Hotel }) {
+  const { t } = useT();
   return (
     <article
       className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-md transition hover:border-gold/30 sm:p-6"
@@ -277,7 +279,7 @@ export function HotelCard({ h }: { h: Hotel }) {
 
           <div className="mt-4 rounded-xl border border-gold/30 bg-gold/5 p-4">
             <div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gold">
-              <BadgePercent size={14} /> Delegate offers
+              <BadgePercent size={14} /> {t("hotels.perks")}
             </div>
             <ul className="space-y-1 text-sm text-white/85">
               {h.perks.map((p) => (
@@ -307,10 +309,11 @@ export function HotelCard({ h }: { h: Hotel }) {
 }
 
 export function Hotels() {
+  const { t } = useT();
   return (
-    <Section id="hotels" eyebrow="Accommodation" title="Official Partner Hotels">
+    <Section id="hotels" eyebrow={t("hotels.eyebrow")} title={t("hotels.title")}>
       <p className="mx-auto -mt-6 mb-12 max-w-2xl text-center text-base text-white/70">
-        Preferential rates and perks negotiated exclusively for ASF 2026 delegates.
+        {t("hotels.lead")}
       </p>
       <div className="space-y-10">
         {hotels.map((h) => (
