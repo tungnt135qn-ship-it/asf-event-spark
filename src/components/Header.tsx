@@ -108,7 +108,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 xl:flex" ref={groupRef}>
-          {NAV.map((n) =>
+          {navItems.map((n) =>
             n.kind === "link" ? (
               <button
                 key={n.hash}
