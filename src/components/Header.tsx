@@ -18,7 +18,6 @@ const NAV: NavItem[] = [
   { kind: "link", hash: "speakers", labelKey: "nav.speakers" },
   { kind: "link", hash: "topics", labelKey: "nav.topics" },
   { kind: "link", hash: "library", labelKey: "nav.library", protected: true },
-  { kind: "link", hash: "documents", labelKey: "nav.documents", protected: true },
   {
     kind: "group",
     labelKey: "nav.newsGroup",
