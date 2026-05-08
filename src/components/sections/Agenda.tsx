@@ -100,21 +100,21 @@ export function Agenda() {
                 >
                   <div className="flex flex-wrap items-center gap-3">
                     <span className="text-xs font-bold uppercase tracking-wider text-gold">
-                      Day {d.index}
+                      {t("agenda.day", { n: d.index })}
                     </span>
                     <StatusPill status={status} />
                     <h3 className="text-base font-bold text-white sm:text-lg">{d.label}</h3>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="hidden text-xs text-white/60 sm:inline">
-                      {d.date.toLocaleDateString("en-GB", {
+                      {d.date.toLocaleDateString(locale, {
                         weekday: "short",
                         day: "numeric",
                         month: "short",
                         year: "numeric",
                       })}
                     </span>
-                    <span className="text-xs text-white/50">{d.sessions.length} sessions</span>
+                    <span className="text-xs text-white/50">{t("agenda.sessions", { n: d.sessions.length })}</span>
                     <ChevronDown
                       size={18}
                       className={`text-white/70 transition-transform ${isOpen ? "rotate-180" : ""}`}
