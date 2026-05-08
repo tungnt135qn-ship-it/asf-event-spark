@@ -49,12 +49,12 @@ export const news: NewsItem[] = [
       },
       {
         type: "quote",
-        text: "ASF 2026 is the most ambitious edition we have hosted. Our goal is to make Hanoi the regional hub for capital-markets dialogue this April.",
+        text: "ASF 2026 is the most ambitious edition we have hosted. Our goal is to make Hanoi the regional hub for capital-markets dialogue this October.",
         author: "VBMA Secretary General",
       },
       {
         type: "p",
-        text: "The full agenda, side events and Vietnam Investment Conference programme will be published in the Documents section in the coming weeks. Early-bird registration closes 15 February 2026.",
+        text: "The full agenda, side events and Vietnam special session programme will be published in the Documents section in the coming weeks. Early-bird registration closes 15 August 2026.",
       },
     ],
   },
