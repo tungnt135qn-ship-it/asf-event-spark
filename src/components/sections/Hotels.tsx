@@ -85,11 +85,28 @@ function HotelGallery({ images, alt }: { images: string[]; alt: string }) {
 function BookingDialog({ hotel }: { hotel: Hotel }) {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const { user } = useAuth();
+  const { user, addBooking } = useAuth();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
+    const fd = new FormData(e.currentTarget);
+    if (user) {
+      addBooking({
+        hotelId: hotel.id,
+        hotelName: hotel.name,
+        name: String(fd.get("passport") || ""),
+        email: String(fd.get("email") || ""),
+        organisation: String(fd.get("org") || ""),
+        phone: String(fd.get("phone") || ""),
+        rooms: Number(fd.get("rooms") || 1),
+        roomType: String(fd.get("roomType") || ""),
+        guests: Number(fd.get("guests") || 1),
+        checkin: String(fd.get("checkin") || ""),
+        checkout: String(fd.get("checkout") || ""),
+        notes: String(fd.get("notes") || "") || undefined,
+      });
+    }
     setTimeout(() => {
       setSubmitting(false);
       setOpen(false);
