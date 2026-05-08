@@ -62,7 +62,7 @@ function SpeakerCard({ s }: { s: Speaker }) {
         <p className="mt-3 text-sm leading-relaxed text-white/85">{s.bio}</p>
         {s.topics.length > 0 && (
           <div className="mt-3">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-gold/80">Topics</div>
+            <div className="text-[10px] font-bold uppercase tracking-wider text-gold/80">{t("speakers.topics")}</div>
             <div className="mt-1.5 flex flex-wrap gap-1.5">
               {s.topics.map((t) => (
                 <span
