@@ -8,7 +8,7 @@ export function Location() {
         <div className="overflow-hidden rounded-2xl border border-white/10 lg:col-span-3">
           <iframe
             title="ASF 2026 Venue Map"
-            src="https://www.google.com/maps?q=National+Convention+Center+Hanoi&output=embed"
+            src="https://www.google.com/maps?q=Melia+Hanoi+Hotel&output=embed"
             className="h-[420px] w-full"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
@@ -20,13 +20,13 @@ export function Location() {
             <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-gold">
               Venue
             </div>
-            <h3 className="text-2xl font-bold text-white">National Convention Center</h3>
+            <h3 className="text-2xl font-bold text-white">Meliá Hanoi Hotel</h3>
             <div className="mt-3 flex items-start gap-2 text-sm text-white/80">
               <MapPin className="mt-0.5 shrink-0 text-gold" size={16} />
-              <span>1 Thang Long Boulevard, Nam Tu Liem District, Hanoi, Vietnam</span>
+              <span>44B Ly Thuong Kiet, Hoan Kiem District, Hanoi, Vietnam</span>
             </div>
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=National+Convention+Center+Hanoi"
+              href="https://www.google.com/maps/dir/?api=1&destination=Melia+Hanoi+Hotel"
               target="_blank"
               rel="noreferrer"
               className="mt-5 inline-flex items-center gap-2 rounded-full bg-destructive px-4 py-2 text-sm font-semibold text-destructive-foreground transition hover:opacity-90"
@@ -40,8 +40,8 @@ export function Location() {
               <Plane size={16} /> Getting Here
             </div>
             <ul className="space-y-2 text-sm text-white/75">
-              <li>• 35 min drive from Noi Bai International Airport (HAN)</li>
-              <li>• 20 min from Hanoi city center</li>
+              <li>• 40 min drive from Noi Bai International Airport (HAN)</li>
+              <li>• 5 min walk to Hoan Kiem Lake & Old Quarter</li>
               <li>• Shuttle service provided for registered delegates</li>
             </ul>
           </div>
