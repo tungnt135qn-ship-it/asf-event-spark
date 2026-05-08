@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Section } from "./Overview";
 import { EVENT_DAYS, getDayStatus, type DayStatus } from "@/lib/event";
-import { Clock, MapPin, CheckCircle2, Radio, CalendarClock } from "lucide-react";
+import { Clock, MapPin, CheckCircle2, Radio, CalendarClock, ChevronDown, LayoutGrid } from "lucide-react";
 
 const STATUS_CFG: Record<DayStatus, { text: string; cls: string; Icon: typeof Clock }> = {
   completed: {
