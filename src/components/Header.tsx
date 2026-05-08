@@ -2,30 +2,32 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { AsfLogo } from "./AsfLogo";
 import { AuthButton } from "./AuthButton";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useAuth } from "@/lib/auth";
+import { useT } from "@/lib/i18n";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 type NavItem =
-  | { kind: "link"; hash: string; label: string; protected?: boolean }
-  | { kind: "group"; label: string; items: { hash: string; label: string; protected?: boolean }[] };
+  | { kind: "link"; hash: string; labelKey: string; protected?: boolean }
+  | { kind: "group"; labelKey: string; items: { hash: string; labelKey: string; protected?: boolean }[] };
 
 const NAV: NavItem[] = [
-  { kind: "link", hash: "overview", label: "Overview" },
-  { kind: "link", hash: "agenda", label: "Agenda" },
-  { kind: "link", hash: "hotels", label: "Hotels", protected: true },
-  { kind: "link", hash: "speakers", label: "Speakers" },
-  { kind: "link", hash: "topics", label: "Topics" },
-  { kind: "link", hash: "library", label: "Library", protected: true },
-  { kind: "link", hash: "documents", label: "Documents", protected: true },
+  { kind: "link", hash: "overview", labelKey: "nav.overview" },
+  { kind: "link", hash: "agenda", labelKey: "nav.agenda" },
+  { kind: "link", hash: "hotels", labelKey: "nav.hotels", protected: true },
+  { kind: "link", hash: "speakers", labelKey: "nav.speakers" },
+  { kind: "link", hash: "topics", labelKey: "nav.topics" },
+  { kind: "link", hash: "library", labelKey: "nav.library", protected: true },
+  { kind: "link", hash: "documents", labelKey: "nav.documents", protected: true },
   {
     kind: "group",
-    label: "News",
+    labelKey: "nav.newsGroup",
     items: [
-      { hash: "news", label: "News" },
-      { hash: "press", label: "Press Release" },
+      { hash: "news", labelKey: "nav.news" },
+      { hash: "press", labelKey: "nav.press" },
     ],
   },
-  { kind: "link", hash: "faq", label: "FAQ" },
+  { kind: "link", hash: "faq", labelKey: "nav.faq" },
 ];
 
 export function Header() {
