@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: "Where will ASF 2026 be held?",
-    a: "The forum will take place at the National Convention Center, Hanoi, Vietnam from 14 – 17 April 2026.",
+    a: "The forum will take place at Meliá Hanoi Hotel, Hà Nội, Vietnam from 1 – 4 October 2026.",
   },
   {
     q: "Do I need a visa to enter Vietnam?",
