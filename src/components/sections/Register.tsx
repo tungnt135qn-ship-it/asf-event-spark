@@ -223,17 +223,11 @@ export function Register() {
               </div>
               <Field label={t("reg.form.phone")} error={errors.phoneCountry || errors.phone}>
                 <div className="flex gap-2">
-                  <Select value={form.phoneCountry} onValueChange={(v) => setForm((f) => ({ ...f, phoneCountry: v }))}>
-                    <SelectTrigger className="w-[140px] bg-white/5 text-white border-white/15">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-72">
-                      {countries.map((c) => (
-                        <SelectItem key={c.code} value={c.code}>{c.flag} {c.dial}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Input value={form.phone} onChange={update("phone")} placeholder="Phone number" className="flex-1 bg-white/5 text-white placeholder:text-white/40 border-white/15" />
+                  <CountryCodeCombo
+                    value={form.phoneCountry}
+                    onChange={(v) => setForm((f) => ({ ...f, phoneCountry: v }))}
+                  />
+                  <Input value={form.phone} onChange={update("phone")} placeholder={t("reg.form.phonePh")} className="flex-1 bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </div>
               </Field>
               <div className="grid gap-3 sm:grid-cols-2">
