@@ -13,6 +13,7 @@ import { KeyContent } from "@/components/sections/KeyContent";
 import { Documents } from "@/components/sections/Documents";
 import { Library } from "@/components/sections/Library";
 import { News } from "@/components/sections/News";
+import { PressRelease } from "@/components/sections/PressRelease";
 import { Sponsors } from "@/components/sections/Sponsors";
 import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
@@ -55,6 +56,7 @@ function Index() {
         <Reveal variant="up"><Library /></Reveal>
         <Reveal variant="up"><Documents /></Reveal>
         <Reveal variant="up"><News /></Reveal>
+        <Reveal variant="up"><PressRelease /></Reveal>
         <Reveal variant="fade"><Sponsors /></Reveal>
         <Reveal variant="left"><FAQ /></Reveal>
         <Reveal variant="up"><Contact /></Reveal>

@@ -17,15 +17,50 @@ import s6 from "@/assets/speakers/s6.jpg";
 import s7 from "@/assets/speakers/s7.jpg";
 import s8 from "@/assets/speakers/s8.jpg";
 
-const speakers = [
-  { img: s1, title: "Dr.", name: "Christine Laurent", role: "President", org: "European Central Bank", bio: "Steering Europe's monetary policy and championing global financial stability." },
-  { img: s2, title: "Mr.", name: "James Dorman", role: "CEO", org: "JP Morgan Asia", bio: "Leading one of the world's largest investment banks across Asia-Pacific markets." },
-  { img: s3, title: "Prof.", name: "Hiroshi Tanaka", role: "Managing Director", org: "Japan Securities Dealers Assoc.", bio: "Expert on cross-border fixed income flows across Asia." },
-  { img: s4, title: "Ms.", name: "Le Thi Minh Anh", role: "Deputy Director", org: "State Securities Commission", bio: "Architect of Vietnam's market reform and ESG disclosure framework." },
-  { img: s5, title: "Mr.", name: "Raj Mehta", role: "CEO", org: "Asia Capital Markets", bio: "Pioneer of digital bond issuance platforms in Southeast Asia." },
-  { img: s6, title: "Dr.", name: "Kim Soo-jin", role: "Chief Economist", org: "Korea Financial Investment", bio: "Authority on Asian monetary policy and rate cycles." },
-  { img: s7, title: "Mr.", name: "Andrew Lim", role: "Partner", org: "Singapore Exchange", bio: "Drives SGX's regional debt listing and clearing initiatives." },
-  { img: s8, title: "Ms.", name: "Maria Santos", role: "Head of ESG", org: "ASEAN Capital Markets Forum", bio: "Champion of sustainable finance and green bond standards." },
+type SpeakerTopic = { abbr: string; full: string };
+
+const speakers: {
+  img: string; title: string; name: string; role: string; org: string; bio: string; topics: SpeakerTopic[];
+}[] = [
+  { img: s1, title: "Dr.", name: "Christine Laurent", role: "President", org: "European Central Bank", bio: "Steering Europe's monetary policy and championing global financial stability.", topics: [
+    { abbr: "SGF", full: "Sustainable & Green Finance" },
+    { abbr: "ABM", full: "Asia Bond Market Outlook" },
+    { abbr: "CCF", full: "Cross-border Capital Flows" },
+    { abbr: "MIR", full: "Market Infrastructure & Resilience" },
+  ]},
+  { img: s2, title: "Mr.", name: "James Dorman", role: "CEO", org: "JP Morgan Asia", bio: "Leading one of the world's largest investment banks across Asia-Pacific markets.", topics: [
+    { abbr: "ABM", full: "Asia Bond Market Outlook" },
+    { abbr: "CCF", full: "Cross-border Capital Flows" },
+    { abbr: "DAT", full: "Digital Assets & Tokenization" },
+  ]},
+  { img: s3, title: "Prof.", name: "Hiroshi Tanaka", role: "Managing Director", org: "Japan Securities Dealers Assoc.", bio: "Expert on cross-border fixed income flows across Asia.", topics: [
+    { abbr: "CCF", full: "Cross-border Capital Flows" },
+    { abbr: "ABM", full: "Asia Bond Market Outlook" },
+  ]},
+  { img: s4, title: "Ms.", name: "Le Thi Minh Anh", role: "Deputy Director", org: "State Securities Commission", bio: "Architect of Vietnam's market reform and ESG disclosure framework.", topics: [
+    { abbr: "SGF", full: "Sustainable & Green Finance" },
+    { abbr: "MIR", full: "Market Infrastructure & Resilience" },
+    { abbr: "CCF", full: "Cross-border Capital Flows" },
+    { abbr: "ABM", full: "Asia Bond Market Outlook" },
+  ]},
+  { img: s5, title: "Mr.", name: "Raj Mehta", role: "CEO", org: "Asia Capital Markets", bio: "Pioneer of digital bond issuance platforms in Southeast Asia.", topics: [
+    { abbr: "DAT", full: "Digital Assets & Tokenization" },
+    { abbr: "MIR", full: "Market Infrastructure & Resilience" },
+  ]},
+  { img: s6, title: "Dr.", name: "Kim Soo-jin", role: "Chief Economist", org: "Korea Financial Investment", bio: "Authority on Asian monetary policy and rate cycles.", topics: [
+    { abbr: "ABM", full: "Asia Bond Market Outlook" },
+    { abbr: "SGF", full: "Sustainable & Green Finance" },
+  ]},
+  { img: s7, title: "Mr.", name: "Andrew Lim", role: "Partner", org: "Singapore Exchange", bio: "Drives SGX's regional debt listing and clearing initiatives.", topics: [
+    { abbr: "MIR", full: "Market Infrastructure & Resilience" },
+    { abbr: "DAT", full: "Digital Assets & Tokenization" },
+    { abbr: "CCF", full: "Cross-border Capital Flows" },
+    { abbr: "ABM", full: "Asia Bond Market Outlook" },
+  ]},
+  { img: s8, title: "Ms.", name: "Maria Santos", role: "Head of ESG", org: "ASEAN Capital Markets Forum", bio: "Champion of sustainable finance and green bond standards.", topics: [
+    { abbr: "SGF", full: "Sustainable & Green Finance" },
+    { abbr: "CCF", full: "Cross-border Capital Flows" },
+  ]},
 ];
 
 function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
@@ -47,6 +82,24 @@ function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
             <span className="text-gold/90">{s.title}</span> {s.name}
           </h3>
           <div className="mt-1 text-xs text-gold">{s.role}</div>
+          {s.topics.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {s.topics.slice(0, 3).map((t) => (
+                <span
+                  key={t.abbr}
+                  title={t.full}
+                  className="rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] font-bold tracking-wide text-gold"
+                >
+                  {t.abbr}
+                </span>
+              ))}
+              {s.topics.length > 3 && (
+                <span className="rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-[10px] font-semibold text-white/70">
+                  +{s.topics.length - 3}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -58,6 +111,21 @@ function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
         <div className="mt-1 text-sm font-semibold text-gold">{s.role}</div>
         <div className="mt-0.5 text-xs text-white/70">{s.org}</div>
         <p className="mt-3 text-sm leading-relaxed text-white/85">{s.bio}</p>
+        {s.topics.length > 0 && (
+          <div className="mt-3">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-gold/80">Topics</div>
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
+              {s.topics.map((t) => (
+                <span
+                  key={t.abbr}
+                  className="rounded-full border border-gold/40 bg-gold/10 px-2.5 py-0.5 text-[11px] font-semibold text-gold"
+                >
+                  {t.full}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

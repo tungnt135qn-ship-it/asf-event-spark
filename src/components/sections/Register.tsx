@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Section } from "./Overview";
-import { ArrowRight, Calendar, MapPin, Users, Mail, CheckCircle2, ExternalLink } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Users, Mail, CheckCircle2, ExternalLink, Paperclip } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
@@ -25,7 +25,7 @@ import { countries, customerTypes } from "@/lib/countries";
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your full name").max(100),
   email: z.string().trim().email("Invalid email").max(255),
-  nationality: z.string().trim().min(1, "Please select your nationality"),
+  nationality: z.string().trim().min(1, "Please enter your nationality").max(80),
   phoneCountry: z.string().trim().min(1, "Select country code"),
   phone: z.string().trim().min(4, "Invalid phone number").max(30),
   organisation: z.string().trim().min(2, "Please enter your organisation").max(150),
@@ -38,7 +38,7 @@ type FormState = z.infer<typeof schema>;
 const empty: FormState = {
   name: "",
   email: "",
-  nationality: "VN",
+  nationality: "",
   phoneCountry: "VN",
   phone: "",
   organisation: "",
@@ -51,7 +51,9 @@ export function Register() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
   const [submittedName, setSubmittedName] = useState("");
+  const [passport, setPassport] = useState<File | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const passportRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const scrollToCenter = (behavior: ScrollBehavior = "auto") => {
@@ -108,6 +110,8 @@ export function Register() {
     setSubmittedName(r.data.name);
     setOpen(true);
     setForm(empty);
+    setPassport(null);
+    if (passportRef.current) passportRef.current.value = "";
     toast.success("Registration submitted successfully");
   };
 
@@ -158,25 +162,16 @@ export function Register() {
             <h4 className="text-xl font-bold text-white">Delegate Registration</h4>
             <p className="mt-1 text-sm text-white/60">Fill in your details — we'll confirm by email.</p>
 
-            <div className="mt-5 grid gap-4">
+            <div className="mt-5 grid gap-3">
               <Field label="Full name *" error={errors.name}>
                 <Input value={form.name} onChange={update("name")} placeholder="As in your passport" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
               </Field>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 <Field label="Email *" error={errors.email}>
                   <Input type="email" value={form.email} onChange={update("email")} placeholder="you@company.com" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
                 <Field label="Nationality *" error={errors.nationality}>
-                  <Select value={form.nationality} onValueChange={(v) => setForm((f) => ({ ...f, nationality: v }))}>
-                    <SelectTrigger className="bg-white/5 text-white border-white/15">
-                      <SelectValue placeholder="Select nationality" />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-72">
-                      {countries.map((c) => (
-                        <SelectItem key={c.code} value={c.code}>{c.flag} {c.name}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Input value={form.nationality} onChange={update("nationality")} placeholder="e.g. Vietnamese" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
               </div>
               <Field label="Phone *" error={errors.phoneCountry || errors.phone}>
@@ -194,7 +189,7 @@ export function Register() {
                   <Input value={form.phone} onChange={update("phone")} placeholder="Phone number" className="flex-1 bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </div>
               </Field>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 <Field label="Organisation *" error={errors.organisation}>
                   <Input value={form.organisation} onChange={update("organisation")} placeholder="Company / Institution" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
@@ -213,6 +208,27 @@ export function Register() {
                     ))}
                   </SelectContent>
                 </Select>
+              </Field>
+              <Field label="Passport photo (optional)">
+                <div className="flex items-center gap-2">
+                  <input
+                    ref={passportRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setPassport(e.target.files?.[0] ?? null)}
+                    className="hidden"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => passportRef.current?.click()}
+                    className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-white/85 hover:bg-white/10"
+                  >
+                    <Paperclip size={14} /> Attach passport image
+                  </button>
+                  {passport && (
+                    <span className="truncate text-xs text-white/70">{passport.name}</span>
+                  )}
+                </div>
               </Field>
             </div>
 
