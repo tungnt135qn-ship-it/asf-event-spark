@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUp, Phone, Mail } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import callLottie from "@/assets/call-ringing.lottie?url";
+import { useT } from "@/lib/i18n";
 
 export function FloatingActions() {
+  const { t } = useT();
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
