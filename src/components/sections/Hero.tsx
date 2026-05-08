@@ -35,6 +35,7 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
 }
 
 export function Hero() {
+  const { t } = useT();
   const [c, setC] = useState(getCountdown());
 
   useEffect(() => {
@@ -64,32 +65,31 @@ export function Hero() {
         </div>
         <h1 className="sr-only">ASF 2026 — Asian Securities Forum, Hanoi</h1>
         <div className="mt-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/80 sm:text-base sm:tracking-[0.3em]">
-          Asian Securities Forum
+          {t("hero.tagline")}
         </div>
 
         <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/80 sm:mt-6 sm:text-lg">
-          Shaping the future of Asia's capital markets. Hosted by VBMA in Vietnam, ASF 2026
-          convenes regulators, market leaders and global investors.
+          {t("hero.lead")}
         </p>
 
         <a href="#location" className="mt-6 inline-flex flex-wrap items-center justify-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 backdrop-blur-md transition hover:border-gold/50 hover:bg-white/10 sm:mt-8 sm:gap-4 sm:px-6 sm:py-3">
           <span className="inline-flex items-center gap-2 text-xs text-white sm:text-sm">
             <Calendar size={14} className="text-gold" />
-            1 – 4 October 2026
+            {t("hero.date")}
           </span>
           <span className="h-4 w-px bg-white/20" />
           <span className="inline-flex items-center gap-2 text-xs text-white sm:text-sm">
             <MapPin size={14} className="text-gold" />
-            Hanoi, Vietnam
+            {t("hero.location")}
           </span>
         </a>
 
         {/* Countdown */}
         <div className="mt-8 flex justify-center gap-2 sm:mt-10 sm:gap-5">
-          <CountdownUnit value={c.days} label="Days" />
-          <CountdownUnit value={c.hours} label="Hours" />
-          <CountdownUnit value={c.minutes} label="Minutes" />
-          <CountdownUnit value={c.seconds} label="Seconds" />
+          <CountdownUnit value={c.days} label={t("hero.cd.days")} />
+          <CountdownUnit value={c.hours} label={t("hero.cd.hours")} />
+          <CountdownUnit value={c.minutes} label={t("hero.cd.minutes")} />
+          <CountdownUnit value={c.seconds} label={t("hero.cd.seconds")} />
         </div>
 
       </div>
