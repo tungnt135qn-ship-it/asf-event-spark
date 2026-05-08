@@ -135,28 +135,6 @@ export function Register() {
               ))}
             </ul>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {[
-                { tier: "Early Bird", price: "USD 690", until: "Until 15 Feb 2026", highlight: true },
-                { tier: "Standard", price: "USD 890", until: "Until 31 Mar 2026", highlight: false },
-                { tier: "On-site", price: "USD 1,090", until: "From 1 Apr 2026", highlight: false },
-              ].map((p) => (
-                <div
-                  key={p.tier}
-                  className={`rounded-2xl border p-4 backdrop-blur-md ${
-                    p.highlight
-                      ? "border-gold bg-gold/10 shadow-[0_0_30px_rgba(212,175,55,0.2)]"
-                      : "border-white/10 bg-white/5"
-                  }`}
-                >
-                  <div className={`text-[10px] font-bold uppercase tracking-[0.18em] ${p.highlight ? "text-gold" : "text-white/60"}`}>
-                    {p.tier}
-                  </div>
-                  <div className="mt-2 text-xl font-extrabold text-white">{p.price}</div>
-                  <div className="mt-1 text-[11px] text-white/60">{p.until}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Right form */}
