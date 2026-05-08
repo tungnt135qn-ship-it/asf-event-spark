@@ -10,7 +10,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 import { speakers, type Speaker } from "@/lib/speakers";
 
-function SpeakerCard({ s }: { s: (typeof speakers)[number] }) {
+function SpeakerCard({ s }: { s: Speaker }) {
   return (
     <div className="group relative h-[480px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:border-gold/40 hover:shadow-[var(--shadow-glow)]">
       <img
