@@ -71,7 +71,7 @@ export const news: NewsItem[] = [
     body: [
       {
         type: "p",
-        text: "The Vietnam Investment Conference (VIC) will be integrated into the ASF 2026 programme as a dedicated half-day track on 17 April 2026, closing the forum with a deep-dive into Vietnam's rapidly developing capital markets.",
+        text: "The Vietnam Special Session — 'Vietnam Capital Markets: A New Era' — will be integrated into the ASF 2026 programme as a dedicated half-day track on 3 October 2026, closing the official ASF agenda with a deep-dive into Vietnam's rapidly developing capital markets.",
       },
       { type: "img", src: n2 },
       { type: "h", text: "Why Vietnam, why now" },
