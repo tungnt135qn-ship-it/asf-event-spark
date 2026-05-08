@@ -153,7 +153,7 @@ export function Register() {
         <div className="relative grid gap-10 lg:grid-cols-2 lg:items-center">
           {/* Left info */}
           <div>
-            <h3 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
+            <h3 className="text-2xl font-extrabold leading-tight text-white sm:text-3xl lg:text-4xl">
               {t("reg.hero.title1")}{" "}
               <span className="text-gradient-gold">{t("reg.hero.title2")}</span>
             </h3>
