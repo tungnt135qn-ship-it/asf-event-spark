@@ -201,11 +201,12 @@ function BookingDialog({ hotel }: { hotel: Hotel }) {
 }
 
 function DetailsDialog({ hotel }: { hotel: Hotel }) {
+  const { t } = useT();
   return (
     <Dialog>
       <DialogTrigger asChild>
         <button className="inline-flex items-center justify-center rounded-full border-2 border-gold/60 px-5 py-2 text-sm font-bold text-gold transition hover:bg-gold/10">
-          View Details
+          {t("hotels.details")}
         </button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
@@ -307,10 +308,11 @@ export function HotelCard({ h }: { h: Hotel }) {
 }
 
 export function Hotels() {
+  const { t } = useT();
   return (
-    <Section id="hotels" eyebrow="Accommodation" title="Official Partner Hotels">
+    <Section id="hotels" eyebrow={t("hotels.eyebrow")} title={t("hotels.title")}>
       <p className="mx-auto -mt-6 mb-12 max-w-2xl text-center text-base text-white/70">
-        Preferential rates and perks negotiated exclusively for ASF 2026 delegates.
+        {t("hotels.lead")}
       </p>
       <div className="space-y-10">
         {hotels.map((h) => (
