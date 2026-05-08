@@ -11,7 +11,7 @@ export const vi: Dict = {
   "nav.news": "Tin tức",
   "nav.press": "Thông cáo báo chí",
   "nav.faq": "Hỏi đáp",
-  "nav.newsGroup": "Tin tức & Hỗ trợ",
+  "nav.newsGroup": "Thông tin",
   "header.handbook": "Cẩm nang",
   "header.register": "Đăng ký ngay",
 
