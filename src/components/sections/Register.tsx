@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { hotels } from "@/lib/hotels";
 import { countries, customerTypes } from "@/lib/countries";
+import { useAuth } from "@/lib/auth";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your full name").max(100),
