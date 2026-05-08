@@ -26,16 +26,18 @@ function StatusPill({ status }: { status: DayStatus }) {
 }
 
 export function Agenda() {
+  const { t, lang } = useT();
   // active: -1 = "All" tab, otherwise day index
   const [active, setActive] = useState(0);
   const [openDays, setOpenDays] = useState<Record<number, boolean>>({});
   const day = active >= 0 ? EVENT_DAYS[active] : null;
+  const locale = lang === "vi" ? "vi-VN" : "en-GB";
 
   const toggleDay = (idx: number) =>
     setOpenDays((s) => ({ ...s, [idx]: !s[idx] }));
 
   return (
-    <Section id="agenda" eyebrow="Agenda" title="Four Days of Insight">
+    <Section id="agenda" eyebrow={t("agenda.eyebrow")} title={t("agenda.title")}>
       {/* Day tabs */}
       <div className="mb-8 flex flex-wrap justify-center gap-3">
         <button
