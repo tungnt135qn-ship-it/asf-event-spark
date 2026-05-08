@@ -124,6 +124,17 @@ export function Register() {
     }
     setErrors({});
     setSubmittedName(r.data.name);
+    if (user) {
+      addRegistration({
+        name: r.data.name,
+        email: r.data.email,
+        nationality: r.data.nationality,
+        phone: `${r.data.phoneCountry} ${r.data.phone}`,
+        organisation: r.data.organisation,
+        title: r.data.title,
+        customerType: r.data.customerType,
+      });
+    }
     setOpen(true);
     setForm(empty);
     setPassport(null);
