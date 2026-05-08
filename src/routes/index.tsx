@@ -52,6 +52,7 @@ function Index() {
         <Reveal variant="fade"><Location /></Reveal>
         <Reveal variant="up"><Speakers /></Reveal>
         <Reveal variant="up"><KeyContent /></Reveal>
+        <Reveal variant="up"><Library /></Reveal>
         <Reveal variant="up"><Documents /></Reveal>
         <Reveal variant="up"><News /></Reveal>
         <Reveal variant="fade"><Sponsors /></Reveal>
