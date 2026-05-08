@@ -172,7 +172,6 @@ export const en = {
   // Agenda
   "agenda.all": "All",
   "agenda.allDays": "All days",
-  "agenda.day": "Day {n}",
   "agenda.sessions": "{n} sessions",
   "agenda.note": "Note:",
   "agenda.noteText": "Agenda is preliminary and may be updated.",
