@@ -119,18 +119,18 @@ export function Header() {
                 onClick={() => goToHash(n.hash)}
                 className="text-sm font-medium text-white/85 transition hover:text-gold"
               >
-                {n.label}
+                {t(n.labelKey as never)}
               </button>
             ) : (
-              <div key={n.label} className="relative">
+              <div key={n.labelKey} className="relative">
                 <button
-                  onClick={() => setOpenGroup((g) => (g === n.label ? null : n.label))}
+                  onClick={() => setOpenGroup((g) => (g === n.labelKey ? null : n.labelKey))}
                   className="inline-flex items-center gap-1 text-sm font-medium text-white/85 transition hover:text-gold"
                 >
-                  {n.label}
+                  {t(n.labelKey as never)}
                   <ChevronDown size={14} />
                 </button>
-                {openGroup === n.label && (
+                {openGroup === n.labelKey && (
                   <div className="absolute left-1/2 top-full mt-2 w-44 -translate-x-1/2 overflow-hidden rounded-xl border border-white/10 bg-navy-deep/95 shadow-xl backdrop-blur">
                     {n.items.map((it) => (
                       <button
@@ -138,7 +138,7 @@ export function Header() {
                         onClick={() => goToHash(it.hash)}
                         className="block w-full px-4 py-2.5 text-left text-sm text-white/85 hover:bg-gold/10 hover:text-gold"
                       >
-                        {it.label}
+                        {t(it.labelKey as never)}
                       </button>
                     ))}
                   </div>
@@ -154,14 +154,15 @@ export function Header() {
               onClick={() => goToHash("documents")}
               className="hidden items-center justify-center rounded-full border-2 border-gold/60 px-4 py-1.5 text-[13px] font-semibold leading-none text-gold transition hover:bg-gold/10 sm:inline-flex"
             >
-              Event Handbook
+              {t("header.handbook")}
             </button>
           )}
+          <LanguageSwitcher className="hidden sm:inline-flex" />
           <button
             onClick={() => goToHash("register")}
             className="hidden items-center justify-center rounded-full bg-destructive px-4 py-1.5 text-[13px] font-semibold leading-none text-destructive-foreground shadow-lg transition hover:opacity-90 sm:inline-flex"
           >
-            Register Now
+            {t("header.register")}
           </button>
           <AuthButton />
           <button
@@ -172,6 +173,42 @@ export function Header() {
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
+      </div>
+
+      {open && (
+        <div className="glass border-t border-white/10 xl:hidden">
+          <div className="mx-auto flex max-w-7xl flex-col px-4 py-4">
+            <div className="flex items-center justify-between border-b border-white/5 py-2">
+              <span className="text-xs uppercase tracking-wider text-white/50">{t("lang.switch")}</span>
+              <LanguageSwitcher />
+            </div>
+            {navItems.map((n) =>
+              n.kind === "link" ? (
+                <button
+                  key={n.hash}
+                  onClick={() => goToHash(n.hash)}
+                  className="border-b border-white/5 py-3 text-left text-sm font-medium text-white/85 hover:text-gold"
+                >
+                  {t(n.labelKey as never)}
+                </button>
+              ) : (
+                <div key={n.labelKey} className="border-b border-white/5 py-2">
+                  <div className="py-1 text-xs uppercase tracking-wider text-white/50">
+                    {t(n.labelKey as never)}
+                  </div>
+                  {n.items.map((it) => (
+                    <button
+                      key={it.hash}
+                      onClick={() => goToHash(it.hash)}
+                      className="block w-full py-2 text-left text-sm font-medium text-white/85 hover:text-gold"
+                    >
+                      {t(it.labelKey as never)}
+                    </button>
+                  ))}
+                </div>
+              ),
+            )}
+          </div>
       </div>
 
       {open && (
