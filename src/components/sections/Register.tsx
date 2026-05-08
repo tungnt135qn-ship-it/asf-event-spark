@@ -25,7 +25,7 @@ import { countries, customerTypes } from "@/lib/countries";
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your full name").max(100),
   email: z.string().trim().email("Invalid email").max(255),
-  nationality: z.string().trim().min(1, "Please select your nationality"),
+  nationality: z.string().trim().min(1, "Please enter your nationality").max(80),
   phoneCountry: z.string().trim().min(1, "Select country code"),
   phone: z.string().trim().min(4, "Invalid phone number").max(30),
   organisation: z.string().trim().min(2, "Please enter your organisation").max(150),
@@ -38,7 +38,7 @@ type FormState = z.infer<typeof schema>;
 const empty: FormState = {
   name: "",
   email: "",
-  nationality: "VN",
+  nationality: "",
   phoneCountry: "VN",
   phone: "",
   organisation: "",
