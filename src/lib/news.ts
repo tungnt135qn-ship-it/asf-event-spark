@@ -39,7 +39,7 @@ export const news: NewsItem[] = [
       { type: "h", text: "A regional dialogue at scale" },
       {
         type: "p",
-        text: "ASF 2026 brings together regulators, exchanges, dealers, asset managers and institutional investors representing more than 20 capital markets. Plenary sessions will focus on Asia's bond market outlook, sustainable finance, cross-border capital flows and the next generation of market infrastructure.",
+        text: "ASF 2026 brings together regulators, exchanges, dealers and institutional investors representing more than 30 securities associations across Asia – Oceania. Plenary sessions will focus on Asian equity outlook, bond market development, digitalization & AI in capital markets, plus a dedicated Vietnam special session 'New Era for Vietnam Capital Markets'.",
       },
       { type: "img", src: n2, caption: "Hanoi — host city of ASF 2026" },
       { type: "h", text: "Speaker highlights" },
