@@ -141,11 +141,11 @@ export function Register() {
     setForm(empty);
     setPassport(null);
     if (passportRef.current) passportRef.current.value = "";
-    toast.success("Registration submitted successfully");
+    toast.success(t("reg.toast"));
   };
 
   return (
-    <Section id="registration" eyebrow="Registration" title="Reserve Your Seat at ASF 2026">
+    <Section id="registration" eyebrow={t("register.eyebrow")} title={t("register.title")}>
       <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-gradient-to-br from-navy via-secondary to-navy-deep p-8 sm:p-14">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gold/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-destructive/20 blur-3xl" />
@@ -196,8 +196,8 @@ export function Register() {
             onSubmit={onSubmit}
             className="rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-md sm:p-8"
           >
-            <h4 className="text-xl font-bold text-white">Delegate Registration</h4>
-            <p className="mt-1 text-sm text-white/60">Fill in your details — we'll confirm by email.</p>
+            <h4 className="text-xl font-bold text-white">{t("reg.form.title")}</h4>
+            <p className="mt-1 text-sm text-white/60">{t("reg.form.sub")}</p>
 
             <div className="mt-5 grid gap-3">
               <Field label="Full name *" error={errors.name}>
