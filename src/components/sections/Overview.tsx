@@ -1,6 +1,7 @@
 import { ExternalLink, CheckCircle2, Globe2, Building2, Calendar } from "lucide-react";
 import overviewImg from "@/assets/overview-hanoi.jpg";
 import vbmaLogo from "@/assets/vbma-logo.png";
+import { useT } from "@/lib/i18n";
 
 function Section({
   id,
@@ -39,14 +40,15 @@ function Section({
 }
 
 export function Overview() {
+  const { t } = useT();
   const highlights = [
-    { icon: Globe2, text: "30+ hiệp hội chứng khoán khu vực Châu Á – Châu Đại Dương" },
-    { icon: Calendar, text: "4 ngày sự kiện chính thức (1–4/10/2026) tại Hà Nội" },
-    { icon: CheckCircle2, text: "Quy tụ regulators, exchanges, dealers & investors — quy mô 100–150 đại biểu" },
+    { icon: Globe2, text: t("overview.h1") },
+    { icon: Calendar, text: t("overview.h2") },
+    { icon: CheckCircle2, text: t("overview.h3") },
   ];
 
   return (
-    <Section id="overview" eyebrow="Overview" title="Shaping Asia's Capital Markets">
+    <Section id="overview" eyebrow={t("overview.eyebrow")} title={t("overview.title")}>
       <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
         {/* Left: Image */}
         <div className="relative">
@@ -71,29 +73,15 @@ export function Overview() {
 
         {/* Right: Content + Highlights */}
         <div className="space-y-6 text-white/85">
-          <p className="text-lg leading-relaxed">
-            <strong className="text-gold">Asian Securities Forum (ASF)</strong> là diễn đàn hợp tác
-            khu vực được thành lập năm 1995, quy tụ trên 30 hiệp hội chứng khoán và tổ chức thị
-            trường vốn khu vực Châu Á – Châu Đại Dương. Hội nghị thường niên ASF 2026 diễn ra ngày
-            <strong className="text-white"> 1 – 4 tháng 10 năm 2026 tại Hà Nội</strong>, do VBMA và
-            VASB đồng đăng cai tổ chức với quy mô 100–150 đại biểu cấp cao.
-          </p>
+          <p className="text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: t("overview.lead") }} />
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
             <div className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gold">
-              <Building2 size={16} /> Đơn vị tổ chức & đồng tổ chức
+              <Building2 size={16} /> {t("overview.orgsTitle")}
             </div>
             <div className="space-y-3 text-sm leading-relaxed text-white/85">
-              <p>
-                <strong className="text-white">Hiệp hội Thị trường Trái phiếu Việt Nam (VBMA)</strong>{" "}
-                — thành lập năm 2009, đại diện các thành viên định chế trên thị trường trái phiếu
-                Việt Nam, thúc đẩy thị trường minh bạch, hiệu quả và bền vững.
-              </p>
-              <p>
-                <strong className="text-white">Hiệp hội Kinh doanh Chứng khoán Việt Nam (VASB)</strong>{" "}
-                — đồng tổ chức, đại diện cộng đồng công ty chứng khoán, kết nối thành viên thị
-                trường vốn Việt Nam với khu vực.
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: t("overview.vbma") }} />
+              <p dangerouslySetInnerHTML={{ __html: t("overview.vasb") }} />
             </div>
             <div className="mt-4 flex flex-wrap gap-4">
               <a
