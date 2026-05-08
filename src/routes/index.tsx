@@ -11,6 +11,7 @@ import { Location } from "@/components/sections/Location";
 import { Speakers } from "@/components/sections/Speakers";
 import { KeyContent } from "@/components/sections/KeyContent";
 import { Documents } from "@/components/sections/Documents";
+import { Library } from "@/components/sections/Library";
 import { News } from "@/components/sections/News";
 import { Sponsors } from "@/components/sections/Sponsors";
 import { FAQ } from "@/components/sections/FAQ";
@@ -51,6 +52,7 @@ function Index() {
         <Reveal variant="fade"><Location /></Reveal>
         <Reveal variant="up"><Speakers /></Reveal>
         <Reveal variant="up"><KeyContent /></Reveal>
+        <Reveal variant="up"><Library /></Reveal>
         <Reveal variant="up"><Documents /></Reveal>
         <Reveal variant="up"><News /></Reveal>
         <Reveal variant="fade"><Sponsors /></Reveal>
