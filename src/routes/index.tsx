@@ -21,6 +21,7 @@ import { FloatingActions } from "@/components/FloatingActions";
 import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
 import { Gated, LockedSection } from "@/components/LockedSection";
+import { useT } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,6 +41,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { t } = useT();
   return (
     <div className="min-h-screen text-white">
       <Starfield />
@@ -51,7 +53,7 @@ function Index() {
         <Reveal variant="up"><Agenda /></Reveal>
         <Reveal variant="zoom"><Register /></Reveal>
         <Reveal variant="up">
-          <Gated fallback={<LockedSection id="hotels" eyebrow="Hotels" title="Partner Hotels" hint="Đăng nhập để xem giá ưu đãi và đặt phòng tại các khách sạn đối tác của ASF 2026." />}>
+          <Gated fallback={<LockedSection id="hotels" eyebrow={t("hotels.eyebrow")} title={t("hotels.title")} hint={t("hotels.lead")} />}>
             <Hotels />
           </Gated>
         </Reveal>
@@ -59,12 +61,12 @@ function Index() {
         <Reveal variant="up"><Speakers /></Reveal>
         <Reveal variant="up"><KeyContent /></Reveal>
         <Reveal variant="up">
-          <Gated fallback={<LockedSection id="library" eyebrow="Library" title="Photos & Videos" hint="Thư viện ảnh và video chính thức của ASF 2026 chỉ dành cho đại biểu đã đăng nhập." />}>
+          <Gated fallback={<LockedSection id="library" eyebrow={t("library.eyebrow")} title={t("library.title")} hint={t("locked.note")} />}>
             <Library preview />
           </Gated>
         </Reveal>
         <Reveal variant="up">
-          <Gated fallback={<LockedSection id="documents" eyebrow="Documents" title="Event Documents" hint="Tải xuống brochure, agenda, báo cáo và travel guide chính thức sau khi đăng nhập bằng mã đại biểu." />}>
+          <Gated fallback={<LockedSection id="documents" eyebrow={t("documents.eyebrow")} title={t("documents.title")} hint={t("locked.note")} />}>
             <Documents />
           </Gated>
         </Reveal>
