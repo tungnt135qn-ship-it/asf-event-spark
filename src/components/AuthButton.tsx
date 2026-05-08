@@ -37,27 +37,7 @@ export function AuthButton({ compact = false }: { compact?: boolean }) {
   };
 
   if (isAuthenticated && user) {
-    return (
-      <div className="flex items-center gap-2">
-        {!compact && (
-          <div className="hidden text-right leading-tight sm:block">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-gold">
-              {user.role}
-            </div>
-            <div className="text-[11px] text-white/70">{user.name}</div>
-          </div>
-        )}
-        <button
-          onClick={() => {
-            logout();
-            toast("Đã đăng xuất");
-          }}
-          className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-[12px] font-semibold text-white/85 hover:border-gold/50 hover:text-gold"
-        >
-          <LogOut size={13} /> Đăng xuất
-        </button>
-      </div>
-    );
+    return <AccountMenu />;
   }
 
   return (
