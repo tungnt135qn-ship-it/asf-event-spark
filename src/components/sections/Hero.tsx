@@ -5,11 +5,12 @@ import { useT } from "@/lib/i18n";
 import logoUrl from "@/assets/asf-logo.png";
 
 function StatusBadge() {
+  const { t } = useT();
   const status = getEventStatus();
   const map = {
-    upcoming: { text: "Upcoming", color: "bg-gold/20 text-gold border-gold/40" },
-    live: { text: "Live Now", color: "bg-destructive/20 text-destructive border-destructive/50 animate-pulse" },
-    completed: { text: "Completed", color: "bg-white/10 text-white/70 border-white/20" },
+    upcoming: { text: t("hero.status.upcoming"), color: "bg-gold/20 text-gold border-gold/40" },
+    live: { text: t("hero.status.live"), color: "bg-destructive/20 text-destructive border-destructive/50 animate-pulse" },
+    completed: { text: t("hero.status.completed"), color: "bg-white/10 text-white/70 border-white/20" },
   } as const;
   const v = map[status];
   return (
