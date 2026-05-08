@@ -154,19 +154,18 @@ export function Register() {
           {/* Left info */}
           <div>
             <h3 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
-              Cùng 100–150 đại biểu định hình{" "}
-              <span className="text-gradient-gold">thị trường vốn Châu Á</span>
+              {t("reg.hero.title1")}{" "}
+              <span className="text-gradient-gold">{t("reg.hero.title2")}</span>
             </h3>
             <p className="mt-4 text-base leading-relaxed text-white/80">
-              Early-bird registration is open until 15 August 2026. Secure your delegate pass,
-              welcome dinner and Halong Bay day tour today.
+              {t("reg.hero.lead")}
             </p>
 
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {[
-                { Icon: Calendar, text: "1 – 4 October 2026" },
-                { Icon: MapPin, text: "Meliá Hanoi Hotel, Hà Nội" },
-                { Icon: Users, text: "30+ hiệp hội · 100–150 đại biểu" },
+                { Icon: Calendar, text: t("reg.hero.dates") },
+                { Icon: MapPin, text: t("reg.hero.venue") },
+                { Icon: Users, text: t("reg.hero.scale") },
                 { Icon: Mail, text: "asf2026@vbma.org.vn" },
               ].map(({ Icon, text }) => (
                 <li

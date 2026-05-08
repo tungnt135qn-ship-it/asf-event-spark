@@ -136,5 +136,12 @@ export const vi: Dict = {
   "acc.book.partnerTitle": "Khách sạn đối tác ASF 2026",
   "acc.book.viewAll": "Xem tất cả",
 
+  "reg.hero.title1": "Cùng 100–150 đại biểu định hình",
+  "reg.hero.title2": "thị trường vốn Châu Á",
+  "reg.hero.lead": "Đăng ký sớm mở đến 15/08/2026. Đặt chỗ đại biểu, dạ tiệc chào mừng và tour Vịnh Hạ Long ngay hôm nay.",
+  "reg.hero.dates": "1 – 4 tháng 10, 2026",
+  "reg.hero.venue": "Meliá Hanoi Hotel, Hà Nội",
+  "reg.hero.scale": "30+ hiệp hội · 100–150 đại biểu",
+
   "lang.switch": "Ngôn ngữ",
 };

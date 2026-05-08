@@ -145,6 +145,14 @@ export const en = {
   "acc.book.partnerTitle": "ASF 2026 partner hotels",
   "acc.book.viewAll": "View all",
 
+  // Register hero
+  "reg.hero.title1": "Join 100–150 delegates shaping",
+  "reg.hero.title2": "Asia's capital markets",
+  "reg.hero.lead": "Early-bird registration is open until 15 August 2026. Secure your delegate pass, welcome dinner and Halong Bay day tour today.",
+  "reg.hero.dates": "1 – 4 October 2026",
+  "reg.hero.venue": "Meliá Hanoi Hotel, Hanoi",
+  "reg.hero.scale": "30+ associations · 100–150 delegates",
+
   // Lang switcher
   "lang.switch": "Language",
 };
