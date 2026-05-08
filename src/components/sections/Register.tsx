@@ -166,10 +166,34 @@ export function Register() {
                 <Field label="Email *" error={errors.email}>
                   <Input type="email" value={form.email} onChange={update("email")} placeholder="you@company.com" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
-                <Field label="Phone *" error={errors.phone}>
-                  <Input value={form.phone} onChange={update("phone")} placeholder="+84 ..." className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
+                <Field label="Nationality *" error={errors.nationality}>
+                  <Select value={form.nationality} onValueChange={(v) => setForm((f) => ({ ...f, nationality: v }))}>
+                    <SelectTrigger className="bg-white/5 text-white border-white/15">
+                      <SelectValue placeholder="Select nationality" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-72">
+                      {countries.map((c) => (
+                        <SelectItem key={c.code} value={c.code}>{c.flag} {c.name}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </Field>
               </div>
+              <Field label="Phone *" error={errors.phoneCountry || errors.phone}>
+                <div className="flex gap-2">
+                  <Select value={form.phoneCountry} onValueChange={(v) => setForm((f) => ({ ...f, phoneCountry: v }))}>
+                    <SelectTrigger className="w-[140px] bg-white/5 text-white border-white/15">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-72">
+                      {countries.map((c) => (
+                        <SelectItem key={c.code} value={c.code}>{c.flag} {c.dial}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Input value={form.phone} onChange={update("phone")} placeholder="Phone number" className="flex-1 bg-white/5 text-white placeholder:text-white/40 border-white/15" />
+                </div>
+              </Field>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Organisation *" error={errors.organisation}>
                   <Input value={form.organisation} onChange={update("organisation")} placeholder="Company / Institution" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
@@ -178,8 +202,17 @@ export function Register() {
                   <Input value={form.title} onChange={update("title")} placeholder="e.g. Head of Fixed Income" className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
                 </Field>
               </div>
-              <Field label="Notes" error={errors.notes}>
-                <Textarea value={form.notes} onChange={update("notes")} placeholder="Dietary needs, accessibility, sessions of interest..." rows={3} className="bg-white/5 text-white placeholder:text-white/40 border-white/15" />
+              <Field label="Customer type *" error={errors.customerType}>
+                <Select value={form.customerType} onValueChange={(v) => setForm((f) => ({ ...f, customerType: v }))}>
+                  <SelectTrigger className="bg-white/5 text-white border-white/15">
+                    <SelectValue placeholder="Select customer type" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {customerTypes.map((t) => (
+                      <SelectItem key={t} value={t}>{t}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </Field>
             </div>
 
