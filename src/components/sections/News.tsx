@@ -1,22 +1,45 @@
 import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
 import { ArrowRight } from "lucide-react";
-import { useNewsList } from "@/lib/event-adapters";
+import { useNewsList, useCurrentEventSlug } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 
 export function News() {
   const { t } = useT();
   const news = useNewsList();
+  const eventSlug = useCurrentEventSlug();
   return (
     <Section id="news" eyebrow={t("news.eyebrow")} title={t("news.title")}>
       <div className="grid gap-6 md:grid-cols-3">
         {news.map((n) => (
+          eventSlug ? (
+          <Link
+            key={n.slug}
+            to="/e/$slug/news/$newsSlug"
+            params={{ slug: eventSlug, newsSlug: n.slug }}
+            className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:-translate-y-1 hover:border-gold/40"
+          >
+            <NewsCardBody n={n} />
+          </Link>
+          ) : (
           <Link
             key={n.slug}
             to="/news/$slug"
             params={{ slug: n.slug }}
             className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:-translate-y-1 hover:border-gold/40"
           >
+            <NewsCardBody n={n} />
+          </Link>
+          )
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function NewsCardBody({ n }: { n: ReturnType<typeof useNewsList>[number] }) {
+  return (
+    <>
             <div className="relative h-44 overflow-hidden">
               <img src={n.cover} alt={n.title} loading="lazy" className="h-full w-full object-cover transition group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy-deep/10 to-transparent" />
