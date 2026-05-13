@@ -97,7 +97,7 @@ function EventLanding() {
 
   return (
     <EventContentProvider content={content}>
-      <div className="min-h-screen text-white">
+      <div className="min-h-screen text-white" style={themeStyle}>
         <Starfield />
         <Header />
         <main>
