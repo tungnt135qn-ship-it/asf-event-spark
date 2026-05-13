@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as TopicsSlugRouteImport } from './routes/topics.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as ESlugRouteImport } from './routes/e.$slug'
 import { Route as AccountRegistrationsRouteImport } from './routes/account.registrations'
 import { Route as AccountBookingsRouteImport } from './routes/account.bookings'
 
@@ -48,6 +49,11 @@ const NewsSlugRoute = NewsSlugRouteImport.update({
   path: '/news/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ESlugRoute = ESlugRouteImport.update({
+  id: '/e/$slug',
+  path: '/e/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountRegistrationsRoute = AccountRegistrationsRouteImport.update({
   id: '/account/registrations',
   path: '/account/registrations',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
+  '/e/$slug': typeof ESlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
+  '/e/$slug': typeof ESlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
+  '/e/$slug': typeof ESlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/account/bookings'
     | '/account/registrations'
+    | '/e/$slug'
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin/'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/account/bookings'
     | '/account/registrations'
+    | '/e/$slug'
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/account/bookings'
     | '/account/registrations'
+    | '/e/$slug'
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin/'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   LibraryRoute: typeof LibraryRoute
   AccountBookingsRoute: typeof AccountBookingsRoute
   AccountRegistrationsRoute: typeof AccountRegistrationsRoute
+  ESlugRoute: typeof ESlugRoute
   NewsSlugRoute: typeof NewsSlugRoute
   TopicsSlugRoute: typeof TopicsSlugRoute
 }
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/e/$slug': {
+      id: '/e/$slug'
+      path: '/e/$slug'
+      fullPath: '/e/$slug'
+      preLoaderRoute: typeof ESlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/account/registrations': {
       id: '/account/registrations'
       path: '/account/registrations'
@@ -208,9 +228,20 @@ const rootRouteChildren: RootRouteChildren = {
   LibraryRoute: LibraryRoute,
   AccountBookingsRoute: AccountBookingsRoute,
   AccountRegistrationsRoute: AccountRegistrationsRoute,
+  ESlugRoute: ESlugRoute,
   NewsSlugRoute: NewsSlugRoute,
   TopicsSlugRoute: TopicsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
