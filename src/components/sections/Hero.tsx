@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { Calendar, MapPin } from "lucide-react";
-import { getCountdown, getEventStatus } from "@/lib/event";
+import { getCountdown } from "@/lib/event";
 import { useEventDates } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 import logoUrl from "@/assets/asf-logo.png";
 
-function StatusBadge() {
+function computeStatus(start: Date, end: Date): "upcoming" | "live" | "completed" {
+  const now = Date.now();
+  if (now > end.getTime()) return "completed";
+  if (now >= start.getTime()) return "live";
+  return "upcoming";
+}
+
+function StatusBadge({ start, end }: { start: Date; end: Date }) {
   const { t } = useT();
-  const status = getEventStatus();
+  const status = computeStatus(start, end);
   const map = {
     upcoming: { text: t("hero.status.upcoming"), color: "bg-gold/20 text-gold border-gold/40" },
     live: { text: t("hero.status.live"), color: "bg-destructive/20 text-destructive border-destructive/50 animate-pulse" },

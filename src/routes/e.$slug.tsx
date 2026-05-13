@@ -82,6 +82,11 @@ function EventLanding() {
   const { slug } = Route.useParams();
   const { data: content } = useSuspenseQuery(eventContentQueryOptions(slug));
   const { t } = useT();
+  const s = content.settings;
+  const registrationEnabled = s?.registration_enabled ?? true;
+  const bookingEnabled = s?.booking_enabled ?? true;
+  const documentsLocked = s?.documents_locked ?? false;
+  const libraryLocked = s?.library_locked ?? false;
 
   return (
     <EventContentProvider content={content}>
@@ -93,24 +98,36 @@ function EventLanding() {
           <Reveal variant="up"><Overview /></Reveal>
           <Reveal variant="up"><WhyAttend /></Reveal>
           <Reveal variant="up"><Agenda /></Reveal>
-          <Reveal variant="zoom"><Register /></Reveal>
-          <Reveal variant="up">
-            <Gated fallback={<LockedSection id="hotels" eyebrow={t("hotels.eyebrow")} title={t("hotels.title")} hint={t("hotels.lead")} />}>
-              <Hotels />
-            </Gated>
-          </Reveal>
+          {registrationEnabled && (
+            <Reveal variant="zoom"><Register /></Reveal>
+          )}
+          {bookingEnabled && (
+            <Reveal variant="up">
+              <Gated fallback={<LockedSection id="hotels" eyebrow={t("hotels.eyebrow")} title={t("hotels.title")} hint={t("hotels.lead")} />}>
+                <Hotels />
+              </Gated>
+            </Reveal>
+          )}
           <Reveal variant="fade"><Location /></Reveal>
           <Reveal variant="up"><Speakers /></Reveal>
           <Reveal variant="up"><KeyContent /></Reveal>
           <Reveal variant="up">
-            <Gated fallback={<LockedSection id="library" eyebrow={t("library.eyebrow")} title={t("library.title")} hint={t("locked.note")} />}>
+            {libraryLocked ? (
+              <Gated fallback={<LockedSection id="library" eyebrow={t("library.eyebrow")} title={t("library.title")} hint={t("locked.note")} />}>
+                <Library preview />
+              </Gated>
+            ) : (
               <Library preview />
-            </Gated>
+            )}
           </Reveal>
           <Reveal variant="up">
-            <Gated fallback={<LockedSection id="documents" eyebrow={t("documents.eyebrow")} title={t("documents.title")} hint={t("locked.note")} />}>
+            {documentsLocked ? (
+              <Gated fallback={<LockedSection id="documents" eyebrow={t("documents.eyebrow")} title={t("documents.title")} hint={t("locked.note")} />}>
+                <Documents />
+              </Gated>
+            ) : (
               <Documents />
-            </Gated>
+            )}
           </Reveal>
           <Reveal variant="up"><News /></Reveal>
           <Reveal variant="up"><PressRelease /></Reveal>

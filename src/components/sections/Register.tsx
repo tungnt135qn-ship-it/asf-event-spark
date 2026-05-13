@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { hotels } from "@/lib/hotels";
+import { useHotels } from "@/lib/event-adapters";
 import { countries, customerTypes } from "@/lib/countries";
 import { useAuth } from "@/lib/auth";
 import { useT } from "@/lib/i18n";
@@ -64,6 +64,7 @@ const empty: FormState = {
 export function Register() {
   const { user, addRegistration } = useAuth();
   const { t } = useT();
+  const hotels = useHotels();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [open, setOpen] = useState(false);
