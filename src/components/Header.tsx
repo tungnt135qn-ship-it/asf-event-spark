@@ -37,7 +37,9 @@ export function Header() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const { t } = useT();
-  const isHome = location.pathname === "/";
+  const eventMatch = location.pathname.match(/^\/e\/([^/]+)\/?$/);
+  const eventSlug = eventMatch?.[1];
+  const isHome = location.pathname === "/" || !!eventMatch;
   const groupRef = useRef<HTMLDivElement>(null);
 
   // Filter nav items: hide protected items if not authenticated
@@ -73,6 +75,8 @@ export function Header() {
       if (el) el.scrollIntoView({ behavior: "smooth" });
       history.replaceState(null, "", `#${hash}`);
       window.dispatchEvent(new HashChangeEvent("hashchange"));
+    } else if (eventSlug) {
+      router.navigate({ to: "/e/$slug", params: { slug: eventSlug }, hash });
     } else {
       router.navigate({ to: "/", hash });
     }
