@@ -1,105 +1,144 @@
-# Kế hoạch i18n Anh / Việt cho ASF 2026
 
-## 1. Mục tiêu
+# Kế hoạch: CMS quản trị sự kiện (multi-event template)
 
-- Người dùng có nút chuyển EN ↔ VI trên header (cạnh avatar/Register).
-- Lưu lựa chọn vào `localStorage` (`asf2026.lang`), mặc định `vi`.
-- Toàn bộ chữ tĩnh (UI labels, tiêu đề section, nội dung mock) dịch được.
-- Không gọi API; tất cả là mock JSON tại frontend.
+## 1. Mô hình tổng thể
 
-## 2. Kiến trúc
+- **Mỗi sự kiện = 1 bản ghi `events` độc lập** với `id` (uuid) + `slug` (vd `asf-2026`).
+- Landing public chuyển sang URL theo sự kiện:
+  - `/e/$eventSlug` → trang chủ của sự kiện đó
+  - `/e/$eventSlug/news/$slug`, `/e/$eventSlug/topics/$slug`, `/e/$eventSlug/library`, `/e/$eventSlug/account/...`
+  - `/` → redirect về sự kiện "default" (ASF 2026 sau seed) để link cũ không vỡ.
+- **CMS** ở `/admin/*`, đăng nhập bằng email/password (Lovable Cloud Auth). Khi vào CMS, admin chọn 1 sự kiện trong danh sách → mọi màn cấu hình đều scope theo `event_id` đang chọn (giữ trong context + URL `/admin/$eventId/...`).
+- **Cô lập dữ liệu**: mọi bảng nội dung đều có `event_id` + RLS lọc theo `event_id` + role admin có quyền trên sự kiện đó.
 
-Tự build một i18n provider gọn nhẹ (không cần thư viện ngoài), tránh phình bundle.
+## 2. Bật Lovable Cloud + Auth
 
-```text
-src/lib/i18n/
-  index.tsx         -> LanguageProvider, useT(), useLang()
-  dictionaries/
-    en.ts           -> object phẳng dạng { "header.register": "Register Now", ... }
-    vi.ts           -> bản dịch tương ứng
+- Bật Cloud (Postgres + Auth).
+- Auth: email/password cho admin. Không dùng Google/Apple ở giai đoạn này.
+- Bảng phụ trợ:
+  - `profiles` (id ↔ auth.users, full_name, avatar)
+  - `app_role` enum: `super_admin`, `event_admin`, `editor`
+  - `user_roles` (user_id, role, event_id nullable) — `super_admin` không gắn event_id, `event_admin/editor` gắn theo từng event.
+  - `has_role(_uid, _role, _event_id)` security definer cho RLS (tránh đệ quy).
+
+## 3. Schema dữ liệu (chính)
+
+Tất cả bảng nội dung đều có `event_id uuid not null references events(id) on delete cascade`, `created_at`, `updated_at`, và các field text song ngữ lưu dạng JSONB `{ vi: string, en: string }` (gọn, không nhân đôi cột).
+
+- `events` — id, slug (unique), name_i18n, tagline_i18n, status (draft/published/archived), default_lang, start_at, end_at, location_i18n, cover, logo, theme (json: màu, gradient), is_default (bool, đúng 1 cái true).
+- `event_settings` — 1-1 với event: countdown target, registration deadline, contact info, social links, footer content (i18n).
+- `access_codes` — code, role (AFF/SPN/SPK), name, email, organisation, active.
+- `registrations`, `bookings` — kế thừa từ `RegistrationRecord`/`BookingRecord` hiện tại + `event_id`.
+- `agenda_days` (index, date, label_i18n) → `agenda_sessions` (day_id, time, title_i18n, description_i18n, location_i18n, tag).
+- `topics` (slug, title_i18n, desc_i18n, image, long_description_i18n, highlights_i18n[], content_blocks_i18n jsonb).
+- `speakers` (name, title, role_i18n, org_i18n, bio_i18n, img) + `speaker_topics` (m-n).
+- `hotels` (name, tier_i18n, address_i18n, map_url, website, perks_i18n[], contact, images[], description_i18n).
+- `news` (slug, date, tag_i18n, title_i18n, excerpt_i18n, cover, author, read_time, body_blocks_i18n jsonb).
+- `faqs` (order, question_i18n, answer_i18n, category).
+- `sponsors` (tier, name, logo, url, order).
+- `documents` (title_i18n, file_url, size, category, requires_role).
+- `library_items` (title_i18n, type, url, requires_role).
+- `key_contents`, `why_attend_items`, `overview_blocks`, `press_releases` — các block tĩnh nhưng vẫn cho admin sửa (đáp ứng "Toàn bộ landing").
+- `hero_content` (1-1: headline_i18n, subheadline_i18n, cta_i18n, badges_i18n, background_image).
+
+Storage buckets: `event-assets/{event_id}/...` cho ảnh hero/cover/speaker/hotel/news/sponsor/document.
+
+## 4. RLS
+
+- Public read các bảng nội dung **chỉ khi `events.status = 'published'`** (hoặc `event_id` thuộc event published).
+- Write/Update/Delete: chỉ `super_admin`, hoặc `event_admin/editor` của đúng `event_id` (qua `has_role`).
+- `registrations`/`bookings`: insert public (form đăng ký), select chỉ admin của event.
+- `access_codes`: select chỉ admin; check code khi đăng nhập làm qua server function (không expose cả bảng).
+
+## 5. Refactor frontend (landing public)
+
+- Tạo `EventProvider` (giống `LanguageProvider`) đọc `eventSlug` từ URL → fetch toàn bộ data event 1 lần (React Query) → cung cấp qua context cho mọi section.
+- Tách logic data: thay vì import trực tiếp `news`, `topics`, `speakers`, `hotels`, `EVENT_DAYS`, các section dùng hook `useEvent()`/`useEventNews()`/v.v.
+- Helper `pickI18n(value, lang)` cho field JSONB.
+- Routes mới:
+  ```
+  src/routes/e.$eventSlug.tsx                  (layout: load event + provider)
+  src/routes/e.$eventSlug.index.tsx            (landing)
+  src/routes/e.$eventSlug.news.$slug.tsx
+  src/routes/e.$eventSlug.topics.$slug.tsx
+  src/routes/e.$eventSlug.library.tsx
+  src/routes/e.$eventSlug.account.registrations.tsx
+  src/routes/e.$eventSlug.account.bookings.tsx
+  src/routes/index.tsx                          (redirect → /e/{default})
+  ```
+- Auth code (AFF/SPN/SPK) chuyển sang gọi server function `verifyAccessCode(eventId, code)`.
+
+## 6. Cấu trúc CMS (`/admin`)
+
+```
+src/routes/admin.tsx                       layout: yêu cầu đăng nhập + sidebar chọn event
+src/routes/admin.login.tsx                 đăng nhập admin
+src/routes/admin.index.tsx                 danh sách sự kiện + nút "Tạo sự kiện mới"
+src/routes/admin.$eventId.tsx              layout cho 1 event (sidebar trái: các section)
+  ├─ overview              dashboard: số lượng đăng ký, booking, trạng thái
+  ├─ settings              tên/slug/ngày/logo/theme/status/default_lang/is_default
+  ├─ hero, overview, why-attend, key-content
+  ├─ agenda                CRUD ngày + sessions (drag reorder)
+  ├─ speakers              CRUD + chọn topics liên quan
+  ├─ topics                CRUD + content blocks editor
+  ├─ hotels                CRUD + ảnh + perks
+  ├─ news, press-release   CRUD + block editor (p/h/img/quote)
+  ├─ faq, sponsors, documents, library
+  ├─ contact, footer
+  ├─ access-codes          CRUD code đăng nhập khách
+  ├─ registrations         table + filter + export CSV (read-only)
+  ├─ bookings              table + filter + export CSV (read-only)
+  └─ team                  (super_admin + event_admin) mời admin theo event
+src/routes/admin.users.tsx                 chỉ super_admin: quản lý toàn bộ admin/role
 ```
 
-API dự kiến:
+### UX nhập song ngữ
+- Mỗi field i18n hiển thị 2 tab `VI | EN` trong cùng FormField (component `<I18nInput>`, `<I18nTextarea>`, `<I18nRichBlocks>`). Giá trị lưu `{ vi, en }`.
+- Validate: bắt buộc cả 2 ngôn ngữ ở các field chính (title, name); description có thể fallback nếu thiếu.
+- Block editor (news/topics): danh sách block kéo-thả, mỗi block có 2 tab VI/EN.
 
-```ts
-const { t, lang, setLang } = useT();
-t("header.register")          // "Register Now" / "Đăng ký ngay"
-t("agenda.day", { n: 2 })     // "Day 2" / "Ngày 2"
-```
+### Tạo sự kiện mới
+- Form: name (i18n), slug, ngày bắt đầu/kết thúc, địa điểm, ngôn ngữ mặc định.
+- "Bản ghi trống" — không clone. (theo lựa chọn của bạn)
+- Sau khi tạo: chuyển vào `/admin/$eventId/settings`.
 
-`LanguageProvider` bọc trong `__root.tsx` (sau `AuthProvider`).
+## 7. Seed dữ liệu ASF 2026 từ mock
 
-## 3. Component chuyển ngôn ngữ
+- Một migration/script chạy 1 lần: tạo event `asf-2026` (is_default=true, status=published) + insert toàn bộ dữ liệu hiện tại từ `src/lib/event.ts`, `news.ts`, `topics.ts`, `speakers.ts`, `hotels.ts`, `countries.ts (customerTypes)`, các text trong section component.
+- Field i18n: với chỗ hiện chỉ có 1 ngôn ngữ → đặt cùng giá trị cho cả `vi` và `en` để admin sửa lại sau (có badge "Chưa dịch" trong CMS để dễ rà).
+- Asset import: copy file ảnh trong `src/assets/...` lên Storage bucket khi seed (script Node chạy với service role).
 
-- `src/components/LanguageSwitcher.tsx`: 2 pill `EN | VI`, hiệu ứng active = gold.
-- Đặt trong `Header.tsx` ngay trước nút "Register Now".
-- Mobile drawer cũng có 1 hàng switch.
+## 8. Server functions chính
 
-## 4. Phạm vi nội dung cần dịch (chia 4 nhóm để làm tuần tự)
+- `verifyAccessCode({ eventId, code })` — kiểm code khách, trả AuthUser.
+- `submitRegistration({ eventId, payload })`, `submitBooking({ eventId, payload })`.
+- `cloneEvent({ sourceEventId, newSlug, newName })` (tuỳ chọn để clone nhanh, không bắt buộc giai đoạn 1).
+- `exportRegistrations(eventId)` / `exportBookings(eventId)` → CSV.
 
-**Nhóm A — Khung điều hướng & layout (ưu tiên 1)**
+## 9. Lộ trình triển khai (8 mốc)
 
-- `Header` (NAV labels, Register Now, Event Handbook, dropdown News)
-- `Footer`
-- `AccountMenu`, `AuthButton`, dialog đăng nhập
-- `LockedSection` (text khóa)
-- 404 / error page trong `__root.tsx`
+1. **Bật Cloud + Auth + bảng `events`/`profiles`/`user_roles`/`has_role`** + route `/admin/login`, `/admin` (danh sách event), seed 1 super_admin đầu tiên.
+2. **Schema toàn bộ bảng nội dung + RLS + Storage bucket**. Migration seed ASF 2026 từ mock (insert dữ liệu hiện tại).
+3. **Refactor landing**: thêm `EventProvider`, đổi tất cả section dùng data từ context (chưa đổi URL — vẫn `/`, đọc event default). Verify trang chủ chạy đúng từ DB.
+4. **Multi-event URL**: thêm routes `/e/$eventSlug/...`, redirect `/` → default. Auth khách + form đăng ký gọi server fn theo event.
+5. **CMS — nhóm core**: Settings, Hero, Overview, Agenda, Speakers, Topics (kèm `<I18nInput>` + `<I18nRichBlocks>`).
+6. **CMS — nhóm còn lại**: Hotels, News, Press, FAQ, Sponsors, Documents, Library, Contact, Footer, Why Attend, Key Content.
+7. **CMS — vận hành**: Access Codes, Registrations, Bookings (table + export), Team/Users + phân quyền.
+8. **Hoàn thiện**: dashboard overview, badge "chưa dịch", upload ảnh, theme/branding per event, nút duplicate event (clone).
 
-**Nhóm B — Section trang chủ (ưu tiên 2)**
-Hero, Overview, WhyAttend, Agenda, Register (form labels + success dialog),
-Hotels (card + dialog booking), Location, Speakers, KeyContent, Documents,
-Library, News, PressRelease, Sponsors, FAQ, Contact.
+Mỗi mốc có thể publish độc lập, không vỡ landing.
 
-**Nhóm C — Trang phụ**
-`/library`, `/account/registrations`, `/account/bookings`,
-`/news/$slug`, `/topics/$slug`.
+## 10. Rủi ro & lưu ý
 
-**Nhóm D — Dữ liệu mock có nội dung dài**
+- **Khối lượng**: rất lớn — nên bám lộ trình 8 mốc, mỗi mốc 1 lượt build.
+- **Routing**: chuyển sang `/e/$slug` sẽ ảnh hưởng SEO của link cũ; redirect 301 từ `/` về default event sẽ giải quyết.
+- **i18n JSONB**: query đơn giản (`value->>lang`), nhưng nếu cần search full-text 2 ngôn ngữ sẽ cần index riêng (chưa cần giai đoạn này).
+- **Storage**: ảnh seed dùng path tương đối hiện tại; sau khi đẩy lên bucket cần đổi sang URL public của Cloud.
+- **Phân quyền**: super_admin không gắn event; event_admin chỉ thao tác đúng event_id của mình — RLS bắt buộc, không tin client.
+- **Backward compat**: trong lúc refactor, giữ song song mock cũ tới hết mốc 3 để landing không vỡ.
 
-- `src/lib/event.ts` (agenda từng ngày, mô tả phiên)
-- `src/lib/news.ts` (tin tức)
-- `src/lib/topics.ts`, `src/lib/speakers.ts` (bio, mô tả chủ đề)
-- `src/lib/hotels.ts` (mô tả, perks)
-- `src/lib/countries.ts` (`customerTypes`)
+## 11. Câu cần bạn quyết trước khi bắt đầu mốc 1
 
-→ Đổi shape: thay vì `title: string`, dùng `title: { en: string; vi: string }`,
-hoặc thêm hàm helper `pickLocale(value, lang)`.
-
-## 5. Quy ước key dịch
-
-- Dạng dot-path theo vùng: `header.*`, `hero.*`, `agenda.*`, `register.form.*`, `auth.dialog.*`.
-- Chuỗi có biến dùng `{name}`: `t("hero.dateRange", { start, end })`.
-- Số ít/nhiều: dùng hàm `tn(key, count)` đơn giản (en: "1 day" / "{n} days"; vi: "{n} ngày").
-- Ngày tháng: format theo `lang` qua `Intl.DateTimeFormat`.
-
-## 6. Lộ trình triển khai (4 bước, làm dần)
-
-1. **Bước 1 — Hạ tầng**: tạo `i18n/index.tsx`, 2 file dictionary rỗng,
-  provider, `LanguageSwitcher`, gắn vào header & root. Mặc định `vi`.
-2. **Bước 2 — Nhóm A**: dịch toàn bộ khung navigation + auth UI.
-3. **Bước 3 — Nhóm B**: dịch các section trang chủ. Form Register/Hotels
-  chỉ dịch label, giữ giá trị nhập của user.
-4. **Bước 4 — Nhóm C + D**: chuyển mock data sang đa ngôn ngữ và dịch các
-  trang phụ.
-
-Mỗi bước có thể publish độc lập, không vỡ build.
-
-## 7. Rủi ro & lưu ý
-
-- **Bundle size**: 2 dictionary tải đồng bộ, ước < 30KB gzip — chấp nhận được.
-- **SEO**: `<title>` và meta `description` trong `head()` của từng route sẽ
-đọc theo lang lưu trong localStorage → SSR sẽ không biết. Giải pháp: vẫn
-giữ tiếng Anh ở `head()` (chuẩn quốc tế), đổi text in-page theo lang.
-- **Layout dài hơn**: tiếng Việt dài hơn ~15%, vài chỗ (button, badge) cần
-kiểm tra wrap; sẽ rà lại ở bước 2.
-- Không đụng tới logic Auth, route, dữ liệu submit — chỉ thay text hiển thị.
-
-## 8. Bạn cần quyết định trước khi bắt đầu
-
-- Ngôn ngữ mặc định khi vào lần đầu: **Tiếng Việt** (đề xuất) hay Tiếng Anh?
-- Có cần auto-detect theo `navigator.language` không, hay luôn theo mặc định?
-- Có muốn URL kèm tiền tố ngôn ngữ (`/vi/...`, `/en/...`) không? (Đề xuất:
-KHÔNG — đơn giản hơn, đủ cho phạm vi mock hiện tại.)
-  => Mặc định ngôn ngữ tiếng Việt.
-
-9, Lưu ý: Đây chỉ là mockup mặc định cho Front-end để demo khách hàng, không phải xây dựng cả BE.
+- Email super_admin đầu tiên là gì? (mình sẽ thêm bằng add-secret hoặc seed thủ công sau khi bạn đăng ký)
+- URL public mặc định: giữ `/` redirect → `/e/asf-2026`, hay đổi hẳn root thành `/e/asf-2026` (link cũ sẽ vỡ)?
+- "Cẩm nang sự kiện" có nằm trong template per-event hay là tài liệu chung? (giả định: per-event, nằm trong `documents`).
