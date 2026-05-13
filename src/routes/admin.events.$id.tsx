@@ -669,7 +669,7 @@ function SettingsForm({
             label="Footer text"
             value={form.footer_text}
             onChange={(v) => setForm({ ...form, footer_text: v })}
-            textarea
+            rich
           />
         </section>
 
