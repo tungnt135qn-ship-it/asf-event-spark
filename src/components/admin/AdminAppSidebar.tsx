@@ -231,22 +231,22 @@ export function AdminAppSidebar() {
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("topics")} onClick={() => goEventTab("topics")}>
+                          <BookOpen className="h-4 w-4" /><span>Chủ đề</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("agenda")} onClick={() => goEventTab("agenda")}>
+                          <CalendarDays className="h-4 w-4" /><span>Lịch trình</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
                         <SidebarMenuButton isActive={eventTab("faqs")} onClick={() => goEventTab("faqs")}>
                           <HelpCircle className="h-4 w-4" /><span>FAQ</span>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <SidebarMenuItem>
-                        <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
-                          <BookOpen className="h-4 w-4" /><span>Chủ đề</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
-                          <CalendarDays className="h-4 w-4" /><span>Lịch trình</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                        <SidebarMenuButton isActive={eventTab("press")} onClick={() => goEventTab("press")}>
                           <Megaphone className="h-4 w-4" /><span>Thông cáo</span>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -255,31 +255,31 @@ export function AdminAppSidebar() {
                 </Collapsible>
 
                 {/* TÀI NGUYÊN group */}
-                <Collapsible defaultOpen className="group/collapsible">
+                <Collapsible defaultOpen className="group/collapsible-res">
                   <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton>
                         <Folder className="h-4 w-4" />
                         <span>Tài nguyên</span>
-                        <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                        <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible-res:rotate-180" />
                       </SidebarMenuButton>
                     </CollapsibleTrigger>
                   </SidebarMenuItem>
                   <CollapsibleContent>
                     <SidebarMenu className="ml-4 border-l pl-2">
                       <SidebarMenuItem>
-                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
-                          <Hotel className="h-4 w-4" /><span>Khách sạn</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                        <SidebarMenuButton isActive={eventTab("documents")} onClick={() => goEventTab("documents")}>
                           <FileText className="h-4 w-4" /><span>Tài liệu</span>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <SidebarMenuItem>
-                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                        <SidebarMenuButton isActive={eventTab("library")} onClick={() => goEventTab("library")}>
                           <ImageIcon className="h-4 w-4" /><span>Thư viện</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                          <Hotel className="h-4 w-4" /><span>Khách sạn</span>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <SidebarMenuItem>

@@ -36,6 +36,11 @@ import { RichTextI18nField } from "@/components/admin/RichTextEditor";
 import { OverviewDashboard } from "@/components/admin/panels/OverviewDashboard";
 import { NewsPanel } from "@/components/admin/panels/NewsPanel";
 import { FaqsPanel } from "@/components/admin/panels/FaqsPanel";
+import { DocumentsPanel } from "@/components/admin/panels/DocumentsPanel";
+import { LibraryPanel } from "@/components/admin/panels/LibraryPanel";
+import { PressPanel } from "@/components/admin/panels/PressPanel";
+import { TopicsPanel } from "@/components/admin/panels/TopicsPanel";
+import { AgendaPanel } from "@/components/admin/panels/AgendaPanel";
 
 type EventTab =
   | "overview"
@@ -46,7 +51,12 @@ type EventTab =
   | "modules"
   | "resources"
   | "news"
-  | "faqs";
+  | "faqs"
+  | "documents"
+  | "library"
+  | "press"
+  | "topics"
+  | "agenda";
 const VALID_TABS: EventTab[] = [
   "overview",
   "general",
@@ -57,6 +67,11 @@ const VALID_TABS: EventTab[] = [
   "resources",
   "news",
   "faqs",
+  "documents",
+  "library",
+  "press",
+  "topics",
+  "agenda",
 ];
 
 export const Route = createFileRoute("/admin/events/$id")({
@@ -207,10 +222,15 @@ function EventTabs({
         <TabsTrigger value="settings">Cấu hình</TabsTrigger>
         <TabsTrigger value="theme">Giao diện</TabsTrigger>
         <TabsTrigger value="content">Nội dung</TabsTrigger>
-        <TabsTrigger value="modules">Module</TabsTrigger>
-        <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
         <TabsTrigger value="news">Tin tức</TabsTrigger>
+        <TabsTrigger value="topics">Chủ đề</TabsTrigger>
+        <TabsTrigger value="agenda">Lịch trình</TabsTrigger>
         <TabsTrigger value="faqs">FAQ</TabsTrigger>
+        <TabsTrigger value="press">Thông cáo</TabsTrigger>
+        <TabsTrigger value="documents">Tài liệu</TabsTrigger>
+        <TabsTrigger value="library">Thư viện</TabsTrigger>
+        <TabsTrigger value="modules">Diễn giả/NTT</TabsTrigger>
+        <TabsTrigger value="resources">Khách sạn/Codes</TabsTrigger>
       </TabsList>
 
       <TabsContent value="overview" className="mt-4">
@@ -242,12 +262,13 @@ function EventTabs({
       <TabsContent value="resources" className="mt-4">
         <ResourcesTab eventId={eventId} />
       </TabsContent>
-      <TabsContent value="news" className="mt-4">
-        <NewsPanel eventId={eventId} />
-      </TabsContent>
-      <TabsContent value="faqs" className="mt-4">
-        <FaqsPanel eventId={eventId} />
-      </TabsContent>
+      <TabsContent value="news" className="mt-4"><NewsPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="faqs" className="mt-4"><FaqsPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="topics" className="mt-4"><TopicsPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="documents" className="mt-4"><DocumentsPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="library" className="mt-4"><LibraryPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="press" className="mt-4"><PressPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="agenda" className="mt-4"><AgendaPanel eventId={eventId} /></TabsContent>
     </Tabs>
   );
 }
