@@ -615,7 +615,7 @@ function DocumentsEditor({
             />
             <div className="space-y-3">
               <I18nField label="Tên" value={d.name} onChange={(v) => update(idx, { name: v })} />
-              <I18nField label="Mô tả" value={d.description} onChange={(v) => update(idx, { description: v })} textarea />
+              <I18nField label="Mô tả" value={d.description} onChange={(v) => update(idx, { description: v })} rich />
               <div className="grid md:grid-cols-3 gap-3">
                 <div className="md:col-span-2">
                   <Label className="text-xs">File</Label>
