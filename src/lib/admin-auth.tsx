@@ -111,6 +111,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
         session,
         roles,
         loading,
+        rolesLoading,
         isSuperAdmin,
         canManageEvent,
         signIn,
