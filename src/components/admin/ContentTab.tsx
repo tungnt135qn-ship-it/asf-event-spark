@@ -213,10 +213,11 @@ function HeroForm({
         />
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Background URL</Label>
-            <Input
-              value={form.background_url ?? ""}
-              onChange={(e) => setForm({ ...form, background_url: e.target.value || null })}
+            <Label>Background</Label>
+            <ImageUpload
+              value={form.background_url}
+              onChange={(url) => setForm({ ...form, background_url: url })}
+              folder="hero"
             />
           </div>
           <div className="space-y-2">
