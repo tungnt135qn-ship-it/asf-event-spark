@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { ArrowLeft, ExternalLink, Plus, Trash2, Save, Star } from "lucide-react";
 import { toast } from "sonner";
+import { ContentTab } from "@/components/admin/ContentTab";
 
 export const Route = createFileRoute("/admin/events/$id")({
   component: EventDetailPage,
@@ -128,9 +129,7 @@ function EventDetailPage() {
         <TabsList>
           <TabsTrigger value="general">Thông tin chung</TabsTrigger>
           <TabsTrigger value="settings">Cấu hình</TabsTrigger>
-          <TabsTrigger value="content" disabled>
-            Nội dung (sắp ra mắt)
-          </TabsTrigger>
+          <TabsTrigger value="content">Nội dung</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="mt-4">
@@ -143,6 +142,10 @@ function EventDetailPage() {
             settings={data.settings as Record<string, unknown> | null}
             onSaved={() => refetch()}
           />
+        </TabsContent>
+
+        <TabsContent value="content" className="mt-4">
+          <ContentTab eventId={event.id} />
         </TabsContent>
       </Tabs>
     </div>
