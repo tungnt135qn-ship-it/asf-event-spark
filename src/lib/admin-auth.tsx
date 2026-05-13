@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { getAdminRoles } from "@/lib/admin-roles.functions";
 
 export type AppRole = "super_admin" | "event_admin" | "editor";
 
@@ -34,12 +35,15 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
   const loadRoles = async (uid: string) => {
     setRolesLoading(true);
-    const { data } = await supabase
-      .from("user_roles")
-      .select("role, event_id")
-      .eq("user_id", uid);
-    setRoles((data ?? []) as UserRole[]);
-    setRolesLoading(false);
+    try {
+      const data = await getAdminRoles();
+      setRoles((data ?? []) as UserRole[]);
+    } catch (error) {
+      console.error("Unable to load admin roles", error);
+      setRoles([]);
+    } finally {
+      setRolesLoading(false);
+    }
   };
 
   useEffect(() => {
