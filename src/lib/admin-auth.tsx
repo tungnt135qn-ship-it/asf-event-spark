@@ -14,6 +14,7 @@ type AdminAuthContextValue = {
   session: Session | null;
   roles: UserRole[];
   loading: boolean;
+  rolesLoading: boolean;
   isSuperAdmin: boolean;
   canManageEvent: (eventId: string) => boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
