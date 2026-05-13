@@ -9,6 +9,7 @@ import {
   updateEventStatus,
   setDefaultEvent,
   upsertEventSettings,
+  updateEventTheme,
 } from "@/lib/event-admin.functions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
