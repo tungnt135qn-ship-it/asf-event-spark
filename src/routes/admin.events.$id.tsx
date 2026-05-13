@@ -378,19 +378,19 @@ function GeneralForm({
 
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Logo URL</Label>
-            <Input
-              value={form.logo_url ?? ""}
-              onChange={(e) => setForm({ ...form, logo_url: e.target.value || null })}
-              placeholder="https://…"
+            <Label>Logo</Label>
+            <ImageUpload
+              value={form.logo_url}
+              onChange={(url) => setForm({ ...form, logo_url: url })}
+              folder="events/logo"
             />
           </div>
           <div className="space-y-2">
-            <Label>Cover URL</Label>
-            <Input
-              value={form.cover_url ?? ""}
-              onChange={(e) => setForm({ ...form, cover_url: e.target.value || null })}
-              placeholder="https://…"
+            <Label>Ảnh bìa (cover)</Label>
+            <ImageUpload
+              value={form.cover_url}
+              onChange={(url) => setForm({ ...form, cover_url: url })}
+              folder="events/cover"
             />
           </div>
         </div>
