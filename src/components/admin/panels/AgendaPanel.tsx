@@ -12,8 +12,6 @@ import {
 } from "@/lib/event-items-admin.functions";
 import { CrudListPage, CrudColumn } from "@/components/admin/CrudListPage";
 import { FormDialog, I18n, I18nField, ReadonlyI18n, emptyI18n } from "@/components/admin/panels/_shared";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
