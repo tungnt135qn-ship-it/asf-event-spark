@@ -222,10 +222,15 @@ function EventTabs({
         <TabsTrigger value="settings">Cấu hình</TabsTrigger>
         <TabsTrigger value="theme">Giao diện</TabsTrigger>
         <TabsTrigger value="content">Nội dung</TabsTrigger>
-        <TabsTrigger value="modules">Module</TabsTrigger>
-        <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
         <TabsTrigger value="news">Tin tức</TabsTrigger>
+        <TabsTrigger value="topics">Chủ đề</TabsTrigger>
+        <TabsTrigger value="agenda">Lịch trình</TabsTrigger>
         <TabsTrigger value="faqs">FAQ</TabsTrigger>
+        <TabsTrigger value="press">Thông cáo</TabsTrigger>
+        <TabsTrigger value="documents">Tài liệu</TabsTrigger>
+        <TabsTrigger value="library">Thư viện</TabsTrigger>
+        <TabsTrigger value="modules">Diễn giả/NTT</TabsTrigger>
+        <TabsTrigger value="resources">Khách sạn/Codes</TabsTrigger>
       </TabsList>
 
       <TabsContent value="overview" className="mt-4">
@@ -257,12 +262,13 @@ function EventTabs({
       <TabsContent value="resources" className="mt-4">
         <ResourcesTab eventId={eventId} />
       </TabsContent>
-      <TabsContent value="news" className="mt-4">
-        <NewsPanel eventId={eventId} />
-      </TabsContent>
-      <TabsContent value="faqs" className="mt-4">
-        <FaqsPanel eventId={eventId} />
-      </TabsContent>
+      <TabsContent value="news" className="mt-4"><NewsPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="faqs" className="mt-4"><FaqsPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="topics" className="mt-4"><TopicsPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="documents" className="mt-4"><DocumentsPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="library" className="mt-4"><LibraryPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="press" className="mt-4"><PressPanel eventId={eventId} /></TabsContent>
+      <TabsContent value="agenda" className="mt-4"><AgendaPanel eventId={eventId} /></TabsContent>
     </Tabs>
   );
 }
