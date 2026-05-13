@@ -34,17 +34,24 @@ type I18nList = { vi: string[]; en: string[] };
 const emptyI18n: I18n = { vi: "", en: "" };
 const emptyI18nList: I18nList = { vi: [], en: [] };
 
+import { RichTextI18nField } from "@/components/admin/RichTextEditor";
+
 function I18nField({
   label,
   value,
   onChange,
   textarea,
+  rich,
 }: {
   label: string;
   value: I18n;
   onChange: (v: I18n) => void;
   textarea?: boolean;
+  rich?: boolean;
 }) {
+  if (rich) {
+    return <RichTextI18nField label={label} value={value} onChange={onChange} />;
+  }
   const Field = textarea ? Textarea : Input;
   return (
     <div className="space-y-1.5">
@@ -288,7 +295,7 @@ function HotelsEditor({
             <div className="mt-3 space-y-3">
               <I18nField label="Hạng" value={h.tier} onChange={(v) => update(idx, { tier: v })} />
               <I18nField label="Địa chỉ" value={h.address} onChange={(v) => update(idx, { address: v })} />
-              <I18nField label="Mô tả" value={h.description} onChange={(v) => update(idx, { description: v })} textarea />
+              <I18nField label="Mô tả" value={h.description} onChange={(v) => update(idx, { description: v })} rich />
             </div>
             <div className="mt-3 grid md:grid-cols-2 gap-3">
               <div>
@@ -461,7 +468,7 @@ function NewsEditor({
             </div>
             <div className="mt-3 space-y-3">
               <I18nField label="Tiêu đề" value={n.title} onChange={(v) => update(idx, { title: v })} />
-              <I18nField label="Mô tả ngắn" value={n.excerpt} onChange={(v) => update(idx, { excerpt: v })} textarea />
+              <I18nField label="Mô tả ngắn" value={n.excerpt} onChange={(v) => update(idx, { excerpt: v })} rich />
             </div>
             <div className="mt-3 grid md:grid-cols-2 gap-3">
               <div>
@@ -608,7 +615,7 @@ function DocumentsEditor({
             />
             <div className="space-y-3">
               <I18nField label="Tên" value={d.name} onChange={(v) => update(idx, { name: v })} />
-              <I18nField label="Mô tả" value={d.description} onChange={(v) => update(idx, { description: v })} textarea />
+              <I18nField label="Mô tả" value={d.description} onChange={(v) => update(idx, { description: v })} rich />
               <div className="grid md:grid-cols-3 gap-3">
                 <div className="md:col-span-2">
                   <Label className="text-xs">File</Label>
@@ -893,7 +900,7 @@ function PressEditor({
             />
             <div className="space-y-3">
               <I18nField label="Tiêu đề" value={p.title} onChange={(v) => update(idx, { title: v })} />
-              <I18nField label="Mô tả" value={p.description} onChange={(v) => update(idx, { description: v })} textarea />
+              <I18nField label="Mô tả" value={p.description} onChange={(v) => update(idx, { description: v })} rich />
               <div className="grid md:grid-cols-2 gap-3">
                 <div>
                   <Label className="text-xs">Nguồn</Label>

@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trash2, Save, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { RichTextI18nField } from "@/components/admin/RichTextEditor";
 
 type I18n = { vi: string; en: string };
 const emptyI18n: I18n = { vi: "", en: "" };
@@ -27,12 +28,17 @@ function I18nField({
   value,
   onChange,
   textarea,
+  rich,
 }: {
   label: string;
   value: I18n;
   onChange: (v: I18n) => void;
   textarea?: boolean;
+  rich?: boolean;
 }) {
+  if (rich) {
+    return <RichTextI18nField label={label} value={value} onChange={onChange} />;
+  }
   const Field = textarea ? Textarea : Input;
   return (
     <div className="space-y-2">
@@ -194,7 +200,7 @@ function HeroForm({
     <Card className="p-6">
       <form onSubmit={submit} className="space-y-5">
         <I18nField label="Tagline" value={form.tagline} onChange={(v) => setForm({ ...form, tagline: v })} />
-        <I18nField label="Lead" value={form.lead} onChange={(v) => setForm({ ...form, lead: v })} textarea />
+        <I18nField label="Lead" value={form.lead} onChange={(v) => setForm({ ...form, lead: v })} rich />
         <I18nField label="Date text" value={form.date_text} onChange={(v) => setForm({ ...form, date_text: v })} />
         <I18nField
           label="Location text"
@@ -326,7 +332,7 @@ function OverviewForm({
       <form onSubmit={submit} className="space-y-5">
         <I18nField label="Eyebrow" value={form.eyebrow} onChange={(v) => setForm({ ...form, eyebrow: v })} />
         <I18nField label="Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
-        <I18nField label="Lead" value={form.lead} onChange={(v) => setForm({ ...form, lead: v })} textarea />
+        <I18nField label="Lead" value={form.lead} onChange={(v) => setForm({ ...form, lead: v })} rich />
         <I18nField
           label="Orgs title"
           value={form.orgs_title}
@@ -482,7 +488,7 @@ function WhyForm({
             label="Description"
             value={it.description}
             onChange={(v) => update(idx, { description: v })}
-            textarea
+            rich
           />
         </Card>
       ))}
@@ -599,7 +605,7 @@ function KeyForm({
             />
           </div>
           <I18nField label="Title" value={it.title} onChange={(v) => update(idx, { title: v })} />
-          <I18nField label="Body" value={it.body} onChange={(v) => update(idx, { body: v })} textarea />
+          <I18nField label="Body" value={it.body} onChange={(v) => update(idx, { body: v })} rich />
         </Card>
       ))}
 

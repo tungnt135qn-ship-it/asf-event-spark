@@ -220,7 +220,7 @@ function DetailsDialog({ hotel }: { hotel: Hotel }) {
             <img key={i} src={src} alt={`${hotel.name} ${i + 1}`} className="h-32 w-full rounded-lg object-cover" />
           ))}
         </div>
-        <p className="text-sm leading-relaxed text-foreground/80">{hotel.description}</p>
+        <div className="text-sm leading-relaxed text-foreground/80 prose-content" dangerouslySetInnerHTML={{ __html: hotel.description ?? "" }} />
         <div className="rounded-xl border border-gold/30 bg-gold/5 p-4">
           <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gold">
             <Sparkles size={14} /> ASF 2026 delegate perks

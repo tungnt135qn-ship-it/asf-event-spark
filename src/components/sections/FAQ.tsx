@@ -11,6 +11,7 @@ import faqLottie from "@/assets/faq-chatbot.lottie?url";
 import { useT } from "@/lib/i18n";
 import type { Dict } from "@/lib/i18n/dictionaries/en";
 import { useFaqs } from "@/lib/event-adapters";
+import { RichHtml } from "@/components/ui/RichHtml";
 
 const faqKeys: { q: keyof Dict; a: keyof Dict }[] = [
   { q: "faq.q1", a: "faq.a1" },
@@ -46,7 +47,7 @@ export function FAQ() {
                   {f.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm leading-relaxed text-white/75">
-                  {f.a}
+                  <RichHtml html={f.a} />
                 </AccordionContent>
               </AccordionItem>
             ))}

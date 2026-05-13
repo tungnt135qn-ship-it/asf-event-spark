@@ -26,6 +26,7 @@ import {
 import { Plus, Trash2, Save, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { RichTextI18nField } from "@/components/admin/RichTextEditor";
 
 type I18n = { vi: string; en: string };
 const emptyI18n: I18n = { vi: "", en: "" };
@@ -35,12 +36,17 @@ function I18nField({
   value,
   onChange,
   textarea,
+  rich,
 }: {
   label: string;
   value: I18n;
   onChange: (v: I18n) => void;
   textarea?: boolean;
+  rich?: boolean;
 }) {
+  if (rich) {
+    return <RichTextI18nField label={label} value={value} onChange={onChange} />;
+  }
   const Field = textarea ? Textarea : Input;
   return (
     <div className="space-y-1.5">
@@ -503,7 +509,7 @@ function TopicsEditor({
           <I18nField
             label="Mô tả chi tiết"
             value={t.long_description}
-            textarea
+            rich
             onChange={(v) =>
               setItems((p) => p.map((x, idx) => (idx === i ? { ...x, long_description: v } : x)))
             }
@@ -795,7 +801,7 @@ function FaqsEditor({
           <I18nField
             label="Trả lời"
             value={f.answer}
-            textarea
+            rich
             onChange={(v) => setItems((p) => p.map((x, idx) => (idx === i ? { ...x, answer: v } : x)))}
           />
         </Card>
@@ -1148,7 +1154,7 @@ function AgendaEditor({
                 <I18nField
                   label="Mô tả"
                   value={s.description}
-                  textarea
+                  rich
                   onChange={(v) =>
                     setItems((p) =>
                       p.map((x, idx) =>

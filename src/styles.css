@@ -181,3 +181,30 @@ html {
   background: var(--gold);
 }
 
+
+/* Rich text (TipTap) — admin editor + frontend rendering */
+.prose-admin p { margin: 0.4em 0; }
+.prose-admin h2 { font-size: 1.25rem; font-weight: 700; margin: 0.8em 0 0.3em; }
+.prose-admin h3 { font-size: 1.1rem; font-weight: 600; margin: 0.7em 0 0.3em; }
+.prose-admin ul { list-style: disc; padding-left: 1.4em; margin: 0.4em 0; }
+.prose-admin ol { list-style: decimal; padding-left: 1.4em; margin: 0.4em 0; }
+.prose-admin blockquote { border-left: 3px solid hsl(var(--border)); padding-left: 0.8em; color: hsl(var(--muted-foreground)); margin: 0.6em 0; }
+.prose-admin a { color: hsl(var(--primary)); text-decoration: underline; }
+.prose-admin img { max-width: 100%; height: auto; border-radius: 6px; margin: 0.5em 0; }
+.prose-admin .is-editor-empty:first-child::before {
+  color: hsl(var(--muted-foreground));
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.prose-content { line-height: 1.7; }
+.prose-content p { margin: 0.6em 0; }
+.prose-content h2 { font-size: 1.4rem; font-weight: 700; margin: 1em 0 0.4em; }
+.prose-content h3 { font-size: 1.15rem; font-weight: 600; margin: 0.9em 0 0.3em; }
+.prose-content ul { list-style: disc; padding-left: 1.4em; margin: 0.5em 0; }
+.prose-content ol { list-style: decimal; padding-left: 1.4em; margin: 0.5em 0; }
+.prose-content blockquote { border-left: 3px solid currentColor; opacity: 0.85; padding-left: 0.9em; margin: 0.7em 0; font-style: italic; }
+.prose-content a { text-decoration: underline; }
+.prose-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 0.7em 0; }
