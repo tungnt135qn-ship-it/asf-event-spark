@@ -488,7 +488,7 @@ function WhyForm({
             label="Description"
             value={it.description}
             onChange={(v) => update(idx, { description: v })}
-            textarea
+            rich
           />
         </Card>
       ))}
