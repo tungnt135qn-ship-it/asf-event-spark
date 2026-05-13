@@ -25,7 +25,7 @@ export function News() {
               <div className="flex flex-1 flex-col p-6">
                 <div className="text-xs text-white/55">{n.date} · {n.readTime}</div>
                 <h3 className="mt-2 text-lg font-bold leading-snug text-white">{n.title}</h3>
-                <p className="mt-2 flex-1 text-sm text-white/70">{n.excerpt}</p>
+                <div className="mt-2 flex-1 text-sm text-white/70" dangerouslySetInnerHTML={{ __html: n.excerpt }} />
                 <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition group-hover:gap-3">
                   {t("news.readMore")} <ArrowRight size={14} />
                 </span>
