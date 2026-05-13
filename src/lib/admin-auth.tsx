@@ -33,10 +33,16 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [rolesLoading, setRolesLoading] = useState(true);
 
-  const loadRoles = async (uid: string) => {
+  const loadRoles = async (_uid: string) => {
     setRolesLoading(true);
     try {
-      const data = await getAdminRoles();
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+      if (!token) throw new Error("Missing admin session token");
+
+      const data = await getAdminRoles({
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setRoles((data ?? []) as UserRole[]);
     } catch (error) {
       console.error("Unable to load admin roles", error);
