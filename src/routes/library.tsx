@@ -1,31 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Header } from "@/components/Header";
-import { Starfield } from "@/components/Starfield";
-import { Footer } from "@/components/sections/Footer";
-import { Library } from "@/components/sections/Library";
-import { Gated, LockedSection } from "@/components/LockedSection";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { fetchDefaultEventSlug } from "@/lib/event-content";
 
 export const Route = createFileRoute("/library")({
-  head: () => ({
-    meta: [
-      { title: "Library — ASF 2026" },
-      { name: "description", content: "Photos and videos from Asian Securities Forum 2026 across all event days." },
-    ],
-  }),
-  component: LibraryPage,
+  beforeLoad: async () => {
+    const eventSlug = await fetchDefaultEventSlug();
+    if (eventSlug) {
+      throw redirect({ to: "/e/$slug/library", params: { slug: eventSlug } });
+    }
+    throw redirect({ to: "/" });
+  },
+  component: () => null,
 });
-
-function LibraryPage() {
-  return (
-    <div className="min-h-screen text-white">
-      <Starfield />
-      <Header />
-      <main className="pt-20">
-        <Gated fallback={<LockedSection id="library" eyebrow="Library" title="Photos & Videos" hint="Thư viện ảnh và video chính thức của ASF 2026 chỉ dành cho đại biểu đã đăng nhập." />}>
-          <Library />
-        </Gated>
-      </main>
-      <Footer />
-    </div>
-  );
-}

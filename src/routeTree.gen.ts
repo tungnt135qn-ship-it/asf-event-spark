@@ -18,6 +18,9 @@ import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as ESlugRouteImport } from './routes/e.$slug'
 import { Route as AccountRegistrationsRouteImport } from './routes/account.registrations'
 import { Route as AccountBookingsRouteImport } from './routes/account.bookings'
+import { Route as ESlugLibraryRouteImport } from './routes/e.$slug.library'
+import { Route as ESlugTopicsTopicSlugRouteImport } from './routes/e.$slug.topics.$topicSlug'
+import { Route as ESlugNewsNewsSlugRouteImport } from './routes/e.$slug.news.$newsSlug'
 
 const LibraryRoute = LibraryRouteImport.update({
   id: '/library',
@@ -64,6 +67,21 @@ const AccountBookingsRoute = AccountBookingsRouteImport.update({
   path: '/account/bookings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ESlugLibraryRoute = ESlugLibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => ESlugRoute,
+} as any)
+const ESlugTopicsTopicSlugRoute = ESlugTopicsTopicSlugRouteImport.update({
+  id: '/topics/$topicSlug',
+  path: '/topics/$topicSlug',
+  getParentRoute: () => ESlugRoute,
+} as any)
+const ESlugNewsNewsSlugRoute = ESlugNewsNewsSlugRouteImport.update({
+  id: '/news/$newsSlug',
+  path: '/news/$newsSlug',
+  getParentRoute: () => ESlugRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -71,20 +89,26 @@ export interface FileRoutesByFullPath {
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
-  '/e/$slug': typeof ESlugRoute
+  '/e/$slug': typeof ESlugRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/e/$slug/library': typeof ESlugLibraryRoute
+  '/e/$slug/news/$newsSlug': typeof ESlugNewsNewsSlugRoute
+  '/e/$slug/topics/$topicSlug': typeof ESlugTopicsTopicSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
-  '/e/$slug': typeof ESlugRoute
+  '/e/$slug': typeof ESlugRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/e/$slug/library': typeof ESlugLibraryRoute
+  '/e/$slug/news/$newsSlug': typeof ESlugNewsNewsSlugRoute
+  '/e/$slug/topics/$topicSlug': typeof ESlugTopicsTopicSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,10 +117,13 @@ export interface FileRoutesById {
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
-  '/e/$slug': typeof ESlugRoute
+  '/e/$slug': typeof ESlugRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/e/$slug/library': typeof ESlugLibraryRoute
+  '/e/$slug/news/$newsSlug': typeof ESlugNewsNewsSlugRoute
+  '/e/$slug/topics/$topicSlug': typeof ESlugTopicsTopicSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -110,6 +137,9 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin/'
+    | '/e/$slug/library'
+    | '/e/$slug/news/$newsSlug'
+    | '/e/$slug/topics/$topicSlug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -120,6 +150,9 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin'
+    | '/e/$slug/library'
+    | '/e/$slug/news/$newsSlug'
+    | '/e/$slug/topics/$topicSlug'
   id:
     | '__root__'
     | '/'
@@ -131,6 +164,9 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin/'
+    | '/e/$slug/library'
+    | '/e/$slug/news/$newsSlug'
+    | '/e/$slug/topics/$topicSlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -139,7 +175,7 @@ export interface RootRouteChildren {
   LibraryRoute: typeof LibraryRoute
   AccountBookingsRoute: typeof AccountBookingsRoute
   AccountRegistrationsRoute: typeof AccountRegistrationsRoute
-  ESlugRoute: typeof ESlugRoute
+  ESlugRoute: typeof ESlugRouteWithChildren
   NewsSlugRoute: typeof NewsSlugRoute
   TopicsSlugRoute: typeof TopicsSlugRoute
 }
@@ -209,6 +245,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountBookingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/e/$slug/library': {
+      id: '/e/$slug/library'
+      path: '/library'
+      fullPath: '/e/$slug/library'
+      preLoaderRoute: typeof ESlugLibraryRouteImport
+      parentRoute: typeof ESlugRoute
+    }
+    '/e/$slug/topics/$topicSlug': {
+      id: '/e/$slug/topics/$topicSlug'
+      path: '/topics/$topicSlug'
+      fullPath: '/e/$slug/topics/$topicSlug'
+      preLoaderRoute: typeof ESlugTopicsTopicSlugRouteImport
+      parentRoute: typeof ESlugRoute
+    }
+    '/e/$slug/news/$newsSlug': {
+      id: '/e/$slug/news/$newsSlug'
+      path: '/news/$newsSlug'
+      fullPath: '/e/$slug/news/$newsSlug'
+      preLoaderRoute: typeof ESlugNewsNewsSlugRouteImport
+      parentRoute: typeof ESlugRoute
+    }
   }
 }
 
@@ -222,16 +279,40 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface ESlugRouteChildren {
+  ESlugLibraryRoute: typeof ESlugLibraryRoute
+  ESlugNewsNewsSlugRoute: typeof ESlugNewsNewsSlugRoute
+  ESlugTopicsTopicSlugRoute: typeof ESlugTopicsTopicSlugRoute
+}
+
+const ESlugRouteChildren: ESlugRouteChildren = {
+  ESlugLibraryRoute: ESlugLibraryRoute,
+  ESlugNewsNewsSlugRoute: ESlugNewsNewsSlugRoute,
+  ESlugTopicsTopicSlugRoute: ESlugTopicsTopicSlugRoute,
+}
+
+const ESlugRouteWithChildren = ESlugRoute._addFileChildren(ESlugRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   LibraryRoute: LibraryRoute,
   AccountBookingsRoute: AccountBookingsRoute,
   AccountRegistrationsRoute: AccountRegistrationsRoute,
-  ESlugRoute: ESlugRoute,
+  ESlugRoute: ESlugRouteWithChildren,
   NewsSlugRoute: NewsSlugRoute,
   TopicsSlugRoute: TopicsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
