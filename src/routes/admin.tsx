@@ -17,9 +17,9 @@ function AdminRoot() {
 }
 
 function AdminGate() {
-  const { user, loading, isSuperAdmin, roles } = useAdminAuth();
+  const { user, loading, rolesLoading, isSuperAdmin, roles } = useAdminAuth();
 
-  if (loading) {
+  if (loading || (user && rolesLoading)) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-sm text-muted-foreground">Đang tải…</div>
