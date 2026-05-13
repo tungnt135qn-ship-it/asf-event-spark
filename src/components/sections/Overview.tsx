@@ -2,8 +2,7 @@ import { ExternalLink, CheckCircle2, Globe2, Building2, Calendar } from "lucide-
 import overviewImg from "@/assets/overview-hanoi.jpg";
 import vbmaLogo from "@/assets/vbma-logo.png";
 import { useT } from "@/lib/i18n";
-import { useOverview, useOptionalEventContent } from "@/lib/event-adapters";
-import { useOptionalEventContent as _x } from "@/lib/event-context";
+import { useOverview } from "@/lib/event-adapters";
 
 function Section({
   id,
