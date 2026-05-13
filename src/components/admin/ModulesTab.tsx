@@ -801,7 +801,7 @@ function FaqsEditor({
           <I18nField
             label="Trả lời"
             value={f.answer}
-            textarea
+            rich
             onChange={(v) => setItems((p) => p.map((x, idx) => (idx === i ? { ...x, answer: v } : x)))}
           />
         </Card>
