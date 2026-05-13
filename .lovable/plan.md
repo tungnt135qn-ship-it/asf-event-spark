@@ -1,88 +1,127 @@
-# Mốc 3 — Landing đọc DB, đa sự kiện, clone template
-
 ## Mục tiêu
-1. Landing (`/` + `/e/$slug` + route con) đọc 100% từ DB.
-2. `/` redirect tới event mặc định (`is_default=true, status=published`); `/e/$slug` render theo slug.
-3. Tạo event mới = **clone toàn bộ dữ liệu** từ event mặc định (ASF 2026) — không bao giờ để landing trống.
-4. Giữ nguyên giao diện hiện tại, không đổi UI.
 
-## A. Server functions (data layer)
+1. Sidebar admin tách 2 tầng rõ ràng: **Global** (luôn hiển thị) và **Event-scoped** (chỉ hiện khi đang ở trong 1 sự kiện).
+2. Khi đổi sự kiện đang focus → toàn bộ menu con và dữ liệu các màn con tự động cập nhật theo `eventId`.
+3. Các field nội dung dài (mô tả overview, key content, news body, topic body, footer, settings…) chuyển sang **rich-text editor** (TipTap) thay cho `<Textarea>`.
+4. Chuẩn hoá lại layout các màn "nội dung" để dùng chung 1 khung: header + breadcrumb + tabs/sub-nav + content card.
 
-File `src/lib/event-content.functions.ts`:
-- `getEventBySlug(slug)` → row `events` + đảm bảo `status=published` (anon).
-- `getDefaultEventSlug()` → slug của event `is_default=true, status=published`.
-- `getEventContent(eventId)` → 1 RPC gom: `event_settings`, `hero_content`, `overview_content`, `why_attend_items`, `key_contents`, `topics`, `speakers`, `agenda_days` + `agenda_sessions`, `hotels`, `news`, `press_releases`, `faqs`, `sponsors`, `documents`, `library_items`. Trả về object `EventContent` đã chuẩn hoá.
-- `getNewsBySlug(eventId, slug)` cho `/news/$slug` (hoặc đổi sang `/e/$slug/news/$newsSlug`).
-- `getTopicBySlug(eventId, slug)` cho `/topics/$slug`.
+---
 
-File `src/lib/event-clone.functions.ts` (admin-only, `requireSupabaseAuth` + `super_admin`):
-- `cloneEventFromDefault({ slug, name_vi, name_en })`:
-  - Tạo row `events` mới (status=`draft`, is_default=false).
-  - Copy tất cả bảng nội dung từ event mặc định sang event mới (giữ nguyên position/i18n).
-  - Trả về event mới.
+## 1. Cấu trúc menu mới
 
-## B. Adapter i18n
-`src/lib/i18n/from-db.ts`: helper `pickI18n(jsonb, lang) → string` và `pickI18nList`.
-Tất cả section nhận `EventContent` + `lang` từ context, gọi adapter để hiển thị.
+```text
+GLOBAL (luôn hiện)
+├─ Dashboard          /admin
+├─ Sự kiện            /admin                (list)
+├─ Người dùng         /admin/users          (super admin)
+└─ Cài đặt hệ thống   /admin/settings
 
-## C. Context + provider
-`src/lib/event-content-context.tsx`:
-- `EventContentProvider` bọc landing, expose `useEventContent()` trả `{event, content, lang}`.
-- Loader của route landing dùng `ensureQueryData` với `eventContentQueryOptions(slug)`.
+EVENT (hiện khi route = /admin/events/$id/*)
+[Selector sự kiện đang focus  ▼]
+├─ Tổng quan          /admin/events/$id
+├─ Thông tin chung    /admin/events/$id/general
+├─ Cấu hình           /admin/events/$id/settings
+├─ Giao diện          /admin/events/$id/theme
+├─ Nội dung           /admin/events/$id/content
+│   ├─ Overview
+│   ├─ Key contents
+│   ├─ News
+│   ├─ Topics
+│   └─ FAQ
+├─ Module             /admin/events/$id/modules
+├─ Tài nguyên         /admin/events/$id/resources
+├─ Đăng ký            /admin/events/$id/registrations
+└─ Đặt phòng          /admin/events/$id/bookings
+```
 
-## D. Routing
+- Mở rộng nhóm "Event" tự động khi URL match `/admin/events/$id`.
+- Có **EventSwitcher** ở đầu nhóm Event (dropdown các event đang quản lý) → đổi sự kiện = `navigate` sang cùng sub-route của event mới, dữ liệu tự reload theo `eventId` mới.
+- Sidebar collapsible (icon-only) để có nhiều không gian cho màn nội dung.
 
-### Đổi cấu trúc routes
-- `src/routes/index.tsx`: chỉ làm redirect → `/e/{defaultSlug}` (loader gọi `getDefaultEventSlug`).
-- Mới: `src/routes/e.$slug.tsx` — layout event, render `<Landing />` (toàn bộ section hiện tại).
-- Mới: `src/routes/e.$slug.topics.$topicSlug.tsx` thay `topics/$slug` cũ.
-- Mới: `src/routes/e.$slug.news.$newsSlug.tsx` thay `news/$slug` cũ.
-- Mới: `src/routes/e.$slug.library.tsx` thay `library` cũ.
-- Cập nhật mọi `<Link to=...>` trong Header/Footer/section dùng param `slug`.
+---
 
-### Backwards compat
-- Giữ `/topics/$slug`, `/news/$slug`, `/library` nhưng làm redirect tới event mặc định để không vỡ link cũ.
+## 2. Refactor route
 
-## E. Refactor 17 section
-Mỗi section đổi từ `import { mock } from "@/lib/..."` sang `useEventContent()`:
+Hiện tại tất cả tab nội dung gộp trong 1 file `admin.events.$id.tsx` dùng `<Tabs>`. Sẽ tách thành các route con để URL phản ánh đúng vị trí, deep-link được, và sidebar highlight đúng:
 
-| Section | Nguồn DB |
-|---|---|
-| Hero | `hero_content` (+ countdown_to) |
-| Overview | `overview_content` |
-| WhyAttend | `why_attend_items` |
-| KeyContent | `key_contents` |
-| Agenda | `agenda_days` + `agenda_sessions` |
-| Speakers | `speakers` |
-| Topics (list) | `topics` |
-| Hotels | `hotels` + `event_settings.booking_enabled` |
-| News (list) | `news` |
-| PressRelease | `press_releases` |
-| FAQ | `faqs` |
-| Sponsors | `sponsors` |
-| Documents | `documents` + `event_settings.documents_locked` |
-| Library | `library_items` + `event_settings.library_locked` |
-| Contact | `event_settings.contact` |
-| Footer | `event_settings.footer_text` + `social_links` |
-| Register | `event_settings.registration_enabled` |
+- `admin.events.$id.tsx` → biến thành **layout route** (header + sidebar event scope + `<Outlet />`).
+- Tách thành các file:
+  - `admin.events.$id.index.tsx` (Tổng quan + KPI nhanh)
+  - `admin.events.$id.general.tsx`
+  - `admin.events.$id.settings.tsx`
+  - `admin.events.$id.theme.tsx`
+  - `admin.events.$id.content.tsx` (layout cho con)
+  - `admin.events.$id.content.overview.tsx`
+  - `admin.events.$id.content.key.tsx`
+  - `admin.events.$id.content.news.tsx`
+  - `admin.events.$id.content.topics.tsx`
+  - `admin.events.$id.content.faq.tsx`
+  - `admin.events.$id.modules.tsx`
+  - `admin.events.$id.resources.tsx`
+  - (đã có) `registrations`, `bookings`
 
-Mock files (`src/lib/event.ts`, `topics.ts`, `speakers.ts`, `hotels.ts`, `news.ts`, dictionaries section content) **giữ lại** làm reference, không xoá ngay (để rollback nếu cần). Dictionaries vẫn dùng cho UI strings (label nút, nav, form…).
+Code form/list hiện có được di chuyển nguyên trạng vào các route con tương ứng — không đổi server functions.
 
-## F. CMS dashboard cập nhật
-- Form "Tạo event mới" trong `admin.index.tsx` đổi sang gọi `cloneEventFromDefault` → đảm bảo event mới có sẵn data.
-- Hiển thị badge "Mặc định" / "Đã clone từ ASF 2026".
+---
 
-## G. SEO
-Mỗi route event set `head()` từ `event_settings.seo` + `events.name`.
+## 3. Rich-text editor
 
-## H. Kiểm thử
-1. `/` → redirect `/e/asf-2026`, landing render đầy đủ y hệt hiện tại.
-2. Topics/News/Library deep link hoạt động ở cả URL cũ lẫn mới.
-3. Tạo event mới `test-2027` qua CMS → publish → `/e/test-2027` render đầy đủ data ASF clone.
-4. Bật `library_locked` qua DB → section khoá lại trên landing.
-5. Kiểm tra console không còn import từ mock content (chỉ dictionaries UI strings).
+- Dùng **TipTap** (`@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-link`, `@tiptap/extension-image`, `@tiptap/extension-placeholder`).
+- Tạo component dùng chung `src/components/admin/RichTextEditor.tsx`:
+  - Toolbar: bold / italic / underline / heading 2-3 / bullet & ordered list / blockquote / link / image (upload qua bucket hiện có) / clear.
+  - Output **HTML string** lưu thẳng vào DB (các field hiện đang là `text` nên không cần migration).
+  - Hỗ trợ `value`, `onChange`, `placeholder`, `minHeight`.
+  - Có biến thể `RichTextI18nField` (vi/en song song) thay cho `I18nField` textarea.
+- Frontend render bằng `dangerouslySetInnerHTML` + class `prose` (Tailwind typography đã có thể dùng qua plugin hoặc CSS reset thủ công trong `styles.css`).
 
-## Ngoài phạm vi mốc 3
-- CMS UI form CRUD nội dung từng module (mốc 4).
-- Quản lý access codes / registrations / bookings UI (mốc 5).
-- Quản lý admin users (mốc 6).
+Các field áp dụng rich-editor:
+- `overview_content.description` (vi/en)
+- `key_contents.description` (vi/en)
+- `news.body` (vi/en)
+- `topics.body` (vi/en)
+- `faq.answer` (vi/en)
+- `event_settings.footer_text` (vi/en) — bản rút gọn (chỉ bold/link)
+
+Field ngắn (title, tagline, location, label, slug, contact info…) **giữ nguyên** Input thường.
+
+---
+
+## 4. Chuẩn hoá layout các màn nội dung
+
+Tạo wrapper `src/components/admin/PageShell.tsx`:
+
+```text
+┌─ Breadcrumb ────────────────────────────────┐
+│ Sự kiện > {event.name} > Nội dung > News   │
+├─ Title row + actions (Save / New / Filter)│
+├─ Optional sub-tabs (vi/en, draft/published)│
+└─ Content card (form hoặc list)             │
+```
+
+Mỗi màn nội dung:
+- List view: bảng có search + filter trạng thái + nút "Tạo mới".
+- Detail/edit: 2 cột — cột trái form (rich-editor full width), cột phải metadata (slug, cover, published_at, status).
+- Validation + toast nhất quán.
+
+---
+
+## 5. Chi tiết kỹ thuật
+
+- `bun add @tiptap/react @tiptap/starter-kit @tiptap/extension-link @tiptap/extension-image @tiptap/extension-placeholder @tiptap/extension-underline`
+- `EventSwitcher`: `useQuery` list events (đã có `listEventsAdmin`), lưu chọn vào URL (không cần localStorage).
+- Sidebar mới đặt trong `admin.tsx` thay cho `<aside>` hiện tại; dùng shadcn `Sidebar` + `SidebarProvider` để có collapse/icon mode.
+- Active state: `useRouterState({ select: r => r.location.pathname })` + `startsWith` cho group active.
+- Mọi route con vẫn dùng `useAdminAuth` và server functions hiện có; chỉ tách UI, không đụng business logic.
+- `routeTree.gen.ts` sẽ được Vite plugin tự cập nhật khi tạo file route mới.
+
+---
+
+## 6. Phạm vi giao hàng
+
+Để tránh PR quá lớn, mốc này chia 3 bước nhỏ trong cùng 1 lần:
+
+1. **Sidebar mới + EventSwitcher** (admin.tsx + AppSidebar component).
+2. **Tách routes con** cho `/admin/events/$id/*` (di chuyển code từ Tabs sang route files, giữ logic).
+3. **RichTextEditor + áp vào** Overview / Key content / News / Topics / FAQ / Footer.
+
+Không thay đổi: schema DB, server functions, các route frontend `/e/$slug`, dashboard charts, SEO helpers.
