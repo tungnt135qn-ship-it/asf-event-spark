@@ -16,7 +16,7 @@ export function EventContentProvider({
   content: EventContent;
   children: ReactNode;
 }) {
-  const { lang } = useLang();
+  const { lang } = useT();
   return (
     <EventContentContext.Provider value={{ content, lang }}>
       {children}
