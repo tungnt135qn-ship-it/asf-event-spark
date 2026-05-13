@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
-import { EVENT_DAYS } from "@/lib/event";
 import { Image as ImageIcon, Play, Calendar, X, ArrowRight } from "lucide-react";
 import { useT } from "@/lib/i18n";
+import { useAgendaDays, useLibraryItems, useCurrentEventSlug } from "@/lib/event-adapters";
 
 export type MediaType = "photo" | "video";
 export type MediaItem = {
@@ -15,7 +15,7 @@ export type MediaItem = {
   src: string;
 };
 
-// Mock data — Unsplash thumbnails grouped by event day
+// Fallback mock data — Unsplash thumbnails grouped by event day
 export const MEDIA: MediaItem[] = [
   { id: "p1-1", type: "photo", dayIndex: 1, title: "Welcome reception", thumb: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&q=70", src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&q=80" },
   { id: "p1-2", type: "photo", dayIndex: 1, title: "Hanoi city tour", thumb: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=70", src: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=1600&q=80" },
@@ -36,15 +36,19 @@ export function Library({ preview = false }: { preview?: boolean }) {
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("all");
   const [dayFilter, setDayFilter] = useState<number | "all">("all");
   const [previewItem, setPreviewItem] = useState<MediaItem | null>(null);
+  const days = useAgendaDays();
+  const dbMedia = useLibraryItems();
+  const eventSlug = useCurrentEventSlug();
+  const source: MediaItem[] = dbMedia ?? MEDIA;
 
   const items = useMemo(() => {
-    const filtered = MEDIA.filter(
+    const filtered = source.filter(
       (m) =>
         (typeFilter === "all" || m.type === typeFilter) &&
         (dayFilter === "all" || m.dayIndex === dayFilter),
     );
     return preview ? filtered.slice(0, 8) : filtered;
-  }, [typeFilter, dayFilter, preview]);
+  }, [typeFilter, dayFilter, preview, source]);
 
   return (
     <Section id="library" eyebrow={t("library.eyebrow")} title={t("library.title")}>
@@ -82,7 +86,7 @@ export function Library({ preview = false }: { preview?: boolean }) {
             >
               All days
             </button>
-            {EVENT_DAYS.map((d) => (
+            {days.map((d) => (
               <button
                 key={d.index}
                 onClick={() => setDayFilter(d.index)}
@@ -139,12 +143,22 @@ export function Library({ preview = false }: { preview?: boolean }) {
 
       {preview && (
         <div className="mt-8 flex justify-center">
-          <Link
-            to="/library"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-gold/60 px-6 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
-          >
-            {t("library.viewAll")} <ArrowRight size={16} />
-          </Link>
+          {eventSlug ? (
+            <Link
+              to="/e/$slug/library"
+              params={{ slug: eventSlug }}
+              className="inline-flex items-center gap-2 rounded-full border-2 border-gold/60 px-6 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
+            >
+              {t("library.viewAll")} <ArrowRight size={16} />
+            </Link>
+          ) : (
+            <Link
+              to="/library"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-gold/60 px-6 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
+            >
+              {t("library.viewAll")} <ArrowRight size={16} />
+            </Link>
+          )}
         </div>
       )}
 

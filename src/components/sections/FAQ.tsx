@@ -10,6 +10,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import faqLottie from "@/assets/faq-chatbot.lottie?url";
 import { useT } from "@/lib/i18n";
 import type { Dict } from "@/lib/i18n/dictionaries/en";
+import { useFaqs } from "@/lib/event-adapters";
 
 const faqKeys: { q: keyof Dict; a: keyof Dict }[] = [
   { q: "faq.q1", a: "faq.a1" },
@@ -24,6 +25,8 @@ const faqKeys: { q: keyof Dict; a: keyof Dict }[] = [
 
 export function FAQ() {
   const { t } = useT();
+  const dbFaqs = useFaqs();
+  const items = dbFaqs ?? faqKeys.map((f) => ({ q: t(f.q), a: t(f.a) }));
   return (
     <Section id="faq" eyebrow={t("faq.eyebrow")} title={t("faq.title")}>
       <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -33,17 +36,17 @@ export function FAQ() {
 
         <div>
           <Accordion type="single" collapsible className="space-y-3">
-            {faqKeys.map((f, i) => (
+            {items.map((f, i) => (
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
                 className="overflow-hidden rounded-xl border border-white/10 bg-white/5 px-5 backdrop-blur-md"
               >
                 <AccordionTrigger className="text-left text-base font-semibold text-white hover:text-gold hover:no-underline">
-                  {t(f.q)}
+                  {f.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm leading-relaxed text-white/75">
-                  {t(f.a)}
+                  {f.a}
                 </AccordionContent>
               </AccordionItem>
             ))}

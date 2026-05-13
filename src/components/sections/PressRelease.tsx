@@ -1,6 +1,7 @@
 import { Section } from "./Overview";
 import { ExternalLink, FileText } from "lucide-react";
 import { useT } from "@/lib/i18n";
+import { usePressReleases } from "@/lib/event-adapters";
 
 type PressItem = {
   date: string;
@@ -10,7 +11,7 @@ type PressItem = {
   source?: string;
 };
 
-const items: PressItem[] = [
+const FALLBACK: PressItem[] = [
   {
     date: "20 Mar 2026",
     title: "VBMA announces ASF 2026 host city and headline programme",
@@ -47,6 +48,8 @@ const items: PressItem[] = [
 
 export function PressRelease() {
   const { t } = useT();
+  const dbItems = usePressReleases();
+  const items = dbItems ?? FALLBACK;
   return (
     <Section id="press" eyebrow={t("press.eyebrow")} title={t("press.title")}>
       <div className="grid gap-4 md:grid-cols-2">

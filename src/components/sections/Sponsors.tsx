@@ -1,26 +1,11 @@
 import { Section } from "./Overview";
+import { useSponsorTiers } from "@/lib/event-adapters";
 
-const tiers = [
-  {
-    name: "Diamond Sponsors",
-    items: ["Vietcombank", "BIDV"],
-    cls: "from-gold/30 to-gold/5 text-2xl h-28 min-w-[260px]",
-  },
-  {
-    name: "Gold Sponsors",
-    items: ["VPBank", "Techcombank", "MB Securities", "ACB", "Sacombank"],
-    cls: "from-gold/20 to-transparent text-xl h-24 min-w-[220px]",
-  },
-  {
-    name: "Silver Sponsors",
-    items: ["SSI", "VNDirect", "HSC", "Mirae Asset", "VCBS", "BSC", "KIS"],
-    cls: "from-white/10 to-transparent text-lg h-20 min-w-[180px]",
-  },
-  {
-    name: "Partners",
-    items: ["ASIFMA", "JSDA", "KOFIA", "ICMA", "SIFMA", "ASEAN+3 BMI", "ADB", "IFC"],
-    cls: "from-white/5 to-transparent text-base h-16 min-w-[160px]",
-  },
+const TIER_CLS: string[] = [
+  "from-gold/30 to-gold/5 text-2xl h-28 min-w-[260px]",
+  "from-gold/20 to-transparent text-xl h-24 min-w-[220px]",
+  "from-white/10 to-transparent text-lg h-20 min-w-[180px]",
+  "from-white/5 to-transparent text-base h-16 min-w-[160px]",
 ];
 
 function Track({
@@ -76,6 +61,7 @@ function MarqueeRow({
 }
 
 export function Sponsors() {
+  const tiers = useSponsorTiers();
   return (
     <Section id="sponsors" eyebrow="Partners" title="Sponsors & Partners">
       <div className="space-y-10">
@@ -86,7 +72,7 @@ export function Sponsors() {
             </div>
             <MarqueeRow
               items={tier.items}
-              cls={tier.cls}
+              cls={TIER_CLS[idx] ?? TIER_CLS[TIER_CLS.length - 1]}
               reverse={idx % 2 === 1}
               speed={30 + idx * 8}
             />
