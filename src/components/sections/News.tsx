@@ -1,19 +1,22 @@
 import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
 import { ArrowRight } from "lucide-react";
-import { news } from "@/lib/news";
+import { useNewsList, useCurrentEventSlug } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 
 export function News() {
   const { t } = useT();
+  const news = useNewsList();
+  const eventSlug = useCurrentEventSlug();
   return (
     <Section id="news" eyebrow={t("news.eyebrow")} title={t("news.title")}>
       <div className="grid gap-6 md:grid-cols-3">
         {news.map((n) => (
           <Link
             key={n.slug}
-            to="/news/$slug"
-            params={{ slug: n.slug }}
+            to="/e/$slug/news/$newsSlug"
+            params={{ slug: eventSlug || "", newsSlug: n.slug }}
+            disabled={!eventSlug}
             className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:-translate-y-1 hover:border-gold/40"
           >
             <div className="relative h-44 overflow-hidden">

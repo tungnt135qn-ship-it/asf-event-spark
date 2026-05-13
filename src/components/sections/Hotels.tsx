@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Section } from "./Overview";
-import { hotels, type Hotel } from "@/lib/hotels";
+import { type Hotel } from "@/lib/hotels";
+import { useHotels } from "@/lib/event-adapters";
 import {
   Dialog,
   DialogContent,
@@ -310,6 +311,7 @@ export function HotelCard({ h }: { h: Hotel }) {
 
 export function Hotels() {
   const { t } = useT();
+  const hotels = useHotels();
   return (
     <Section id="hotels" eyebrow={t("hotels.eyebrow")} title={t("hotels.title")}>
       <p className="mx-auto -mt-6 mb-12 max-w-2xl text-center text-base text-white/70">
