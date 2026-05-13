@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Trash2, Save, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "sonner";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 type I18n = { vi: string; en: string };
 const emptyI18n: I18n = { vi: "", en: "" };
@@ -212,10 +213,11 @@ function HeroForm({
         />
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Background URL</Label>
-            <Input
-              value={form.background_url ?? ""}
-              onChange={(e) => setForm({ ...form, background_url: e.target.value || null })}
+            <Label>Background</Label>
+            <ImageUpload
+              value={form.background_url}
+              onChange={(url) => setForm({ ...form, background_url: url })}
+              folder="hero"
             />
           </div>
           <div className="space-y-2">
@@ -589,10 +591,11 @@ function KeyForm({
             </div>
           </div>
           <div className="space-y-2">
-            <Label>Image URL</Label>
-            <Input
-              value={it.image_url ?? ""}
-              onChange={(e) => update(idx, { image_url: e.target.value || null })}
+            <Label>Image</Label>
+            <ImageUpload
+              value={it.image_url}
+              onChange={(url) => update(idx, { image_url: url })}
+              folder="key-content"
             />
           </div>
           <I18nField label="Title" value={it.title} onChange={(v) => update(idx, { title: v })} />

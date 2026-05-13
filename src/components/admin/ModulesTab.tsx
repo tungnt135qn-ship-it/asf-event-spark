@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Plus, Trash2, Save, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "sonner";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 type I18n = { vi: string; en: string };
 const emptyI18n: I18n = { vi: "", en: "" };
@@ -276,14 +277,13 @@ function SpeakersEditor({
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs">Avatar URL</Label>
-            <Input
-              value={sp.avatar_url ?? ""}
-              onChange={(e) =>
-                setItems((p) =>
-                  p.map((x, idx) => (idx === i ? { ...x, avatar_url: e.target.value || null } : x))
-                )
+            <Label className="text-xs">Avatar</Label>
+            <ImageUpload
+              value={sp.avatar_url}
+              onChange={(url) =>
+                setItems((p) => p.map((x, idx) => (idx === i ? { ...x, avatar_url: url } : x)))
               }
+              folder="speakers"
             />
           </div>
 
@@ -478,15 +478,14 @@ function TopicsEditor({
                 }
               />
             </div>
-            <div className="space-y-1.5">
-              <Label className="text-xs">Image URL</Label>
-              <Input
-                value={t.image_url ?? ""}
-                onChange={(e) =>
-                  setItems((p) =>
-                    p.map((x, idx) => (idx === i ? { ...x, image_url: e.target.value || null } : x))
-                  )
+            <div className="space-y-1.5 md:col-span-1">
+              <Label className="text-xs">Hình ảnh</Label>
+              <ImageUpload
+                value={t.image_url}
+                onChange={(url) =>
+                  setItems((p) => p.map((x, idx) => (idx === i ? { ...x, image_url: url } : x)))
                 }
+                folder="topics"
               />
             </div>
           </div>
@@ -660,14 +659,13 @@ function SponsorsEditor({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs">Logo URL</Label>
-              <Input
-                value={s.logo_url ?? ""}
-                onChange={(e) =>
-                  setItems((p) =>
-                    p.map((x, idx) => (idx === i ? { ...x, logo_url: e.target.value || null } : x))
-                  )
+              <Label className="text-xs">Logo</Label>
+              <ImageUpload
+                value={s.logo_url}
+                onChange={(url) =>
+                  setItems((p) => p.map((x, idx) => (idx === i ? { ...x, logo_url: url } : x)))
                 }
+                folder="sponsors"
               />
             </div>
             <div className="space-y-1.5">

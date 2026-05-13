@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Plus, Trash2, Save, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "sonner";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 type I18n = { vi: string; en: string };
 type I18nList = { vi: string[]; en: string[] };
@@ -482,10 +483,11 @@ function NewsEditor({
             </div>
             <div className="mt-3 grid md:grid-cols-3 gap-3">
               <div className="md:col-span-2">
-                <Label className="text-xs">Ảnh bìa URL</Label>
-                <Input
-                  value={n.cover_url ?? ""}
-                  onChange={(e) => update(idx, { cover_url: e.target.value || null })}
+                <Label className="text-xs">Ảnh bìa</Label>
+                <ImageUpload
+                  value={n.cover_url}
+                  onChange={(url) => update(idx, { cover_url: url })}
+                  folder="news"
                 />
               </div>
               <div>
@@ -609,10 +611,12 @@ function DocumentsEditor({
               <I18nField label="Mô tả" value={d.description} onChange={(v) => update(idx, { description: v })} textarea />
               <div className="grid md:grid-cols-3 gap-3">
                 <div className="md:col-span-2">
-                  <Label className="text-xs">File URL</Label>
-                  <Input
-                    value={d.file_url ?? ""}
-                    onChange={(e) => update(idx, { file_url: e.target.value || null })}
+                  <Label className="text-xs">File</Label>
+                  <ImageUpload
+                    value={d.file_url}
+                    onChange={(url) => update(idx, { file_url: url })}
+                    folder="documents"
+                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
                   />
                 </div>
                 <div>
@@ -769,17 +773,20 @@ function LibraryEditor({
               <I18nField label="Tiêu đề" value={l.title} onChange={(v) => update(idx, { title: v })} />
               <div className="grid md:grid-cols-2 gap-3">
                 <div>
-                  <Label className="text-xs">Thumbnail URL</Label>
-                  <Input
-                    value={l.thumbnail_url}
-                    onChange={(e) => update(idx, { thumbnail_url: e.target.value })}
+                  <Label className="text-xs">Thumbnail</Label>
+                  <ImageUpload
+                    value={l.thumbnail_url || null}
+                    onChange={(url) => update(idx, { thumbnail_url: url ?? "" })}
+                    folder="library/thumbs"
                   />
                 </div>
                 <div>
-                  <Label className="text-xs">Source URL</Label>
-                  <Input
-                    value={l.source_url}
-                    onChange={(e) => update(idx, { source_url: e.target.value })}
+                  <Label className="text-xs">Source (ảnh hoặc video)</Label>
+                  <ImageUpload
+                    value={l.source_url || null}
+                    onChange={(url) => update(idx, { source_url: url ?? "" })}
+                    folder="library/source"
+                    accept={l.type === "video" ? "video/*" : "image/*"}
                   />
                 </div>
               </div>
@@ -912,10 +919,12 @@ function PressEditor({
                   <Input value={p.url ?? ""} onChange={(e) => update(idx, { url: e.target.value || null })} />
                 </div>
                 <div>
-                  <Label className="text-xs">File URL</Label>
-                  <Input
-                    value={p.file_url ?? ""}
-                    onChange={(e) => update(idx, { file_url: e.target.value || null })}
+                  <Label className="text-xs">File</Label>
+                  <ImageUpload
+                    value={p.file_url}
+                    onChange={(url) => update(idx, { file_url: url })}
+                    folder="press"
+                    accept=".pdf,.doc,.docx"
                   />
                 </div>
               </div>
