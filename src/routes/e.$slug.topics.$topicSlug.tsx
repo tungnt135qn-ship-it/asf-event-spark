@@ -11,6 +11,24 @@ import { useTopics, useSpeakersForTopic } from "@/lib/event-adapters";
 export const Route = createFileRoute("/e/$slug/topics/$topicSlug")({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(eventContentQueryOptions(params.slug)),
+  head: ({ loaderData, params }) => {
+    if (!loaderData) return { meta: [] };
+    const lang = (loaderData.event.default_lang as "vi" | "en") ?? "vi";
+    const t = loaderData.topics.find((x) => x.slug === params.topicSlug);
+    const override = t
+      ? {
+          title: pickI18n(t.title as never, lang, ""),
+          description: pickI18n(t.summary as never, lang, ""),
+          image: t.image_url ?? null,
+          type: "article",
+        }
+      : undefined;
+    return buildEventHead({
+      content: loaderData,
+      path: `/e/${params.slug}/topics/${params.topicSlug}`,
+      override,
+    });
+  },
   notFoundComponent: () => (
     <div className="flex min-h-screen items-center justify-center text-white">
       <div className="text-center">
