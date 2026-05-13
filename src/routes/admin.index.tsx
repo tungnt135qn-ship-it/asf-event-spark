@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/lib/admin-auth";
+import { getAdminEvents } from "@/lib/admin-roles.functions";
 import { cloneEventFromDefault } from "@/lib/event-clone.functions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -38,18 +38,18 @@ type EventRow = {
 };
 
 function AdminEventsList() {
-  const { isSuperAdmin } = useAdminAuth();
+  const { isSuperAdmin, session, rolesLoading } = useAdminAuth();
+  const fetchAdminEvents = useServerFn(getAdminEvents);
 
-  const { data: events, isLoading, refetch } = useQuery({
+  const { data: events, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["admin-events"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("events")
-        .select("id, slug, name, status, is_default, start_at, end_at, created_at")
-        .order("created_at", { ascending: false });
-      if (error) throw error;
+      const token = session?.access_token;
+      if (!token) throw new Error("Phiên đăng nhập không hợp lệ");
+      const data = await fetchAdminEvents({ headers: { Authorization: `Bearer ${token}` } });
       return data as unknown as EventRow[];
     },
+    enabled: Boolean(session?.access_token) && !rolesLoading,
   });
 
   return (
@@ -65,6 +65,12 @@ function AdminEventsList() {
       </div>
 
       {isLoading && <div className="text-muted-foreground">Đang tải…</div>}
+
+      {isError && (
+        <Card className="p-5 text-sm text-destructive">
+          {error instanceof Error ? error.message : "Không tải được danh sách sự kiện."}
+        </Card>
+      )}
 
       <div className="grid gap-4 md:grid-cols-2">
         {events?.map((ev) => (
