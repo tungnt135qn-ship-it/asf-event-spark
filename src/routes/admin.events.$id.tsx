@@ -626,6 +626,59 @@ function SettingsForm({
         </section>
 
         <section className="space-y-3">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            SEO
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Title (VI)</Label>
+              <Input
+                value={form.seo.title_vi ?? ""}
+                onChange={(e) => setForm({ ...form, seo: { ...form.seo, title_vi: e.target.value || null } })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Title (EN)</Label>
+              <Input
+                value={form.seo.title_en ?? ""}
+                onChange={(e) => setForm({ ...form, seo: { ...form.seo, title_en: e.target.value || null } })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Description (VI)</Label>
+              <Textarea
+                rows={2}
+                value={form.seo.description_vi ?? ""}
+                onChange={(e) => setForm({ ...form, seo: { ...form.seo, description_vi: e.target.value || null } })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Description (EN)</Label>
+              <Textarea
+                rows={2}
+                value={form.seo.description_en ?? ""}
+                onChange={(e) => setForm({ ...form, seo: { ...form.seo, description_en: e.target.value || null } })}
+              />
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <Label>Keywords (cách nhau bằng dấu phẩy)</Label>
+              <Input
+                value={form.seo.keywords ?? ""}
+                onChange={(e) => setForm({ ...form, seo: { ...form.seo, keywords: e.target.value || null } })}
+              />
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <Label>OG Image (ảnh chia sẻ mạng xã hội)</Label>
+              <ImageUpload
+                value={form.seo.og_image ?? null}
+                onChange={(url) => setForm({ ...form, seo: { ...form.seo, og_image: url } })}
+                folder="events/og"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
               Mạng xã hội
