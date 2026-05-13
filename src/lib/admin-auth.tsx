@@ -36,8 +36,15 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const loadRoles = async (_uid: string) => {
     setRolesLoading(true);
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const token = sessionData.session?.access_token;
+      let { data: sessionData } = await supabase.auth.getSession();
+      let current = sessionData.session;
+      const expiresAt = current?.expires_at ?? 0;
+      // Refresh if missing or expiring within 60s
+      if (!current || expiresAt * 1000 - Date.now() < 60_000) {
+        const { data: refreshed } = await supabase.auth.refreshSession();
+        current = refreshed.session ?? current;
+      }
+      const token = current?.access_token;
       if (!token) throw new Error("Missing admin session token");
 
       const data = await getAdminRoles({
