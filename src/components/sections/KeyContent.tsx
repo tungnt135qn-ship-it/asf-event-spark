@@ -1,11 +1,12 @@
 import { Section } from "./Overview";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { topics } from "@/lib/topics";
+import { useTopics } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 
 export function KeyContent() {
   const { t } = useT();
+  const topics = useTopics();
   return (
     <Section id="topics" eyebrow={t("topics.eyebrow")} title={t("topics.title")}>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

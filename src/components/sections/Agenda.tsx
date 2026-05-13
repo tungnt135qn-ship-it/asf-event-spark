@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
-import { EVENT_DAYS, getDayStatus, type DayStatus, type EventDay } from "@/lib/event";
-import { speakers as ALL_SPEAKERS } from "@/lib/speakers";
-import { topics as ALL_TOPICS } from "@/lib/topics";
+import { getDayStatus, type DayStatus, type EventDay } from "@/lib/event";
+import { useAgendaDays, useSpeakers, useTopics } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 import { Clock, MapPin, CheckCircle2, Radio, CalendarClock, ChevronDown, LayoutGrid, Users, Tag } from "lucide-react";
 
@@ -27,10 +26,11 @@ function StatusPill({ status }: { status: DayStatus }) {
 
 export function Agenda() {
   const { t, lang } = useT();
+  const days = useAgendaDays();
   // active: -1 = "All" tab, otherwise day index
   const [active, setActive] = useState(0);
   const [openDays, setOpenDays] = useState<Record<number, boolean>>({});
-  const day = active >= 0 ? EVENT_DAYS[active] : null;
+  const day = active >= 0 ? days[active] : null;
   const locale = lang === "vi" ? "vi-VN" : "en-GB";
 
   const toggleDay = (idx: number) =>
@@ -56,7 +56,7 @@ export function Agenda() {
           </div>
           <div className="mt-1 text-sm font-semibold text-white">{t("agenda.allDays")}</div>
         </button>
-        {EVENT_DAYS.map((d, i) => {
+        {days.map((d, i) => {
           const status = getDayStatus(d.date);
           const isActive = i === active;
           return (
@@ -86,7 +86,7 @@ export function Agenda() {
       {active === -1 ? (
         // ALL view — collapsible per-day
         <div className="space-y-4">
-          {EVENT_DAYS.map((d, i) => {
+          {days.map((d, i) => {
             const status = getDayStatus(d.date);
             const isOpen = !!openDays[i];
             return (
@@ -170,7 +170,7 @@ export function Agenda() {
   );
 }
 
-type Session = (typeof EVENT_DAYS)[number]["sessions"][number];
+type Session = EventDay["sessions"][number];
 
 function SessionItem({ s }: { s: Session }) {
   return (
@@ -198,10 +198,12 @@ function SessionItem({ s }: { s: Session }) {
 }
 
 function DayMeta({ day, className = "" }: { day: EventDay; className?: string }) {
-  const dayTopics = ALL_TOPICS.filter((t) => day.topicSlugs.includes(t.slug));
+  const allTopics = useTopics();
+  const allSpeakers = useSpeakers();
+  const dayTopics = allTopics.filter((t) => day.topicSlugs.includes(t.slug));
   const daySpeakers = day.speakerIds
-    .map((id) => ALL_SPEAKERS.find((s) => s.id === id))
-    .filter(Boolean) as typeof ALL_SPEAKERS;
+    .map((id) => allSpeakers.find((s) => s.id === id))
+    .filter(Boolean) as typeof allSpeakers;
 
   if (dayTopics.length === 0 && daySpeakers.length === 0) return null;
 
@@ -233,14 +235,14 @@ function DayMeta({ day, className = "" }: { day: EventDay; className?: string })
       {dayTopics.length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
           <Tag size={14} className="text-gold/80" />
-          {dayTopics.map((t) => (
+          {dayTopics.map((tp) => (
             <Link
-              key={t.slug}
+              key={tp.slug}
               to="/topics/$slug"
-              params={{ slug: t.slug }}
+              params={{ slug: tp.slug }}
               className="rounded-full border border-gold/40 bg-gold/10 px-2.5 py-0.5 text-[11px] font-semibold text-gold transition hover:bg-gold/20"
             >
-              {t.title}
+              {tp.title}
             </Link>
           ))}
         </div>

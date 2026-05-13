@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
 import { ArrowRight } from "lucide-react";
-import { news } from "@/lib/news";
+import { useNewsList } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 
 export function News() {
   const { t } = useT();
+  const news = useNewsList();
   return (
     <Section id="news" eyebrow={t("news.eyebrow")} title={t("news.title")}>
       <div className="grid gap-6 md:grid-cols-3">

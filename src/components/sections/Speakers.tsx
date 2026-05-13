@@ -8,7 +8,8 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
-import { speakers, type Speaker } from "@/lib/speakers";
+import { type Speaker } from "@/lib/speakers";
+import { useSpeakers } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 
 function SpeakerCard({ s }: { s: Speaker }) {
@@ -82,6 +83,7 @@ function SpeakerCard({ s }: { s: Speaker }) {
 
 export function Speakers() {
   const { t } = useT();
+  const speakers = useSpeakers();
   const autoplay = useRef(Autoplay({ delay: 3500, stopOnInteraction: true }));
 
   return (
