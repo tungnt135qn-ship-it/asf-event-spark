@@ -478,15 +478,14 @@ function TopicsEditor({
                 }
               />
             </div>
-            <div className="space-y-1.5">
-              <Label className="text-xs">Image URL</Label>
-              <Input
-                value={t.image_url ?? ""}
-                onChange={(e) =>
-                  setItems((p) =>
-                    p.map((x, idx) => (idx === i ? { ...x, image_url: e.target.value || null } : x))
-                  )
+            <div className="space-y-1.5 md:col-span-1">
+              <Label className="text-xs">Hình ảnh</Label>
+              <ImageUpload
+                value={t.image_url}
+                onChange={(url) =>
+                  setItems((p) => p.map((x, idx) => (idx === i ? { ...x, image_url: url } : x)))
                 }
+                folder="topics"
               />
             </div>
           </div>
