@@ -28,12 +28,17 @@ function I18nField({
   value,
   onChange,
   textarea,
+  rich,
 }: {
   label: string;
   value: I18n;
   onChange: (v: I18n) => void;
   textarea?: boolean;
+  rich?: boolean;
 }) {
+  if (rich) {
+    return <RichTextI18nField label={label} value={value} onChange={onChange} />;
+  }
   const Field = textarea ? Textarea : Input;
   return (
     <div className="space-y-2">
