@@ -232,7 +232,7 @@ export const replacePressReleases = createServerFn({ method: "POST" })
 const accessCodeItem = z.object({
   code: z.string().min(1),
   label: i18n,
-  scope: z.enum(["all", "documents", "library"]).default("all"),
+  scope: z.enum(["all", "document", "library", "registration"]).default("all"),
   max_uses: z.number().nullable().optional(),
   expires_at: z.string().nullable().optional(),
   active: z.boolean().default(true),
