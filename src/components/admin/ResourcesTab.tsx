@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Plus, Trash2, Save, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "sonner";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 type I18n = { vi: string; en: string };
 type I18nList = { vi: string[]; en: string[] };
