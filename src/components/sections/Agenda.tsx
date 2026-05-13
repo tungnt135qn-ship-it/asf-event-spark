@@ -200,6 +200,7 @@ function SessionItem({ s }: { s: Session }) {
 function DayMeta({ day, className = "" }: { day: EventDay; className?: string }) {
   const allTopics = useTopics();
   const allSpeakers = useSpeakers();
+  const eventSlug = useCurrentEventSlug();
   const dayTopics = allTopics.filter((t) => day.topicSlugs.includes(t.slug));
   const daySpeakers = day.speakerIds
     .map((id) => allSpeakers.find((s) => s.id === id))
