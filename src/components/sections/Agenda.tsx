@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
-import { EVENT_DAYS, getDayStatus, type DayStatus, type EventDay } from "@/lib/event";
-import { speakers as ALL_SPEAKERS } from "@/lib/speakers";
-import { topics as ALL_TOPICS } from "@/lib/topics";
+import { getDayStatus, type DayStatus, type EventDay } from "@/lib/event";
+import { useAgendaDays, useSpeakers, useTopics, useCurrentEventSlug } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 import { Clock, MapPin, CheckCircle2, Radio, CalendarClock, ChevronDown, LayoutGrid, Users, Tag } from "lucide-react";
 
@@ -27,10 +26,14 @@ function StatusPill({ status }: { status: DayStatus }) {
 
 export function Agenda() {
   const { t, lang } = useT();
+  const days = useAgendaDays();
+  const allSpeakers = useSpeakers();
+  const allTopics = useTopics();
+  const currentSlug = useCurrentEventSlug();
   // active: -1 = "All" tab, otherwise day index
   const [active, setActive] = useState(0);
   const [openDays, setOpenDays] = useState<Record<number, boolean>>({});
-  const day = active >= 0 ? EVENT_DAYS[active] : null;
+  const day = active >= 0 ? days[active] : null;
   const locale = lang === "vi" ? "vi-VN" : "en-GB";
 
   const toggleDay = (idx: number) =>
