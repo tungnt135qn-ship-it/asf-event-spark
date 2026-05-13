@@ -277,14 +277,13 @@ function SpeakersEditor({
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-xs">Avatar URL</Label>
-            <Input
-              value={sp.avatar_url ?? ""}
-              onChange={(e) =>
-                setItems((p) =>
-                  p.map((x, idx) => (idx === i ? { ...x, avatar_url: e.target.value || null } : x))
-                )
+            <Label className="text-xs">Avatar</Label>
+            <ImageUpload
+              value={sp.avatar_url}
+              onChange={(url) =>
+                setItems((p) => p.map((x, idx) => (idx === i ? { ...x, avatar_url: url } : x)))
               }
+              folder="speakers"
             />
           </div>
 
