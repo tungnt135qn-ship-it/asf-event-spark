@@ -133,26 +133,30 @@ function NewEventDialog({ onCreated }: { onCreated: () => void }) {
   const [slug, setSlug] = useState("");
   const [nameVi, setNameVi] = useState("");
   const [nameEn, setNameEn] = useState("");
+  const cloneFn = useServerFn(cloneEventFromDefault);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.from("events").insert({
-      slug: slug.trim().toLowerCase(),
-      name: { vi: nameVi, en: nameEn },
-      status: "draft",
-    });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      await cloneFn({
+        data: {
+          slug: slug.trim().toLowerCase(),
+          name_vi: nameVi,
+          name_en: nameEn,
+        },
+      });
+      toast.success("Đã tạo sự kiện và sao chép dữ liệu mẫu từ sự kiện mặc định");
+      setOpen(false);
+      setSlug("");
+      setNameVi("");
+      setNameEn("");
+      onCreated();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Có lỗi xảy ra");
+    } finally {
+      setLoading(false);
     }
-    toast.success("Đã tạo sự kiện");
-    setOpen(false);
-    setSlug("");
-    setNameVi("");
-    setNameEn("");
-    onCreated();
   };
 
   return (
