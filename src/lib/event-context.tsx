@@ -1,5 +1,5 @@
 import { createContext, useContext, type ReactNode } from "react";
-import { useLang } from "@/lib/i18n";
+import { useT } from "@/lib/i18n";
 import type { EventContent } from "@/lib/event-content";
 
 type EventContextValue = {
