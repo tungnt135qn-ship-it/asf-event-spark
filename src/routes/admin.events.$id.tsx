@@ -33,9 +33,31 @@ import { ModulesTab } from "@/components/admin/ModulesTab";
 import { ResourcesTab } from "@/components/admin/ResourcesTab";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { RichTextI18nField } from "@/components/admin/RichTextEditor";
+import { OverviewDashboard } from "@/components/admin/panels/OverviewDashboard";
+import { NewsPanel } from "@/components/admin/panels/NewsPanel";
+import { FaqsPanel } from "@/components/admin/panels/FaqsPanel";
 
-type EventTab = "general" | "settings" | "theme" | "content" | "modules" | "resources";
-const VALID_TABS: EventTab[] = ["general", "settings", "theme", "content", "modules", "resources"];
+type EventTab =
+  | "overview"
+  | "general"
+  | "settings"
+  | "theme"
+  | "content"
+  | "modules"
+  | "resources"
+  | "news"
+  | "faqs";
+const VALID_TABS: EventTab[] = [
+  "overview",
+  "general",
+  "settings",
+  "theme",
+  "content",
+  "modules",
+  "resources",
+  "news",
+  "faqs",
+];
 
 export const Route = createFileRoute("/admin/events/$id")({
   validateSearch: (search: Record<string, unknown>): { tab?: EventTab } => {
@@ -169,7 +191,7 @@ function EventTabs({
 }) {
   const search = Route.useSearch();
   const router = useRouter();
-  const activeTab: EventTab = search.tab ?? "general";
+  const activeTab: EventTab = search.tab ?? "overview";
   const setTab = (t: string) =>
     router.navigate({
       to: "/admin/events/$id",
@@ -180,14 +202,20 @@ function EventTabs({
   return (
     <Tabs value={activeTab} onValueChange={setTab} className="w-full">
       <TabsList className="flex-wrap h-auto">
+        <TabsTrigger value="overview">Tổng quan</TabsTrigger>
         <TabsTrigger value="general">Thông tin chung</TabsTrigger>
         <TabsTrigger value="settings">Cấu hình</TabsTrigger>
         <TabsTrigger value="theme">Giao diện</TabsTrigger>
         <TabsTrigger value="content">Nội dung</TabsTrigger>
         <TabsTrigger value="modules">Module</TabsTrigger>
         <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
+        <TabsTrigger value="news">Tin tức</TabsTrigger>
+        <TabsTrigger value="faqs">FAQ</TabsTrigger>
       </TabsList>
 
+      <TabsContent value="overview" className="mt-4">
+        <OverviewDashboard eventId={eventId} />
+      </TabsContent>
       <TabsContent value="general" className="mt-4">
         <GeneralForm event={event as never} onSaved={refetch} />
       </TabsContent>
@@ -213,6 +241,12 @@ function EventTabs({
       </TabsContent>
       <TabsContent value="resources" className="mt-4">
         <ResourcesTab eventId={eventId} />
+      </TabsContent>
+      <TabsContent value="news" className="mt-4">
+        <NewsPanel eventId={eventId} />
+      </TabsContent>
+      <TabsContent value="faqs" className="mt-4">
+        <FaqsPanel eventId={eventId} />
       </TabsContent>
     </Tabs>
   );

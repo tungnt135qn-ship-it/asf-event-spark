@@ -1,127 +1,74 @@
 ## Mục tiêu
 
-1. Sidebar admin tách 2 tầng rõ ràng: **Global** (luôn hiển thị) và **Event-scoped** (chỉ hiện khi đang ở trong 1 sự kiện).
-2. Khi đổi sự kiện đang focus → toàn bộ menu con và dữ liệu các màn con tự động cập nhật theo `eventId`.
-3. Các field nội dung dài (mô tả overview, key content, news body, topic body, footer, settings…) chuyển sang **rich-text editor** (TipTap) thay cho `<Textarea>`.
-4. Chuẩn hoá lại layout các màn "nội dung" để dùng chung 1 khung: header + breadcrumb + tabs/sub-nav + content card.
+1. Sửa lỗi trang **Tổng quan** sự kiện (mục đầu tiên trong sidebar khi đang focus 1 sự kiện).
+2. Gom **Nội dung** và **Tài nguyên** thành 2 nhóm dropdown (collapsible) trong sidebar, mỗi nhóm liệt kê các mục con tương ứng.
+3. Chuyển các phần **Tin tức, Thư viện, Tài liệu, Thông cáo, Chủ đề, FAQ, Lịch trình** sang dạng **bảng (Table)** với cột chính + cột Hành động (Xem / Sửa / Xoá), thao tác Tạo/Sửa/Xem mở **Dialog** riêng (không còn form danh sách dài như hiện tại).
 
----
+## Thay đổi sidebar
 
-## 1. Cấu trúc menu mới
+- Thêm 2 nhóm collapsible (dùng `Collapsible` + `SidebarGroup`):
+  - **Nội dung**: Hero, Overview, Why Attend, Key Content, Tin tức, Chủ đề, FAQ, Thông cáo, Lịch trình
+  - **Tài nguyên**: Khách sạn, Tài liệu, Thư viện, Access codes, Diễn giả, Nhà tài trợ
+- Mỗi mục con điều hướng tới `?tab=<group>&sub=<sub>` của trang sự kiện hiện tại.
+- Mục **Tổng quan** trỏ tới `?tab=overview` (tab mới) — tránh xung đột với route mặc định.
 
-```text
-GLOBAL (luôn hiện)
-├─ Dashboard          /admin
-├─ Sự kiện            /admin                (list)
-├─ Người dùng         /admin/users          (super admin)
-└─ Cài đặt hệ thống   /admin/settings
+## Sửa lỗi Tổng quan
 
-EVENT (hiện khi route = /admin/events/$id/*)
-[Selector sự kiện đang focus  ▼]
-├─ Tổng quan          /admin/events/$id
-├─ Thông tin chung    /admin/events/$id/general
-├─ Cấu hình           /admin/events/$id/settings
-├─ Giao diện          /admin/events/$id/theme
-├─ Nội dung           /admin/events/$id/content
-│   ├─ Overview
-│   ├─ Key contents
-│   ├─ News
-│   ├─ Topics
-│   └─ FAQ
-├─ Module             /admin/events/$id/modules
-├─ Tài nguyên         /admin/events/$id/resources
-├─ Đăng ký            /admin/events/$id/registrations
-└─ Đặt phòng          /admin/events/$id/bookings
-```
+- Hiện sidebar đẩy về `eventBase` (không có search) ⇒ rơi vào tab mặc định `general`. Đặt 1 tab riêng `overview` với nội dung dashboard nhanh (KPI: số đăng ký, số booking, trạng thái, link nhanh) — giải quyết "lỗi" và làm trang có ý nghĩa.
 
-- Mở rộng nhóm "Event" tự động khi URL match `/admin/events/$id`.
-- Có **EventSwitcher** ở đầu nhóm Event (dropdown các event đang quản lý) → đổi sự kiện = `navigate` sang cùng sub-route của event mới, dữ liệu tự reload theo `eventId` mới.
-- Sidebar collapsible (icon-only) để có nhiều không gian cho màn nội dung.
+## Refactor `EventTabs`
 
----
+- Thêm search param `sub` (string).
+- Tabs chính giữ: `overview | general | settings | theme | content | modules | resources` nhưng phần `content` & `modules` & `resources` chỉ render **một panel con** dựa vào `sub` (mặc định panel đầu tiên).
 
-## 2. Refactor route
+## Bảng + Dialog cho 7 mục
 
-Hiện tại tất cả tab nội dung gộp trong 1 file `admin.events.$id.tsx` dùng `<Tabs>`. Sẽ tách thành các route con để URL phản ánh đúng vị trí, deep-link được, và sidebar highlight đúng:
+Tạo component dùng chung `CrudListPage<T>` với props:
+- `columns`: định nghĩa cột hiển thị
+- `rows`, `loading`
+- `onCreate`, `onEdit(row)`, `onView(row)`, `onDelete(row)`
+- Render: thanh công cụ (search + nút "Tạo mới") + `<Table>` shadcn + cột "Hành động" dropdown.
 
-- `admin.events.$id.tsx` → biến thành **layout route** (header + sidebar event scope + `<Outlet />`).
-- Tách thành các file:
-  - `admin.events.$id.index.tsx` (Tổng quan + KPI nhanh)
-  - `admin.events.$id.general.tsx`
-  - `admin.events.$id.settings.tsx`
-  - `admin.events.$id.theme.tsx`
-  - `admin.events.$id.content.tsx` (layout cho con)
-  - `admin.events.$id.content.overview.tsx`
-  - `admin.events.$id.content.key.tsx`
-  - `admin.events.$id.content.news.tsx`
-  - `admin.events.$id.content.topics.tsx`
-  - `admin.events.$id.content.faq.tsx`
-  - `admin.events.$id.modules.tsx`
-  - `admin.events.$id.resources.tsx`
-  - (đã có) `registrations`, `bookings`
+Dialog form dùng các editor đã có (lấy ra từ `ModulesTab` / `ResourcesTab`) đặt vào `<Dialog>`. Mode `view` = readonly preview, `create`/`edit` = form save.
 
-Code form/list hiện có được di chuyển nguyên trạng vào các route con tương ứng — không đổi server functions.
+### Server functions per-item (mới)
 
----
+Hiện tại các bảng dùng pattern **replace toàn bộ**. Dialog cần API per-item. Bổ sung:
 
-## 3. Rich-text editor
+- `news`: `upsertNewsItem`, `deleteNewsItem`
+- `library_items`: `upsertLibraryItem`, `deleteLibraryItem`
+- `documents`: `upsertDocument`, `deleteDocument`
+- `press_releases`: `upsertPressRelease`, `deletePressRelease`
+- `topics`: `upsertTopic`, `deleteTopic`
+- `faqs`: `upsertFaq`, `deleteFaq`
+- `agenda_days` + `agenda_sessions`: `upsertAgendaDay`, `deleteAgendaDay`, `upsertAgendaSession`, `deleteAgendaSession`
 
-- Dùng **TipTap** (`@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-link`, `@tiptap/extension-image`, `@tiptap/extension-placeholder`).
-- Tạo component dùng chung `src/components/admin/RichTextEditor.tsx`:
-  - Toolbar: bold / italic / underline / heading 2-3 / bullet & ordered list / blockquote / link / image (upload qua bucket hiện có) / clear.
-  - Output **HTML string** lưu thẳng vào DB (các field hiện đang là `text` nên không cần migration).
-  - Hỗ trợ `value`, `onChange`, `placeholder`, `minHeight`.
-  - Có biến thể `RichTextI18nField` (vi/en song song) thay cho `I18nField` textarea.
-- Frontend render bằng `dangerouslySetInnerHTML` + class `prose` (Tailwind typography đã có thể dùng qua plugin hoặc CSS reset thủ công trong `styles.css`).
+Tất cả validate bằng Zod, dùng `requireSupabaseAuth`, RLS đã sẵn sàng.
 
-Các field áp dụng rich-editor:
-- `overview_content.description` (vi/en)
-- `key_contents.description` (vi/en)
-- `news.body` (vi/en)
-- `topics.body` (vi/en)
-- `faq.answer` (vi/en)
-- `event_settings.footer_text` (vi/en) — bản rút gọn (chỉ bold/link)
+### Trang mới (mỗi mục 1 panel)
 
-Field ngắn (title, tagline, location, label, slug, contact info…) **giữ nguyên** Input thường.
+- `NewsListPanel`, `LibraryListPanel`, `DocumentsListPanel`, `PressListPanel`, `TopicsListPanel`, `FaqsListPanel`, `AgendaListPanel`
+- Dùng `CrudListPage` + dialog tương ứng.
+- Phần còn lại (Hero/Overview/WhyAttend/KeyContent/Hotels/Speakers/Sponsors/AccessCodes) giữ form cũ trong panel riêng — không nằm trong yêu cầu chuyển sang table.
 
----
+## Phạm vi & file dự kiến
 
-## 4. Chuẩn hoá layout các màn nội dung
+Sửa:
+- `src/components/admin/AdminAppSidebar.tsx` — thêm 2 nhóm collapsible
+- `src/routes/admin.events.$id.tsx` — thêm tab `overview`, hỗ trợ `?sub=`, gắn panel mới
 
-Tạo wrapper `src/components/admin/PageShell.tsx`:
+Tạo:
+- `src/lib/event-items-admin.functions.ts` — server fn per-item cho 7 mục
+- `src/components/admin/CrudListPage.tsx` — khung table + dialog
+- `src/components/admin/panels/{NewsPanel,LibraryPanel,DocumentsPanel,PressPanel,TopicsPanel,FaqsPanel,AgendaPanel,OverviewDashboard}.tsx`
 
-```text
-┌─ Breadcrumb ────────────────────────────────┐
-│ Sự kiện > {event.name} > Nội dung > News   │
-├─ Title row + actions (Save / New / Filter)│
-├─ Optional sub-tabs (vi/en, draft/published)│
-└─ Content card (form hoặc list)             │
-```
+Không đụng:
+- DB schema, RLS, các route frontend `/e/$slug/*`, SEO helpers.
 
-Mỗi màn nội dung:
-- List view: bảng có search + filter trạng thái + nút "Tạo mới".
-- Detail/edit: 2 cột — cột trái form (rich-editor full width), cột phải metadata (slug, cover, published_at, status).
-- Validation + toast nhất quán.
+## Triển khai theo 3 đợt (PR liên tiếp)
 
----
+1. **Đợt A**: Sidebar dropdown + tab `overview` (dashboard nhanh) + khung `CrudListPage` + per-item server fn cho **News & FAQ** (làm pilot).
+2. **Đợt B**: Áp dụng cho **Documents, Library, Press, Topics**.
+3. **Đợt C**: Áp dụng cho **Agenda** (days + sessions phức tạp hơn) và dọn lại `ModulesTab`/`ResourcesTab` (chỉ giữ các phần chưa chuyển: Speakers/Sponsors/AccessCodes/Hotels).
 
-## 5. Chi tiết kỹ thuật
-
-- `bun add @tiptap/react @tiptap/starter-kit @tiptap/extension-link @tiptap/extension-image @tiptap/extension-placeholder @tiptap/extension-underline`
-- `EventSwitcher`: `useQuery` list events (đã có `listEventsAdmin`), lưu chọn vào URL (không cần localStorage).
-- Sidebar mới đặt trong `admin.tsx` thay cho `<aside>` hiện tại; dùng shadcn `Sidebar` + `SidebarProvider` để có collapse/icon mode.
-- Active state: `useRouterState({ select: r => r.location.pathname })` + `startsWith` cho group active.
-- Mọi route con vẫn dùng `useAdminAuth` và server functions hiện có; chỉ tách UI, không đụng business logic.
-- `routeTree.gen.ts` sẽ được Vite plugin tự cập nhật khi tạo file route mới.
-
----
-
-## 6. Phạm vi giao hàng
-
-Để tránh PR quá lớn, mốc này chia 3 bước nhỏ trong cùng 1 lần:
-
-1. **Sidebar mới + EventSwitcher** (admin.tsx + AppSidebar component).
-2. **Tách routes con** cho `/admin/events/$id/*` (di chuyển code từ Tabs sang route files, giữ logic).
-3. **RichTextEditor + áp vào** Overview / Key content / News / Topics / FAQ / Footer.
-
-Không thay đổi: schema DB, server functions, các route frontend `/e/$slug`, dashboard charts, SEO helpers.
+Sau mỗi đợt sẽ build & kiểm tra trước khi sang đợt tiếp theo.
