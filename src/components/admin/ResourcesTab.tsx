@@ -611,10 +611,12 @@ function DocumentsEditor({
               <I18nField label="Mô tả" value={d.description} onChange={(v) => update(idx, { description: v })} textarea />
               <div className="grid md:grid-cols-3 gap-3">
                 <div className="md:col-span-2">
-                  <Label className="text-xs">File URL</Label>
-                  <Input
-                    value={d.file_url ?? ""}
-                    onChange={(e) => update(idx, { file_url: e.target.value || null })}
+                  <Label className="text-xs">File</Label>
+                  <ImageUpload
+                    value={d.file_url}
+                    onChange={(url) => update(idx, { file_url: url })}
+                    folder="documents"
+                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
                   />
                 </div>
                 <div>
