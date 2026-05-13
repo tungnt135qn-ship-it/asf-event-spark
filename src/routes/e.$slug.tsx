@@ -87,6 +87,13 @@ function EventLanding() {
   const bookingEnabled = s?.booking_enabled ?? true;
   const documentsLocked = s?.documents_locked ?? false;
   const libraryLocked = s?.library_locked ?? false;
+  const theme = (content.event.theme as { primary?: string; accent?: string } | null) ?? null;
+  const themeStyle = theme
+    ? ({
+        ...(theme.primary ? { ["--brand-primary" as string]: theme.primary } : {}),
+        ...(theme.accent ? { ["--brand-accent" as string]: theme.accent } : {}),
+      } as React.CSSProperties)
+    : undefined;
 
   return (
     <EventContentProvider content={content}>
