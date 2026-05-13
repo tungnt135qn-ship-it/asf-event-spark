@@ -171,7 +171,7 @@ function NewEventDialog({ onCreated }: { onCreated: () => void }) {
           <DialogHeader>
             <DialogTitle>Tạo sự kiện mới</DialogTitle>
             <DialogDescription>
-              Sau khi tạo, bạn có thể vào cấu hình chi tiết.
+              Sự kiện mới sẽ được sao chép toàn bộ dữ liệu (Hero, Agenda, Speakers, Hotels...) từ sự kiện mặc định để bạn chỉnh sửa, không khởi tạo trống.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
