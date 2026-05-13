@@ -1,5 +1,6 @@
+import type { CSSProperties } from "react";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useQuery, queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
 import { Starfield } from "@/components/Starfield";
 import { Hero } from "@/components/sections/Hero";
@@ -87,10 +88,17 @@ function EventLanding() {
   const bookingEnabled = s?.booking_enabled ?? true;
   const documentsLocked = s?.documents_locked ?? false;
   const libraryLocked = s?.library_locked ?? false;
+  const theme = (content.event.theme as { primary?: string; accent?: string } | null) ?? null;
+  const themeStyle = theme
+    ? ({
+        ...(theme.primary ? { ["--brand-primary" as string]: theme.primary } : {}),
+        ...(theme.accent ? { ["--brand-accent" as string]: theme.accent } : {}),
+      } as CSSProperties)
+    : undefined;
 
   return (
     <EventContentProvider content={content}>
-      <div className="min-h-screen text-white">
+      <div className="min-h-screen text-white" style={themeStyle}>
         <Starfield />
         <Header />
         <main>

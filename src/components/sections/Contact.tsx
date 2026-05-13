@@ -1,39 +1,41 @@
 import { Section } from "./Overview";
-import { Mail, Phone, MapPin, Globe, User, Facebook, Linkedin, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Globe, User, Facebook, Linkedin, Youtube, MessageCircle, Twitter, Instagram, Send } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useT } from "@/lib/i18n";
+import { useContactInfo } from "@/lib/event-adapters";
 
-const primaryContacts = [
-  {
-    icon: Phone,
-    label: "Hotline",
-    value: "+84 24 3974 8506",
-    href: "tel:+842439748506",
-    accent: "from-emerald-400/30 to-emerald-500/10",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    value: "asf2026@vbma.org.vn",
-    href: "mailto:asf2026@vbma.org.vn",
-    accent: "from-sky-400/30 to-sky-500/10",
-  },
-  {
-    icon: Globe,
-    label: "Website",
-    value: "vbma.org.vn",
-    href: "https://vbma.org.vn/vi",
-    accent: "from-violet-400/30 to-violet-500/10",
-  },
-];
-
-const socials = [
-  { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/p/Vietnam-Bond-Market-Association-100064838944642/" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: MessageCircle, label: "Zalo", href: "#" },
-];
+const SOCIAL_ICONS: Record<string, LucideIcon> = {
+  facebook: Facebook,
+  linkedin: Linkedin,
+  youtube: Youtube,
+  twitter: Twitter,
+  x: Twitter,
+  instagram: Instagram,
+  zalo: MessageCircle,
+  telegram: Send,
+};
+function socialIcon(name: string): LucideIcon {
+  return SOCIAL_ICONS[name.trim().toLowerCase()] ?? Globe;
+}
 
 export function Contact() {
   const { t } = useT();
+  const info = useContactInfo();
+  const socials = (info?.socials?.length ? info.socials : [
+    { name: "Facebook", url: "https://www.facebook.com/p/Vietnam-Bond-Market-Association-100064838944642/" },
+    { name: "LinkedIn", url: "#" },
+    { name: "Zalo", url: "#" },
+  ]).map((s) => ({ icon: socialIcon(s.name), label: s.name, href: s.url }));
+  const phone = info?.phone || "+84 24 3974 8506";
+  const email = info?.email || "asf2026@vbma.org.vn";
+  const website = info?.website || "https://vbma.org.vn/vi";
+  const address = info?.address || t("contact.addressValue");
+  const websiteLabel = website.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  const primaryContacts = [
+    { icon: Phone, label: "Hotline", value: phone, href: `tel:${phone.replace(/\s+/g, "")}`, accent: "from-emerald-400/30 to-emerald-500/10" },
+    { icon: Mail, label: "Email", value: email, href: `mailto:${email}`, accent: "from-sky-400/30 to-sky-500/10" },
+    { icon: Globe, label: "Website", value: websiteLabel, href: website, accent: "from-violet-400/30 to-violet-500/10" },
+  ];
   return (
     <Section id="contact" eyebrow={t("contact.eyebrow")} title={t("contact.title")}>
       <div className="grid gap-6 lg:grid-cols-5">
@@ -58,12 +60,12 @@ export function Contact() {
               <div>
                 <div className="text-xs uppercase tracking-wider text-gold/80">{t("contact.address")}</div>
                 <a
-                  href="https://maps.google.com/?q=35+Hang+Voi,+Hoan+Kiem,+Hanoi"
+                  href={`https://maps.google.com/?q=${encodeURIComponent(address)}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-sm font-medium text-white hover:text-gold"
                 >
-                  {t("contact.addressValue")}
+                  {address}
                 </a>
               </div>
             </div>
@@ -130,7 +132,7 @@ export function Contact() {
           <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
             <iframe
               title="VBMA location"
-              src="https://www.google.com/maps?q=35+Hang+Voi,+Hoan+Kiem,+Hanoi&output=embed"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
               loading="lazy"
               className="h-[280px] w-full grayscale-[40%] contrast-110"
               referrerPolicy="no-referrer-when-downgrade"
