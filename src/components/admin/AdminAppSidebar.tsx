@@ -279,22 +279,12 @@ export function AdminAppSidebar() {
                       </SidebarMenuItem>
                       <SidebarMenuItem>
                         <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
-                          <Hotel className="h-4 w-4" /><span>Khách sạn</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
-                          <KeyRound className="h-4 w-4" /><span>Access codes</span>
+                          <Hotel className="h-4 w-4" /><span>Khách sạn & Access codes</span>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <SidebarMenuItem>
                         <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
-                          <Mic className="h-4 w-4" /><span>Diễn giả</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
-                          <Award className="h-4 w-4" /><span>Nhà tài trợ</span>
+                          <Mic className="h-4 w-4" /><span>Diễn giả & Nhà tài trợ</span>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     </SidebarMenu>
