@@ -200,7 +200,7 @@ function HeroForm({
     <Card className="p-6">
       <form onSubmit={submit} className="space-y-5">
         <I18nField label="Tagline" value={form.tagline} onChange={(v) => setForm({ ...form, tagline: v })} />
-        <I18nField label="Lead" value={form.lead} onChange={(v) => setForm({ ...form, lead: v })} textarea />
+        <I18nField label="Lead" value={form.lead} onChange={(v) => setForm({ ...form, lead: v })} rich />
         <I18nField label="Date text" value={form.date_text} onChange={(v) => setForm({ ...form, date_text: v })} />
         <I18nField
           label="Location text"
