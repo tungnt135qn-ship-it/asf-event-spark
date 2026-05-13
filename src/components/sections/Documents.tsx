@@ -19,11 +19,13 @@ export function Documents() {
   return (
     <Section id="documents" eyebrow={t("docs.eyebrow")} title={t("docs.title")}>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {docs.map((d) => (
+        {docs.map((d) => {
+          const url = ("url" in d ? d.url : undefined) as string | undefined;
+          return (
           <a
             key={d.name}
-            href={("url" in d && d.url) || "#"}
-            target={"url" in d && d.url ? "_blank" : undefined}
+            href={url ?? "#"}
+            target={url ? "_blank" : undefined}
             rel="noreferrer"
             className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition hover:border-gold/40"
           >
@@ -36,7 +38,8 @@ export function Documents() {
             </div>
             <Download size={18} className="shrink-0 text-white/50 transition group-hover:text-gold" />
           </a>
-        ))}
+          );
+        })}
       </div>
     </Section>
   );

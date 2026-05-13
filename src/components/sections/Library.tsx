@@ -48,7 +48,7 @@ export function Library({ preview = false }: { preview?: boolean }) {
         (dayFilter === "all" || m.dayIndex === dayFilter),
     );
     return preview ? filtered.slice(0, 8) : filtered;
-  }, [typeFilter, dayFilter, preview]);
+  }, [typeFilter, dayFilter, preview, source]);
 
   return (
     <Section id="library" eyebrow={t("library.eyebrow")} title={t("library.title")}>
@@ -86,7 +86,7 @@ export function Library({ preview = false }: { preview?: boolean }) {
             >
               All days
             </button>
-            {EVENT_DAYS.map((d) => (
+            {days.map((d) => (
               <button
                 key={d.index}
                 onClick={() => setDayFilter(d.index)}
