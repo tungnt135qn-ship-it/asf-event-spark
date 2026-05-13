@@ -36,6 +36,11 @@ import { RichTextI18nField } from "@/components/admin/RichTextEditor";
 import { OverviewDashboard } from "@/components/admin/panels/OverviewDashboard";
 import { NewsPanel } from "@/components/admin/panels/NewsPanel";
 import { FaqsPanel } from "@/components/admin/panels/FaqsPanel";
+import { DocumentsPanel } from "@/components/admin/panels/DocumentsPanel";
+import { LibraryPanel } from "@/components/admin/panels/LibraryPanel";
+import { PressPanel } from "@/components/admin/panels/PressPanel";
+import { TopicsPanel } from "@/components/admin/panels/TopicsPanel";
+import { AgendaPanel } from "@/components/admin/panels/AgendaPanel";
 
 type EventTab =
   | "overview"
@@ -46,7 +51,12 @@ type EventTab =
   | "modules"
   | "resources"
   | "news"
-  | "faqs";
+  | "faqs"
+  | "documents"
+  | "library"
+  | "press"
+  | "topics"
+  | "agenda";
 const VALID_TABS: EventTab[] = [
   "overview",
   "general",
@@ -57,6 +67,11 @@ const VALID_TABS: EventTab[] = [
   "resources",
   "news",
   "faqs",
+  "documents",
+  "library",
+  "press",
+  "topics",
+  "agenda",
 ];
 
 export const Route = createFileRoute("/admin/events/$id")({
