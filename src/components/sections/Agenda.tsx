@@ -59,7 +59,7 @@ export function Agenda() {
           </div>
           <div className="mt-1 text-sm font-semibold text-white">{t("agenda.allDays")}</div>
         </button>
-        {EVENT_DAYS.map((d, i) => {
+        {days.map((d, i) => {
           const status = getDayStatus(d.date);
           const isActive = i === active;
           return (
@@ -89,7 +89,7 @@ export function Agenda() {
       {active === -1 ? (
         // ALL view — collapsible per-day
         <div className="space-y-4">
-          {EVENT_DAYS.map((d, i) => {
+          {days.map((d, i) => {
             const status = getDayStatus(d.date);
             const isOpen = !!openDays[i];
             return (
@@ -173,7 +173,7 @@ export function Agenda() {
   );
 }
 
-type Session = (typeof EVENT_DAYS)[number]["sessions"][number];
+type Session = (typeof days)[number]["sessions"][number];
 
 function SessionItem({ s }: { s: Session }) {
   return (
@@ -201,10 +201,10 @@ function SessionItem({ s }: { s: Session }) {
 }
 
 function DayMeta({ day, className = "" }: { day: EventDay; className?: string }) {
-  const dayTopics = ALL_TOPICS.filter((t) => day.topicSlugs.includes(t.slug));
+  const dayTopics = allTopics.filter((t) => day.topicSlugs.includes(t.slug));
   const daySpeakers = day.speakerIds
-    .map((id) => ALL_SPEAKERS.find((s) => s.id === id))
-    .filter(Boolean) as typeof ALL_SPEAKERS;
+    .map((id) => allSpeakers.find((s) => s.id === id))
+    .filter(Boolean) as typeof allSpeakers;
 
   if (dayTopics.length === 0 && daySpeakers.length === 0) return null;
 
