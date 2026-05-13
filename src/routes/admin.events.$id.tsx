@@ -26,7 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, ExternalLink, Plus, Trash2, Save, Star } from "lucide-react";
+import { ArrowLeft, ExternalLink, Plus, Trash2, Save, Star, Users, BedDouble } from "lucide-react";
 import { toast } from "sonner";
 import { ContentTab } from "@/components/admin/ContentTab";
 import { ModulesTab } from "@/components/admin/ModulesTab";
@@ -126,7 +126,19 @@ function EventDetailPage() {
             </a>
           </div>
         </div>
-        <StatusActions event={event} onChanged={() => refetch()} />
+        <div className="flex items-center gap-2 flex-wrap">
+          <Button asChild variant="outline" size="sm">
+            <Link to="/admin/events/$id/registrations" params={{ id: event.id }}>
+              <Users className="mr-1 h-4 w-4" /> Đăng ký
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="sm">
+            <Link to="/admin/events/$id/bookings" params={{ id: event.id }}>
+              <BedDouble className="mr-1 h-4 w-4" /> Đặt phòng
+            </Link>
+          </Button>
+          <StatusActions event={event} onChanged={() => refetch()} />
+        </div>
       </div>
 
       <Tabs defaultValue="general" className="w-full">
