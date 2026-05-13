@@ -57,12 +57,12 @@ export const upsertNewsItem = createServerFn({ method: "POST" })
       published_at: data.published_at ?? null,
     };
     if (data.id) {
-      const r = await supabase.from("news").update(payload).eq("id", data.id).select("id").single();
+      const r = await supabase.from("news").update(payload as never).eq("id", data.id).select("id").single();
       if (r.error) throw new Error(r.error.message);
       return { id: r.data.id };
     }
     payload.position = await nextPosition(supabase, "news", data.event_id);
-    const r = await supabase.from("news").insert(payload).select("id").single();
+    const r = await supabase.from("news").insert(payload as never).select("id").single();
     if (r.error) throw new Error(r.error.message);
     return { id: r.data.id };
   });
@@ -97,12 +97,12 @@ export const upsertFaq = createServerFn({ method: "POST" })
       answer: data.answer,
     };
     if (data.id) {
-      const r = await supabase.from("faqs").update(payload).eq("id", data.id).select("id").single();
+      const r = await supabase.from("faqs").update(payload as never).eq("id", data.id).select("id").single();
       if (r.error) throw new Error(r.error.message);
       return { id: r.data.id };
     }
     payload.position = await nextPosition(supabase, "faqs", data.event_id);
-    const r = await supabase.from("faqs").insert(payload).select("id").single();
+    const r = await supabase.from("faqs").insert(payload as never).select("id").single();
     if (r.error) throw new Error(r.error.message);
     return { id: r.data.id };
   });
@@ -143,12 +143,12 @@ export const upsertTopic = createServerFn({ method: "POST" })
       long_description: data.long_description,
     };
     if (data.id) {
-      const r = await supabase.from("topics").update(payload).eq("id", data.id).select("id").single();
+      const r = await supabase.from("topics").update(payload as never).eq("id", data.id).select("id").single();
       if (r.error) throw new Error(r.error.message);
       return { id: r.data.id };
     }
     payload.position = await nextPosition(supabase, "topics", data.event_id);
-    const r = await supabase.from("topics").insert(payload).select("id").single();
+    const r = await supabase.from("topics").insert(payload as never).select("id").single();
     if (r.error) throw new Error(r.error.message);
     return { id: r.data.id };
   });
@@ -189,12 +189,12 @@ export const upsertDocument = createServerFn({ method: "POST" })
       requires_code: data.requires_code,
     };
     if (data.id) {
-      const r = await supabase.from("documents").update(payload).eq("id", data.id).select("id").single();
+      const r = await supabase.from("documents").update(payload as never).eq("id", data.id).select("id").single();
       if (r.error) throw new Error(r.error.message);
       return { id: r.data.id };
     }
     payload.position = await nextPosition(supabase, "documents", data.event_id);
-    const r = await supabase.from("documents").insert(payload).select("id").single();
+    const r = await supabase.from("documents").insert(payload as never).select("id").single();
     if (r.error) throw new Error(r.error.message);
     return { id: r.data.id };
   });
@@ -237,12 +237,12 @@ export const upsertLibraryItem = createServerFn({ method: "POST" })
       requires_code: data.requires_code,
     };
     if (data.id) {
-      const r = await supabase.from("library_items").update(payload).eq("id", data.id).select("id").single();
+      const r = await supabase.from("library_items").update(payload as never).eq("id", data.id).select("id").single();
       if (r.error) throw new Error(r.error.message);
       return { id: r.data.id };
     }
     payload.position = await nextPosition(supabase, "library_items", data.event_id);
-    const r = await supabase.from("library_items").insert(payload).select("id").single();
+    const r = await supabase.from("library_items").insert(payload as never).select("id").single();
     if (r.error) throw new Error(r.error.message);
     return { id: r.data.id };
   });
@@ -283,12 +283,12 @@ export const upsertPressRelease = createServerFn({ method: "POST" })
       published_at: data.published_at ?? null,
     };
     if (data.id) {
-      const r = await supabase.from("press_releases").update(payload).eq("id", data.id).select("id").single();
+      const r = await supabase.from("press_releases").update(payload as never).eq("id", data.id).select("id").single();
       if (r.error) throw new Error(r.error.message);
       return { id: r.data.id };
     }
     payload.position = await nextPosition(supabase, "press_releases", data.event_id);
-    const r = await supabase.from("press_releases").insert(payload).select("id").single();
+    const r = await supabase.from("press_releases").insert(payload as never).select("id").single();
     if (r.error) throw new Error(r.error.message);
     return { id: r.data.id };
   });
@@ -329,12 +329,12 @@ export const upsertAgendaDay = createServerFn({ method: "POST" })
       speaker_external_ids: data.speaker_external_ids,
     };
     if (data.id) {
-      const r = await supabase.from("agenda_days").update(payload).eq("id", data.id).select("id").single();
+      const r = await supabase.from("agenda_days").update(payload as never).eq("id", data.id).select("id").single();
       if (r.error) throw new Error(r.error.message);
       return { id: r.data.id };
     }
     payload.position = await nextPosition(supabase, "agenda_days", data.event_id);
-    const r = await supabase.from("agenda_days").insert(payload).select("id").single();
+    const r = await supabase.from("agenda_days").insert(payload as never).select("id").single();
     if (r.error) throw new Error(r.error.message);
     return { id: r.data.id };
   });
@@ -386,7 +386,7 @@ export const upsertAgendaSession = createServerFn({ method: "POST" })
       tag: data.tag ?? null,
     };
     if (data.id) {
-      const r = await supabase.from("agenda_sessions").update(payload).eq("id", data.id).select("id").single();
+      const r = await supabase.from("agenda_sessions").update(payload as never).eq("id", data.id).select("id").single();
       if (r.error) throw new Error(r.error.message);
       return { id: r.data.id };
     }
@@ -400,7 +400,7 @@ export const upsertAgendaSession = createServerFn({ method: "POST" })
       .limit(1);
     if (top.error) throw new Error(top.error.message);
     payload.position = ((top.data?.[0]?.position as number | undefined) ?? -1) + 1;
-    const r = await supabase.from("agenda_sessions").insert(payload).select("id").single();
+    const r = await supabase.from("agenda_sessions").insert(payload as never).select("id").single();
     if (r.error) throw new Error(r.error.message);
     return { id: r.data.id };
   });
