@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Section } from "./Overview";
 import { getDayStatus, type DayStatus, type EventDay } from "@/lib/event";
-import { useAgendaDays, useSpeakers, useTopics } from "@/lib/event-adapters";
+import { useAgendaDays, useSpeakers, useTopics, useCurrentEventSlug } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 import { Clock, MapPin, CheckCircle2, Radio, CalendarClock, ChevronDown, LayoutGrid, Users, Tag } from "lucide-react";
 
