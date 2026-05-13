@@ -140,9 +140,9 @@ export const upsertEventSettings = createServerFn({ method: "POST" })
           documents_locked: data.documents_locked,
           library_locked: data.library_locked,
           footer_text: data.footer_text,
-          contact: data.contact,
-          social_links: data.social_links,
-          seo: data.seo,
+          contact: data.contact as never,
+          social_links: data.social_links as never,
+          seo: data.seo as never,
         })
         .eq("id", existing.id);
       if (error) throw new Error(error.message);
@@ -154,9 +154,9 @@ export const upsertEventSettings = createServerFn({ method: "POST" })
         documents_locked: data.documents_locked,
         library_locked: data.library_locked,
         footer_text: data.footer_text,
-        contact: data.contact,
-        social_links: data.social_links,
-        seo: data.seo,
+        contact: data.contact as never,
+        social_links: data.social_links as never,
+        seo: data.seo as never,
       });
       if (error) throw new Error(error.message);
     }
