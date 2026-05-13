@@ -132,7 +132,7 @@ export function Contact() {
           <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
             <iframe
               title="VBMA location"
-              src="https://www.google.com/maps?q=35+Hang+Voi,+Hoan+Kiem,+Hanoi&output=embed"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
               loading="lazy"
               className="h-[280px] w-full grayscale-[40%] contrast-110"
               referrerPolicy="no-referrer-when-downgrade"
