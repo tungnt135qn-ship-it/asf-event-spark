@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -116,8 +116,10 @@ function AdminEventsList() {
               </div>
             </div>
             <div className="mt-4 flex gap-2">
-              <Button size="sm" variant="default" disabled>
-                Cấu hình (sắp ra mắt)
+              <Button size="sm" asChild>
+                <Link to="/admin/events/$id" params={{ id: ev.id }}>
+                  Cấu hình
+                </Link>
               </Button>
             </div>
           </Card>
