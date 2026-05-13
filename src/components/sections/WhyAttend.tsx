@@ -1,15 +1,33 @@
 import { Section } from "./Overview";
-import { Users, TrendingUp, Landmark, Briefcase, ArrowUpRight } from "lucide-react";
+import { Users, TrendingUp, Landmark, Briefcase, ArrowUpRight, type LucideIcon } from "lucide-react";
 import { useT } from "@/lib/i18n";
+import { useWhyAttend } from "@/lib/event-adapters";
+
+const ICONS: Record<string, LucideIcon> = {
+  users: Users,
+  "trending-up": TrendingUp,
+  landmark: Landmark,
+  briefcase: Briefcase,
+};
+const FALLBACK_ICONS = [Users, TrendingUp, Landmark, Briefcase];
 
 export function WhyAttend() {
   const { t } = useT();
-  const items = [
-    { icon: Users, title: t("why.1.title"), desc: t("why.1.desc"), stat: "100–150", statLabel: t("why.1.statLabel") },
-    { icon: TrendingUp, title: t("why.2.title"), desc: t("why.2.desc"), stat: "30+", statLabel: t("why.2.statLabel") },
-    { icon: Landmark, title: t("why.3.title"), desc: t("why.3.desc"), stat: "ICMA · ASIFMA · ICSA", statLabel: t("why.3.statLabel") },
-    { icon: Briefcase, title: t("why.4.title"), desc: t("why.4.desc"), stat: "1:1", statLabel: t("why.4.statLabel") },
-  ];
+  const dbItems = useWhyAttend();
+  const items = (dbItems
+    ? dbItems.map((d, i) => ({
+        icon: (d.icon && ICONS[d.icon]) || FALLBACK_ICONS[i % FALLBACK_ICONS.length],
+        title: d.title,
+        desc: d.desc,
+        stat: d.stat,
+        statLabel: d.statLabel,
+      }))
+    : [
+        { icon: Users, title: t("why.1.title"), desc: t("why.1.desc"), stat: "100–150", statLabel: t("why.1.statLabel") },
+        { icon: TrendingUp, title: t("why.2.title"), desc: t("why.2.desc"), stat: "30+", statLabel: t("why.2.statLabel") },
+        { icon: Landmark, title: t("why.3.title"), desc: t("why.3.desc"), stat: "ICMA · ASIFMA · ICSA", statLabel: t("why.3.statLabel") },
+        { icon: Briefcase, title: t("why.4.title"), desc: t("why.4.desc"), stat: "1:1", statLabel: t("why.4.statLabel") },
+      ]);
 
   return (
     <Section id="why" eyebrow={t("why.eyebrow")} title={t("why.title")}>

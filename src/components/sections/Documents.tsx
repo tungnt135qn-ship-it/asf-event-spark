@@ -1,8 +1,9 @@
 import { Section } from "./Overview";
 import { FileText, Download } from "lucide-react";
 import { useT } from "@/lib/i18n";
+import { useDocuments } from "@/lib/event-adapters";
 
-const docs = [
+const FALLBACK = [
   { name: "ASF 2026 Brochure", size: "2.4 MB", type: "PDF" },
   { name: "Preliminary Agenda", size: "1.1 MB", type: "PDF" },
   { name: "Sponsorship Pack", size: "3.8 MB", type: "PDF" },
@@ -13,13 +14,17 @@ const docs = [
 
 export function Documents() {
   const { t } = useT();
+  const dbDocs = useDocuments();
+  const docs = dbDocs ?? FALLBACK;
   return (
     <Section id="documents" eyebrow={t("docs.eyebrow")} title={t("docs.title")}>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {docs.map((d) => (
           <a
             key={d.name}
-            href="#"
+            href={("url" in d && d.url) || "#"}
+            target={"url" in d && d.url ? "_blank" : undefined}
+            rel="noreferrer"
             className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md transition hover:border-gold/40"
           >
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold">
