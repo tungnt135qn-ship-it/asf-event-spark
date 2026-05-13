@@ -33,7 +33,16 @@ import { ModulesTab } from "@/components/admin/ModulesTab";
 import { ResourcesTab } from "@/components/admin/ResourcesTab";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 
+type EventTab = "general" | "settings" | "theme" | "content" | "modules" | "resources";
+const VALID_TABS: EventTab[] = ["general", "settings", "theme", "content", "modules", "resources"];
+
 export const Route = createFileRoute("/admin/events/$id")({
+  validateSearch: (search: Record<string, unknown>): { tab?: EventTab } => {
+    const t = search.tab;
+    return typeof t === "string" && (VALID_TABS as string[]).includes(t)
+      ? { tab: t as EventTab }
+      : {};
+  },
   component: EventDetailPage,
 });
 
