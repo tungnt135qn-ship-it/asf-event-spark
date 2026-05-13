@@ -446,6 +446,15 @@ function I18nField({
   );
 }
 
+type SeoState = {
+  title_vi?: string | null;
+  title_en?: string | null;
+  description_vi?: string | null;
+  description_en?: string | null;
+  keywords?: string | null;
+  og_image?: string | null;
+};
+
 type SettingsState = {
   registration_enabled: boolean;
   booking_enabled: boolean;
@@ -459,6 +468,7 @@ type SettingsState = {
     address_en?: string | null;
   };
   social_links: SocialLink[];
+  seo: SeoState;
 };
 
 const emptySettings: SettingsState = {
@@ -469,6 +479,7 @@ const emptySettings: SettingsState = {
   footer_text: { vi: "", en: "" },
   contact: {},
   social_links: [],
+  seo: {},
 };
 
 function SettingsForm({
