@@ -531,7 +531,7 @@ function SettingsForm({
           footer_text: form.footer_text,
           contact: form.contact,
           social_links: form.social_links,
-          seo: (settings?.seo as Record<string, unknown>) ?? {},
+          seo: form.seo as Record<string, unknown>,
         },
         headers: { Authorization: `Bearer ${token}` },
       });
