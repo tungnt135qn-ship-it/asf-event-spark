@@ -9,6 +9,7 @@ import {
   updateEventStatus,
   setDefaultEvent,
   upsertEventSettings,
+  updateEventTheme,
 } from "@/lib/event-admin.functions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -30,6 +31,7 @@ import { toast } from "sonner";
 import { ContentTab } from "@/components/admin/ContentTab";
 import { ModulesTab } from "@/components/admin/ModulesTab";
 import { ResourcesTab } from "@/components/admin/ResourcesTab";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 export const Route = createFileRoute("/admin/events/$id")({
   component: EventDetailPage,
@@ -131,6 +133,7 @@ function EventDetailPage() {
         <TabsList className="flex-wrap h-auto">
           <TabsTrigger value="general">Thông tin chung</TabsTrigger>
           <TabsTrigger value="settings">Cấu hình</TabsTrigger>
+          <TabsTrigger value="theme">Giao diện</TabsTrigger>
           <TabsTrigger value="content">Nội dung</TabsTrigger>
           <TabsTrigger value="modules">Module</TabsTrigger>
           <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
@@ -144,6 +147,14 @@ function EventDetailPage() {
           <SettingsForm
             eventId={event.id}
             settings={data.settings as Record<string, unknown> | null}
+            onSaved={() => refetch()}
+          />
+        </TabsContent>
+
+        <TabsContent value="theme" className="mt-4">
+          <ThemeForm
+            eventId={event.id}
+            theme={(data.event as unknown as { theme?: Record<string, unknown> }).theme ?? {}}
             onSaved={() => refetch()}
           />
         </TabsContent>
@@ -368,19 +379,19 @@ function GeneralForm({
 
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Logo URL</Label>
-            <Input
-              value={form.logo_url ?? ""}
-              onChange={(e) => setForm({ ...form, logo_url: e.target.value || null })}
-              placeholder="https://…"
+            <Label>Logo</Label>
+            <ImageUpload
+              value={form.logo_url}
+              onChange={(url) => setForm({ ...form, logo_url: url })}
+              folder="events/logo"
             />
           </div>
           <div className="space-y-2">
-            <Label>Cover URL</Label>
-            <Input
-              value={form.cover_url ?? ""}
-              onChange={(e) => setForm({ ...form, cover_url: e.target.value || null })}
-              placeholder="https://…"
+            <Label>Ảnh bìa (cover)</Label>
+            <ImageUpload
+              value={form.cover_url}
+              onChange={(url) => setForm({ ...form, cover_url: url })}
+              folder="events/cover"
             />
           </div>
         </div>
@@ -684,5 +695,91 @@ function ToggleRow({
       <div className="text-sm">{label}</div>
       <Switch checked={value} onCheckedChange={onChange} />
     </div>
+  );
+}
+
+function ThemeForm({
+  eventId,
+  theme,
+  onSaved,
+}: {
+  eventId: string;
+  theme: Record<string, unknown>;
+  onSaved: () => void;
+}) {
+  const { session } = useAdminAuth();
+  const updateFn = useServerFn(updateEventTheme);
+  const [form, setForm] = useState({
+    primary: (theme.primary as string) ?? "#C8A45D",
+    accent: (theme.accent as string) ?? "#1A1F2E",
+    animations: (theme.animations as Record<string, string>) ?? {},
+  });
+  const [saving, setSaving] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const token = session?.access_token;
+    if (!token) return toast.error("Phiên không hợp lệ");
+    setSaving(true);
+    try {
+      await updateFn({
+        data: { id: eventId, theme: form },
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Đã lưu giao diện");
+      onSaved();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Có lỗi");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const setAnim = (key: string, url: string | null) =>
+    setForm({ ...form, animations: { ...form.animations, [key]: url ?? "" } });
+
+  return (
+    <Card className="p-6">
+      <form onSubmit={submit} className="space-y-6">
+        <section className="space-y-3">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Màu sắc</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Màu chính (primary)</Label>
+              <div className="flex gap-2">
+                <Input type="color" className="h-10 w-16 p-1" value={form.primary} onChange={(e) => setForm({ ...form, primary: e.target.value })} />
+                <Input value={form.primary} onChange={(e) => setForm({ ...form, primary: e.target.value })} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Màu phụ (accent)</Label>
+              <div className="flex gap-2">
+                <Input type="color" className="h-10 w-16 p-1" value={form.accent} onChange={(e) => setForm({ ...form, accent: e.target.value })} />
+                <Input value={form.accent} onChange={(e) => setForm({ ...form, accent: e.target.value })} />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-3">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Animation (.lottie)</h3>
+          <div className="space-y-3">
+            <div className="space-y-1"><Label>Signup</Label>
+              <ImageUpload value={form.animations.signup} onChange={(u) => setAnim("signup", u)} folder="theme/animations" accept=".lottie,application/zip" />
+            </div>
+            <div className="space-y-1"><Label>Call ringing</Label>
+              <ImageUpload value={form.animations.call} onChange={(u) => setAnim("call", u)} folder="theme/animations" accept=".lottie,application/zip" />
+            </div>
+            <div className="space-y-1"><Label>FAQ chatbot</Label>
+              <ImageUpload value={form.animations.faq} onChange={(u) => setAnim("faq", u)} folder="theme/animations" accept=".lottie,application/zip" />
+            </div>
+          </div>
+        </section>
+
+        <div className="flex justify-end">
+          <Button type="submit" disabled={saving}><Save className="mr-2 h-4 w-4" />{saving ? "Đang lưu…" : "Lưu giao diện"}</Button>
+        </div>
+      </form>
+    </Card>
   );
 }

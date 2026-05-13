@@ -162,3 +162,17 @@ export const upsertEventSettings = createServerFn({ method: "POST" })
     }
     return { ok: true };
   });
+
+const themeInput = z.object({
+  id: z.string().uuid(),
+  theme: z.record(z.string(), z.unknown()),
+});
+
+export const updateEventTheme = createServerFn({ method: "POST" })
+  .inputValidator((d) => themeInput.parse(d))
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase.from("events").update({ theme: data.theme as never }).eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
