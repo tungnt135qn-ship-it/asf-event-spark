@@ -60,12 +60,12 @@ export function Contact() {
               <div>
                 <div className="text-xs uppercase tracking-wider text-gold/80">{t("contact.address")}</div>
                 <a
-                  href="https://maps.google.com/?q=35+Hang+Voi,+Hoan+Kiem,+Hanoi"
+                  href={`https://maps.google.com/?q=${encodeURIComponent(address)}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-sm font-medium text-white hover:text-gold"
                 >
-                  {t("contact.addressValue")}
+                  {address}
                 </a>
               </div>
             </div>
