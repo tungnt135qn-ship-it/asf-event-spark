@@ -659,14 +659,13 @@ function SponsorsEditor({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs">Logo URL</Label>
-              <Input
-                value={s.logo_url ?? ""}
-                onChange={(e) =>
-                  setItems((p) =>
-                    p.map((x, idx) => (idx === i ? { ...x, logo_url: e.target.value || null } : x))
-                  )
+              <Label className="text-xs">Logo</Label>
+              <ImageUpload
+                value={s.logo_url}
+                onChange={(url) =>
+                  setItems((p) => p.map((x, idx) => (idx === i ? { ...x, logo_url: url } : x)))
                 }
+                folder="sponsors"
               />
             </div>
             <div className="space-y-1.5">
