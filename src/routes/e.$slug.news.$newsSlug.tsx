@@ -7,6 +7,8 @@ import { Footer } from "@/components/sections/Footer";
 import { EventContentProvider } from "@/lib/event-context";
 import { eventContentQueryOptions } from "./e.$slug";
 import { useNewsList } from "@/lib/event-adapters";
+import { pickI18n } from "@/lib/event-content";
+import { buildEventHead } from "@/lib/seo-helpers";
 
 export const Route = createFileRoute("/e/$slug/news/$newsSlug")({
   loader: ({ context, params }) =>
