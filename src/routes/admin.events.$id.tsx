@@ -29,6 +29,7 @@ import { ArrowLeft, ExternalLink, Plus, Trash2, Save, Star } from "lucide-react"
 import { toast } from "sonner";
 import { ContentTab } from "@/components/admin/ContentTab";
 import { ModulesTab } from "@/components/admin/ModulesTab";
+import { ResourcesTab } from "@/components/admin/ResourcesTab";
 
 export const Route = createFileRoute("/admin/events/$id")({
   component: EventDetailPage,
@@ -127,11 +128,12 @@ function EventDetailPage() {
       </div>
 
       <Tabs defaultValue="general" className="w-full">
-        <TabsList>
+        <TabsList className="flex-wrap h-auto">
           <TabsTrigger value="general">Thông tin chung</TabsTrigger>
           <TabsTrigger value="settings">Cấu hình</TabsTrigger>
           <TabsTrigger value="content">Nội dung</TabsTrigger>
           <TabsTrigger value="modules">Module</TabsTrigger>
+          <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="mt-4">
@@ -152,6 +154,10 @@ function EventDetailPage() {
 
         <TabsContent value="modules" className="mt-4">
           <ModulesTab eventId={event.id} />
+        </TabsContent>
+
+        <TabsContent value="resources" className="mt-4">
+          <ResourcesTab eventId={event.id} />
         </TabsContent>
       </Tabs>
     </div>
