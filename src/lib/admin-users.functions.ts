@@ -72,14 +72,15 @@ export const grantRole = createServerFn({ method: "POST" })
     }
 
     // Avoid duplicate
-    const { data: existing } = await supabaseAdmin
+    let existingQuery = supabaseAdmin
       .from("user_roles")
       .select("id")
       .eq("user_id", data.user_id)
-      .eq("role", data.role)
-      .is("event_id", eventId === null ? null : undefined)
-      .eq("event_id", eventId ?? "00000000-0000-0000-0000-000000000000")
-      .maybeSingle();
+      .eq("role", data.role);
+    existingQuery = eventId
+      ? existingQuery.eq("event_id", eventId)
+      : existingQuery.is("event_id", null);
+    const { data: existing } = await existingQuery.maybeSingle();
     if (existing) return { ok: true, id: existing.id };
 
     const { data: row, error } = await supabaseAdmin
