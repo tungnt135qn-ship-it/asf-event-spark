@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useQuery, queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
