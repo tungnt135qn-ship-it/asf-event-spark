@@ -504,6 +504,7 @@ function SettingsForm({
         footer_text: (settings.footer_text as I18n) ?? { vi: "", en: "" },
         contact: (settings.contact as SettingsState["contact"]) ?? {},
         social_links: ((settings.social_links as SocialLink[]) ?? []) || [],
+        seo: (settings.seo as SeoState) ?? {},
       }
     : emptySettings;
 
