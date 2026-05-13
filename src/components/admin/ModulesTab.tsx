@@ -1154,7 +1154,7 @@ function AgendaEditor({
                 <I18nField
                   label="Mô tả"
                   value={s.description}
-                  textarea
+                  rich
                   onChange={(v) =>
                     setItems((p) =>
                       p.map((x, idx) =>
