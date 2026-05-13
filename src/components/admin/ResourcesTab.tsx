@@ -295,7 +295,7 @@ function HotelsEditor({
             <div className="mt-3 space-y-3">
               <I18nField label="Hạng" value={h.tier} onChange={(v) => update(idx, { tier: v })} />
               <I18nField label="Địa chỉ" value={h.address} onChange={(v) => update(idx, { address: v })} />
-              <I18nField label="Mô tả" value={h.description} onChange={(v) => update(idx, { description: v })} textarea />
+              <I18nField label="Mô tả" value={h.description} onChange={(v) => update(idx, { description: v })} rich />
             </div>
             <div className="mt-3 grid md:grid-cols-2 gap-3">
               <div>
