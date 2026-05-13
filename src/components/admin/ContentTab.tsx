@@ -605,7 +605,7 @@ function KeyForm({
             />
           </div>
           <I18nField label="Title" value={it.title} onChange={(v) => update(idx, { title: v })} />
-          <I18nField label="Body" value={it.body} onChange={(v) => update(idx, { body: v })} textarea />
+          <I18nField label="Body" value={it.body} onChange={(v) => update(idx, { body: v })} rich />
         </Card>
       ))}
 
