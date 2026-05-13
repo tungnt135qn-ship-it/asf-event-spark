@@ -509,7 +509,7 @@ function TopicsEditor({
           <I18nField
             label="Mô tả chi tiết"
             value={t.long_description}
-            textarea
+            rich
             onChange={(v) =>
               setItems((p) => p.map((x, idx) => (idx === i ? { ...x, long_description: v } : x)))
             }
