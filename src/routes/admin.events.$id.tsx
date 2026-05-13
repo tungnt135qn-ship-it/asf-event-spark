@@ -29,6 +29,7 @@ import { ArrowLeft, ExternalLink, Plus, Trash2, Save, Star } from "lucide-react"
 import { toast } from "sonner";
 import { ContentTab } from "@/components/admin/ContentTab";
 import { ModulesTab } from "@/components/admin/ModulesTab";
+import { ResourcesTab } from "@/components/admin/ResourcesTab";
 
 export const Route = createFileRoute("/admin/events/$id")({
   component: EventDetailPage,
