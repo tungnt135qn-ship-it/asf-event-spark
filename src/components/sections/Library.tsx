@@ -143,12 +143,22 @@ export function Library({ preview = false }: { preview?: boolean }) {
 
       {preview && (
         <div className="mt-8 flex justify-center">
-          <Link
-            to="/library"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-gold/60 px-6 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
-          >
-            {t("library.viewAll")} <ArrowRight size={16} />
-          </Link>
+          {eventSlug ? (
+            <Link
+              to="/e/$slug/library"
+              params={{ slug: eventSlug }}
+              className="inline-flex items-center gap-2 rounded-full border-2 border-gold/60 px-6 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
+            >
+              {t("library.viewAll")} <ArrowRight size={16} />
+            </Link>
+          ) : (
+            <Link
+              to="/library"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-gold/60 px-6 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
+            >
+              {t("library.viewAll")} <ArrowRight size={16} />
+            </Link>
+          )}
         </div>
       )}
 
