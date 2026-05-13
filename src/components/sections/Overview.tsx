@@ -42,14 +42,24 @@ function Section({
 
 export function Overview() {
   const { t } = useT();
-  const highlights = [
-    { icon: Globe2, text: t("overview.h1") },
-    { icon: Calendar, text: t("overview.h2") },
-    { icon: CheckCircle2, text: t("overview.h3") },
-  ];
+  const ov = useOverview();
+  const ICONS = [Globe2, Calendar, CheckCircle2];
+  const highlights =
+    ov?.highlights?.length
+      ? ov.highlights.map((text, i) => ({ icon: ICONS[i % ICONS.length], text }))
+      : [
+          { icon: Globe2, text: t("overview.h1") },
+          { icon: Calendar, text: t("overview.h2") },
+          { icon: CheckCircle2, text: t("overview.h3") },
+        ];
+  const eyebrow = ov?.eyebrow || t("overview.eyebrow");
+  const title = ov?.title || t("overview.title");
+  const lead = ov?.lead || t("overview.lead");
+  const orgsTitle = ov?.orgsTitle || t("overview.orgsTitle");
+  const orgs = ov?.orgs?.length ? ov.orgs : [t("overview.vbma"), t("overview.vasb")];
 
   return (
-    <Section id="overview" eyebrow={t("overview.eyebrow")} title={t("overview.title")}>
+    <Section id="overview" eyebrow={eyebrow} title={title}>
       <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
         {/* Left: Image */}
         <div className="relative">
@@ -74,15 +84,16 @@ export function Overview() {
 
         {/* Right: Content + Highlights */}
         <div className="space-y-6 text-white/85">
-          <p className="text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: t("overview.lead") }} />
+          <p className="text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: lead }} />
 
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
             <div className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gold">
-              <Building2 size={16} /> {t("overview.orgsTitle")}
+              <Building2 size={16} /> {orgsTitle}
             </div>
             <div className="space-y-3 text-sm leading-relaxed text-white/85">
-              <p dangerouslySetInnerHTML={{ __html: t("overview.vbma") }} />
-              <p dangerouslySetInnerHTML={{ __html: t("overview.vasb") }} />
+              {orgs.map((html, i) => (
+                <p key={i} dangerouslySetInnerHTML={{ __html: html }} />
+              ))}
             </div>
             <div className="mt-4 flex flex-wrap gap-4">
               <a
