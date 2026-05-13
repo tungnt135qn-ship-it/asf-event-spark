@@ -29,13 +29,16 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [roles, setRoles] = useState<UserRole[]>([]);
   const [loading, setLoading] = useState(true);
+  const [rolesLoading, setRolesLoading] = useState(true);
 
   const loadRoles = async (uid: string) => {
+    setRolesLoading(true);
     const { data } = await supabase
       .from("user_roles")
       .select("role, event_id")
       .eq("user_id", uid);
     setRoles((data ?? []) as UserRole[]);
+    setRolesLoading(false);
   };
 
   useEffect(() => {
@@ -44,10 +47,12 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       setSession(newSession);
       setUser(newSession?.user ?? null);
       if (newSession?.user) {
+        setRolesLoading(true);
         // Defer the roles fetch to avoid deadlock
         setTimeout(() => loadRoles(newSession.user.id), 0);
       } else {
         setRoles([]);
+        setRolesLoading(false);
       }
     });
 
@@ -55,7 +60,11 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession().then(({ data: { session: existing } }) => {
       setSession(existing);
       setUser(existing?.user ?? null);
-      if (existing?.user) loadRoles(existing.user.id);
+      if (existing?.user) {
+        loadRoles(existing.user.id);
+      } else {
+        setRolesLoading(false);
+      }
       setLoading(false);
     });
 
