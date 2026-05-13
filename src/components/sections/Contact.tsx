@@ -20,6 +20,22 @@ function socialIcon(name: string): LucideIcon {
 
 export function Contact() {
   const { t } = useT();
+  const info = useContactInfo();
+  const socials = (info?.socials?.length ? info.socials : [
+    { name: "Facebook", url: "https://www.facebook.com/p/Vietnam-Bond-Market-Association-100064838944642/" },
+    { name: "LinkedIn", url: "#" },
+    { name: "Zalo", url: "#" },
+  ]).map((s) => ({ icon: socialIcon(s.name), label: s.name, href: s.url }));
+  const phone = info?.phone || "+84 24 3974 8506";
+  const email = info?.email || "asf2026@vbma.org.vn";
+  const website = info?.website || "https://vbma.org.vn/vi";
+  const address = info?.address || t("contact.addressValue");
+  const websiteLabel = website.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  const primaryContacts = [
+    { icon: Phone, label: "Hotline", value: phone, href: `tel:${phone.replace(/\s+/g, "")}`, accent: "from-emerald-400/30 to-emerald-500/10" },
+    { icon: Mail, label: "Email", value: email, href: `mailto:${email}`, accent: "from-sky-400/30 to-sky-500/10" },
+    { icon: Globe, label: "Website", value: websiteLabel, href: website, accent: "from-violet-400/30 to-violet-500/10" },
+  ];
   return (
     <Section id="contact" eyebrow={t("contact.eyebrow")} title={t("contact.title")}>
       <div className="grid gap-6 lg:grid-cols-5">
