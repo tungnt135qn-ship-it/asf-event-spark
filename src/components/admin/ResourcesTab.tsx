@@ -919,10 +919,12 @@ function PressEditor({
                   <Input value={p.url ?? ""} onChange={(e) => update(idx, { url: e.target.value || null })} />
                 </div>
                 <div>
-                  <Label className="text-xs">File URL</Label>
-                  <Input
-                    value={p.file_url ?? ""}
-                    onChange={(e) => update(idx, { file_url: e.target.value || null })}
+                  <Label className="text-xs">File</Label>
+                  <ImageUpload
+                    value={p.file_url}
+                    onChange={(url) => update(idx, { file_url: url })}
+                    folder="press"
+                    accept=".pdf,.doc,.docx"
                   />
                 </div>
               </div>
