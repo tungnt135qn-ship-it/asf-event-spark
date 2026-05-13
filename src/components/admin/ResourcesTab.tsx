@@ -468,7 +468,7 @@ function NewsEditor({
             </div>
             <div className="mt-3 space-y-3">
               <I18nField label="Tiêu đề" value={n.title} onChange={(v) => update(idx, { title: v })} />
-              <I18nField label="Mô tả ngắn" value={n.excerpt} onChange={(v) => update(idx, { excerpt: v })} textarea />
+              <I18nField label="Mô tả ngắn" value={n.excerpt} onChange={(v) => update(idx, { excerpt: v })} rich />
             </div>
             <div className="mt-3 grid md:grid-cols-2 gap-3">
               <div>
