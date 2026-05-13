@@ -24,7 +24,8 @@ import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
 import { Gated, LockedSection } from "@/components/LockedSection";
 import { useT } from "@/lib/i18n";
-import { fetchEventContent, pickI18n } from "@/lib/event-content";
+import { fetchEventContent } from "@/lib/event-content";
+import { buildEventHead } from "@/lib/seo-helpers";
 import { EventContentProvider } from "@/lib/event-context";
 
 export const eventContentQueryOptions = (slug: string) =>
