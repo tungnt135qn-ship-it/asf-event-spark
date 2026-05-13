@@ -72,7 +72,7 @@ function EventDetailPage() {
       </div>
     );
 
-  const event = data.event as {
+  const event = data.event as unknown as {
     id: string;
     slug: string;
     name: I18n;
