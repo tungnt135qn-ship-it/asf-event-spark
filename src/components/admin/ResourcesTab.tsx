@@ -483,10 +483,11 @@ function NewsEditor({
             </div>
             <div className="mt-3 grid md:grid-cols-3 gap-3">
               <div className="md:col-span-2">
-                <Label className="text-xs">Ảnh bìa URL</Label>
-                <Input
-                  value={n.cover_url ?? ""}
-                  onChange={(e) => update(idx, { cover_url: e.target.value || null })}
+                <Label className="text-xs">Ảnh bìa</Label>
+                <ImageUpload
+                  value={n.cover_url}
+                  onChange={(url) => update(idx, { cover_url: url })}
+                  folder="news"
                 />
               </div>
               <div>
