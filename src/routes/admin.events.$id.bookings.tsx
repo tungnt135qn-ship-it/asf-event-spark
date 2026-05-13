@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowLeft, Download, Eye, Trash2, Search } from "lucide-react";
 import { toast } from "sonner";
+import { BookingStats } from "@/components/admin/StatsCharts";
 
 export const Route = createFileRoute("/admin/events/$id/bookings")({
   component: BookingsPage,
