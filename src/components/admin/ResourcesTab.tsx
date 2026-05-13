@@ -900,7 +900,7 @@ function PressEditor({
             />
             <div className="space-y-3">
               <I18nField label="Tiêu đề" value={p.title} onChange={(v) => update(idx, { title: v })} />
-              <I18nField label="Mô tả" value={p.description} onChange={(v) => update(idx, { description: v })} textarea />
+              <I18nField label="Mô tả" value={p.description} onChange={(v) => update(idx, { description: v })} rich />
               <div className="grid md:grid-cols-2 gap-3">
                 <div>
                   <Label className="text-xs">Nguồn</Label>
