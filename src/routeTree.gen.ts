@@ -19,6 +19,7 @@ import { Route as ESlugRouteImport } from './routes/e.$slug'
 import { Route as AccountRegistrationsRouteImport } from './routes/account.registrations'
 import { Route as AccountBookingsRouteImport } from './routes/account.bookings'
 import { Route as ESlugLibraryRouteImport } from './routes/e.$slug.library'
+import { Route as AdminEventsIdRouteImport } from './routes/admin.events.$id'
 import { Route as ESlugTopicsTopicSlugRouteImport } from './routes/e.$slug.topics.$topicSlug'
 import { Route as ESlugNewsNewsSlugRouteImport } from './routes/e.$slug.news.$newsSlug'
 
@@ -72,6 +73,11 @@ const ESlugLibraryRoute = ESlugLibraryRouteImport.update({
   path: '/library',
   getParentRoute: () => ESlugRoute,
 } as any)
+const AdminEventsIdRoute = AdminEventsIdRouteImport.update({
+  id: '/events/$id',
+  path: '/events/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ESlugTopicsTopicSlugRoute = ESlugTopicsTopicSlugRouteImport.update({
   id: '/topics/$topicSlug',
   path: '/topics/$topicSlug',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/events/$id': typeof AdminEventsIdRoute
   '/e/$slug/library': typeof ESlugLibraryRoute
   '/e/$slug/news/$newsSlug': typeof ESlugNewsNewsSlugRoute
   '/e/$slug/topics/$topicSlug': typeof ESlugTopicsTopicSlugRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/events/$id': typeof AdminEventsIdRoute
   '/e/$slug/library': typeof ESlugLibraryRoute
   '/e/$slug/news/$newsSlug': typeof ESlugNewsNewsSlugRoute
   '/e/$slug/topics/$topicSlug': typeof ESlugTopicsTopicSlugRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/events/$id': typeof AdminEventsIdRoute
   '/e/$slug/library': typeof ESlugLibraryRoute
   '/e/$slug/news/$newsSlug': typeof ESlugNewsNewsSlugRoute
   '/e/$slug/topics/$topicSlug': typeof ESlugTopicsTopicSlugRoute
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin/'
+    | '/admin/events/$id'
     | '/e/$slug/library'
     | '/e/$slug/news/$newsSlug'
     | '/e/$slug/topics/$topicSlug'
@@ -150,6 +160,7 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin'
+    | '/admin/events/$id'
     | '/e/$slug/library'
     | '/e/$slug/news/$newsSlug'
     | '/e/$slug/topics/$topicSlug'
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/topics/$slug'
     | '/admin/'
+    | '/admin/events/$id'
     | '/e/$slug/library'
     | '/e/$slug/news/$newsSlug'
     | '/e/$slug/topics/$topicSlug'
@@ -252,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ESlugLibraryRouteImport
       parentRoute: typeof ESlugRoute
     }
+    '/admin/events/$id': {
+      id: '/admin/events/$id'
+      path: '/events/$id'
+      fullPath: '/admin/events/$id'
+      preLoaderRoute: typeof AdminEventsIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/e/$slug/topics/$topicSlug': {
       id: '/e/$slug/topics/$topicSlug'
       path: '/topics/$topicSlug'
@@ -271,10 +290,12 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminEventsIdRoute: typeof AdminEventsIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
+  AdminEventsIdRoute: AdminEventsIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
