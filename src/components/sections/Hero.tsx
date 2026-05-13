@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Calendar, MapPin } from "lucide-react";
-import { EVENT_START, getCountdown, getEventStatus } from "@/lib/event";
+import { getCountdown, getEventStatus } from "@/lib/event";
+import { useEventDates } from "@/lib/event-adapters";
 import { useT } from "@/lib/i18n";
 import logoUrl from "@/assets/asf-logo.png";
 
@@ -36,12 +37,13 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
 
 export function Hero() {
   const { t } = useT();
-  const [c, setC] = useState(getCountdown());
+  const { countdownTo } = useEventDates();
+  const [c, setC] = useState(() => getCountdown(countdownTo));
 
   useEffect(() => {
-    const id = setInterval(() => setC(getCountdown()), 1000);
+    const id = setInterval(() => setC(getCountdown(countdownTo)), 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [countdownTo]);
 
   return (
     <section
