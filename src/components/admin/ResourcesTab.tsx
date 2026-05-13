@@ -771,17 +771,20 @@ function LibraryEditor({
               <I18nField label="Tiêu đề" value={l.title} onChange={(v) => update(idx, { title: v })} />
               <div className="grid md:grid-cols-2 gap-3">
                 <div>
-                  <Label className="text-xs">Thumbnail URL</Label>
-                  <Input
-                    value={l.thumbnail_url}
-                    onChange={(e) => update(idx, { thumbnail_url: e.target.value })}
+                  <Label className="text-xs">Thumbnail</Label>
+                  <ImageUpload
+                    value={l.thumbnail_url || null}
+                    onChange={(url) => update(idx, { thumbnail_url: url ?? "" })}
+                    folder="library/thumbs"
                   />
                 </div>
                 <div>
-                  <Label className="text-xs">Source URL</Label>
-                  <Input
-                    value={l.source_url}
-                    onChange={(e) => update(idx, { source_url: e.target.value })}
+                  <Label className="text-xs">Source (ảnh hoặc video)</Label>
+                  <ImageUpload
+                    value={l.source_url || null}
+                    onChange={(url) => update(idx, { source_url: url ?? "" })}
+                    folder="library/source"
+                    accept={l.type === "video" ? "video/*" : "image/*"}
                   />
                 </div>
               </div>
