@@ -128,11 +128,12 @@ function EventDetailPage() {
       </div>
 
       <Tabs defaultValue="general" className="w-full">
-        <TabsList>
+        <TabsList className="flex-wrap h-auto">
           <TabsTrigger value="general">Thông tin chung</TabsTrigger>
           <TabsTrigger value="settings">Cấu hình</TabsTrigger>
           <TabsTrigger value="content">Nội dung</TabsTrigger>
           <TabsTrigger value="modules">Module</TabsTrigger>
+          <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="mt-4">
@@ -153,6 +154,10 @@ function EventDetailPage() {
 
         <TabsContent value="modules" className="mt-4">
           <ModulesTab eventId={event.id} />
+        </TabsContent>
+
+        <TabsContent value="resources" className="mt-4">
+          <ResourcesTab eventId={event.id} />
         </TabsContent>
       </Tabs>
     </div>
