@@ -183,10 +183,7 @@ export function AdminAppSidebar() {
               </div>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton
-                    isActive={pathname === eventBase && !(router.state.location.search as Record<string, unknown>)?.tab}
-                    onClick={() => router.navigate({ to: eventBase })}
-                  >
+                  <SidebarMenuButton isActive={eventTab("overview") || (pathname === eventBase && !(router.state.location.search as Record<string, unknown>)?.tab)} onClick={() => goEventTab("overview")}>
                     <Gauge className="h-4 w-4" />
                     <span>Tổng quan</span>
                   </SidebarMenuButton>
@@ -209,24 +206,100 @@ export function AdminAppSidebar() {
                     <span>Giao diện</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton isActive={eventTab("content")} onClick={() => goEventTab("content")}>
-                    <FileText className="h-4 w-4" />
-                    <span>Nội dung</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
-                    <Boxes className="h-4 w-4" />
-                    <span>Module</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
-                    <Folder className="h-4 w-4" />
-                    <span>Tài nguyên</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+
+                {/* NỘI DUNG group */}
+                <Collapsible defaultOpen className="group/collapsible">
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton>
+                        <FileText className="h-4 w-4" />
+                        <span>Nội dung</span>
+                        <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                  </SidebarMenuItem>
+                  <CollapsibleContent>
+                    <SidebarMenu className="ml-4 border-l pl-2">
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("content")} onClick={() => goEventTab("content")}>
+                          <Sparkles className="h-4 w-4" /><span>Hero / Overview / Why / Key</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("news")} onClick={() => goEventTab("news")}>
+                          <Newspaper className="h-4 w-4" /><span>Tin tức</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("faqs")} onClick={() => goEventTab("faqs")}>
+                          <HelpCircle className="h-4 w-4" /><span>FAQ</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
+                          <BookOpen className="h-4 w-4" /><span>Chủ đề</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
+                          <CalendarDays className="h-4 w-4" /><span>Lịch trình</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                          <Megaphone className="h-4 w-4" /><span>Thông cáo</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* TÀI NGUYÊN group */}
+                <Collapsible defaultOpen className="group/collapsible">
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton>
+                        <Folder className="h-4 w-4" />
+                        <span>Tài nguyên</span>
+                        <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                  </SidebarMenuItem>
+                  <CollapsibleContent>
+                    <SidebarMenu className="ml-4 border-l pl-2">
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                          <Hotel className="h-4 w-4" /><span>Khách sạn</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                          <FileText className="h-4 w-4" /><span>Tài liệu</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                          <ImageIcon className="h-4 w-4" /><span>Thư viện</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("resources")} onClick={() => goEventTab("resources")}>
+                          <KeyRound className="h-4 w-4" /><span>Access codes</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
+                          <Mic className="h-4 w-4" /><span>Diễn giả</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive={eventTab("modules")} onClick={() => goEventTab("modules")}>
+                          <Award className="h-4 w-4" /><span>Nhà tài trợ</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
+                  </CollapsibleContent>
+                </Collapsible>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild isActive={isActive(`${eventBase}/registrations`)}>
                     <Link to="/admin/events/$id/registrations" params={{ id: currentEventId! }}>
