@@ -208,6 +208,8 @@ function BookingsPage() {
         </Button>
       </div>
 
+      <BookingStats rows={rows} />
+
       <Card className="p-4 mb-4">
         <div className="flex gap-3 flex-wrap items-center">
           <div className="relative flex-1 min-w-[240px]">
