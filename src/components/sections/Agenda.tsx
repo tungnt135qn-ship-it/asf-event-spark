@@ -27,9 +27,6 @@ function StatusPill({ status }: { status: DayStatus }) {
 export function Agenda() {
   const { t, lang } = useT();
   const days = useAgendaDays();
-  const allSpeakers = useSpeakers();
-  const allTopics = useTopics();
-  const currentSlug = useCurrentEventSlug();
   // active: -1 = "All" tab, otherwise day index
   const [active, setActive] = useState(0);
   const [openDays, setOpenDays] = useState<Record<number, boolean>>({});
