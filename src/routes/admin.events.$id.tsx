@@ -30,6 +30,7 @@ import { toast } from "sonner";
 import { ContentTab } from "@/components/admin/ContentTab";
 import { ModulesTab } from "@/components/admin/ModulesTab";
 import { ResourcesTab } from "@/components/admin/ResourcesTab";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 export const Route = createFileRoute("/admin/events/$id")({
   component: EventDetailPage,
@@ -131,6 +132,7 @@ function EventDetailPage() {
         <TabsList className="flex-wrap h-auto">
           <TabsTrigger value="general">Thông tin chung</TabsTrigger>
           <TabsTrigger value="settings">Cấu hình</TabsTrigger>
+          <TabsTrigger value="theme">Giao diện</TabsTrigger>
           <TabsTrigger value="content">Nội dung</TabsTrigger>
           <TabsTrigger value="modules">Module</TabsTrigger>
           <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
@@ -144,6 +146,14 @@ function EventDetailPage() {
           <SettingsForm
             eventId={event.id}
             settings={data.settings as Record<string, unknown> | null}
+            onSaved={() => refetch()}
+          />
+        </TabsContent>
+
+        <TabsContent value="theme" className="mt-4">
+          <ThemeForm
+            eventId={event.id}
+            theme={(data.event as unknown as { theme?: Record<string, unknown> }).theme ?? {}}
             onSaved={() => refetch()}
           />
         </TabsContent>
