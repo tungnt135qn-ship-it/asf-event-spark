@@ -32,6 +32,7 @@ import { ContentTab } from "@/components/admin/ContentTab";
 import { ModulesTab } from "@/components/admin/ModulesTab";
 import { ResourcesTab } from "@/components/admin/ResourcesTab";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { RichTextI18nField } from "@/components/admin/RichTextEditor";
 
 type EventTab = "general" | "settings" | "theme" | "content" | "modules" | "resources";
 const VALID_TABS: EventTab[] = ["general", "settings", "theme", "content", "modules", "resources"];
