@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -216,22 +216,7 @@ function EventTabs({
 
   return (
     <Tabs value={activeTab} onValueChange={setTab} className="w-full">
-      <TabsList className="flex-wrap h-auto">
-        <TabsTrigger value="overview">Tổng quan</TabsTrigger>
-        <TabsTrigger value="general">Thông tin chung</TabsTrigger>
-        <TabsTrigger value="settings">Cấu hình</TabsTrigger>
-        <TabsTrigger value="theme">Giao diện</TabsTrigger>
-        <TabsTrigger value="content">Nội dung</TabsTrigger>
-        <TabsTrigger value="news">Tin tức</TabsTrigger>
-        <TabsTrigger value="topics">Chủ đề</TabsTrigger>
-        <TabsTrigger value="agenda">Lịch trình</TabsTrigger>
-        <TabsTrigger value="faqs">FAQ</TabsTrigger>
-        <TabsTrigger value="press">Thông cáo</TabsTrigger>
-        <TabsTrigger value="documents">Tài liệu</TabsTrigger>
-        <TabsTrigger value="library">Thư viện</TabsTrigger>
-        <TabsTrigger value="modules">Diễn giả/NTT</TabsTrigger>
-        <TabsTrigger value="resources">Khách sạn/Codes</TabsTrigger>
-      </TabsList>
+      {/* Tab navigation lives in the left sidebar; in-page TabsList removed. */}
 
       <TabsContent value="overview" className="mt-4">
         <OverviewDashboard eventId={eventId} />
