@@ -303,10 +303,90 @@ export function useWhyAttend(): WhyItem[] | null {
 // ---------- Key contents (topics highlights / cards on landing) ----------
 // Reuses topics for the KeyContent section.
 
+// ---------- Overview ----------
+export type OverviewData = {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  orgsTitle: string;
+  orgs: string[];
+  highlights: string[];
+};
+export function useOverview(): OverviewData | null {
+  const ctx = useOptionalEventContent();
+  return useMemo(() => {
+    const o = ctx?.content.overview;
+    if (!ctx || !o) return null;
+    const orgs = Array.isArray(o.orgs)
+      ? (o.orgs as Array<{ vi?: string; en?: string }>).map((v) => pickI18n(v as never, ctx.lang))
+      : [];
+    const highlights = Array.isArray(o.highlights)
+      ? (o.highlights as Array<{ vi?: string; en?: string }>).map((v) => pickI18n(v as never, ctx.lang))
+      : [];
+    return {
+      eyebrow: pickI18n(o.eyebrow as never, ctx.lang),
+      title: pickI18n(o.title as never, ctx.lang),
+      lead: pickI18n(o.lead as never, ctx.lang),
+      orgsTitle: pickI18n(o.orgs_title as never, ctx.lang),
+      orgs,
+      highlights,
+    };
+  }, [ctx?.content.overview, ctx?.lang]);
+}
+
 // ---------- Settings: footer / contact ----------
 export function useEventSettings() {
   const ctx = useOptionalEventContent();
   return ctx?.content.settings ?? null;
+}
+
+export type ContactInfo = {
+  email: string;
+  phone: string;
+  website: string;
+  address: string;
+  socials: { name: string; url: string }[];
+};
+export function useContactInfo(): ContactInfo | null {
+  const ctx = useOptionalEventContent();
+  return useMemo(() => {
+    const s = ctx?.content.settings;
+    if (!ctx || !s) return null;
+    const c = (s.contact as { email?: string; phone?: string; website?: string; address?: { vi?: string; en?: string } | string } | null) ?? {};
+    const socials = Array.isArray(s.social_links)
+      ? (s.social_links as Array<{ name?: string; url?: string }>).map((x) => ({ name: x.name ?? "", url: x.url ?? "#" }))
+      : [];
+    const address =
+      typeof c.address === "string"
+        ? c.address
+        : pickI18n((c.address ?? null) as never, ctx.lang);
+    return {
+      email: c.email ?? "",
+      phone: c.phone ?? "",
+      website: c.website ?? "",
+      address,
+      socials,
+    };
+  }, [ctx?.content.settings, ctx?.lang]);
+}
+
+export function useFooterText(): string | null {
+  const ctx = useOptionalEventContent();
+  return useMemo(() => {
+    const ft = ctx?.content.settings?.footer_text;
+    if (!ctx || !ft) return null;
+    return pickI18n(ft as never, ctx.lang);
+  }, [ctx?.content.settings, ctx?.lang]);
+}
+
+export type EventTheme = {
+  primary?: string;
+  accent?: string;
+  animations?: Record<string, string>;
+};
+export function useEventTheme(): EventTheme | null {
+  const ctx = useOptionalEventContent();
+  return (ctx?.content.event.theme as EventTheme | null) ?? null;
 }
 
 // ---------- Current event slug (for Link params) ----------
