@@ -93,7 +93,7 @@ function EventLanding() {
     ? ({
         ...(theme.primary ? { ["--brand-primary" as string]: theme.primary } : {}),
         ...(theme.accent ? { ["--brand-accent" as string]: theme.accent } : {}),
-      } as React.CSSProperties)
+      } as CSSProperties)
     : undefined;
 
   return (
