@@ -173,7 +173,7 @@ export function Agenda() {
   );
 }
 
-type Session = (typeof days)[number]["sessions"][number];
+type Session = EventDay["sessions"][number];
 
 function SessionItem({ s }: { s: Session }) {
   return (
@@ -201,6 +201,9 @@ function SessionItem({ s }: { s: Session }) {
 }
 
 function DayMeta({ day, className = "" }: { day: EventDay; className?: string }) {
+  const allTopics = useTopics();
+  const allSpeakers = useSpeakers();
+  const eventSlug = useCurrentEventSlug();
   const dayTopics = allTopics.filter((t) => day.topicSlugs.includes(t.slug));
   const daySpeakers = day.speakerIds
     .map((id) => allSpeakers.find((s) => s.id === id))
@@ -236,16 +239,25 @@ function DayMeta({ day, className = "" }: { day: EventDay; className?: string })
       {dayTopics.length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
           <Tag size={14} className="text-gold/80" />
-          {dayTopics.map((t) => (
-            <Link
-              key={t.slug}
-              to="/topics/$slug"
-              params={{ slug: t.slug }}
-              className="rounded-full border border-gold/40 bg-gold/10 px-2.5 py-0.5 text-[11px] font-semibold text-gold transition hover:bg-gold/20"
-            >
-              {t.title}
-            </Link>
-          ))}
+          {dayTopics.map((tp) =>
+            eventSlug ? (
+              <Link
+                key={tp.slug}
+                to="/e/$slug/topics/$topicSlug"
+                params={{ slug: eventSlug, topicSlug: tp.slug }}
+                className="rounded-full border border-gold/40 bg-gold/10 px-2.5 py-0.5 text-[11px] font-semibold text-gold transition hover:bg-gold/20"
+              >
+                {tp.title}
+              </Link>
+            ) : (
+              <span
+                key={tp.slug}
+                className="rounded-full border border-gold/40 bg-gold/10 px-2.5 py-0.5 text-[11px] font-semibold text-gold"
+              >
+                {tp.title}
+              </span>
+            ),
+          )}
         </div>
       )}
     </div>
