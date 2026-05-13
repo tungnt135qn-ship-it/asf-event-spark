@@ -23,21 +23,33 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   LayoutDashboard,
   CalendarRange,
   Users,
-  Settings2,
   LogOut,
   Info,
   Sliders,
   Palette,
   FileText,
-  Boxes,
   Folder,
   UserCheck,
   BedDouble,
   Gauge,
+  ChevronDown,
+  Newspaper,
+  HelpCircle,
+  BookOpen,
+  CalendarDays,
+  Megaphone,
+  Image as ImageIcon,
+  Hotel,
+  KeyRound,
+  Mic,
+  Award,
+  Sparkles,
+  Star,
 } from "lucide-react";
 
 type EventRow = {
