@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/lib/admin-auth";
+import { cloneEventFromDefault } from "@/lib/event-clone.functions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -131,26 +133,30 @@ function NewEventDialog({ onCreated }: { onCreated: () => void }) {
   const [slug, setSlug] = useState("");
   const [nameVi, setNameVi] = useState("");
   const [nameEn, setNameEn] = useState("");
+  const cloneFn = useServerFn(cloneEventFromDefault);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.from("events").insert({
-      slug: slug.trim().toLowerCase(),
-      name: { vi: nameVi, en: nameEn },
-      status: "draft",
-    });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message);
-      return;
+    try {
+      await cloneFn({
+        data: {
+          slug: slug.trim().toLowerCase(),
+          name_vi: nameVi,
+          name_en: nameEn,
+        },
+      });
+      toast.success("Đã tạo sự kiện và sao chép dữ liệu mẫu từ sự kiện mặc định");
+      setOpen(false);
+      setSlug("");
+      setNameVi("");
+      setNameEn("");
+      onCreated();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Có lỗi xảy ra");
+    } finally {
+      setLoading(false);
     }
-    toast.success("Đã tạo sự kiện");
-    setOpen(false);
-    setSlug("");
-    setNameVi("");
-    setNameEn("");
-    onCreated();
   };
 
   return (
@@ -165,7 +171,7 @@ function NewEventDialog({ onCreated }: { onCreated: () => void }) {
           <DialogHeader>
             <DialogTitle>Tạo sự kiện mới</DialogTitle>
             <DialogDescription>
-              Sau khi tạo, bạn có thể vào cấu hình chi tiết.
+              Sự kiện mới sẽ được sao chép toàn bộ dữ liệu (Hero, Agenda, Speakers, Hotels...) từ sự kiện mặc định để bạn chỉnh sửa, không khởi tạo trống.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
