@@ -150,49 +150,70 @@ function EventDetailPage() {
         </div>
       </div>
 
-      <Tabs defaultValue="general" className="w-full">
-        <TabsList className="flex-wrap h-auto">
-          <TabsTrigger value="general">Thông tin chung</TabsTrigger>
-          <TabsTrigger value="settings">Cấu hình</TabsTrigger>
-          <TabsTrigger value="theme">Giao diện</TabsTrigger>
-          <TabsTrigger value="content">Nội dung</TabsTrigger>
-          <TabsTrigger value="modules">Module</TabsTrigger>
-          <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="general" className="mt-4">
-          <GeneralForm event={event} onSaved={() => refetch()} />
-        </TabsContent>
-
-        <TabsContent value="settings" className="mt-4">
-          <SettingsForm
-            eventId={event.id}
-            settings={data.settings as Record<string, unknown> | null}
-            onSaved={() => refetch()}
-          />
-        </TabsContent>
-
-        <TabsContent value="theme" className="mt-4">
-          <ThemeForm
-            eventId={event.id}
-            theme={(data.event as unknown as { theme?: Record<string, unknown> }).theme ?? {}}
-            onSaved={() => refetch()}
-          />
-        </TabsContent>
-
-        <TabsContent value="content" className="mt-4">
-          <ContentTab eventId={event.id} />
-        </TabsContent>
-
-        <TabsContent value="modules" className="mt-4">
-          <ModulesTab eventId={event.id} />
-        </TabsContent>
-
-        <TabsContent value="resources" className="mt-4">
-          <ResourcesTab eventId={event.id} />
-        </TabsContent>
-      </Tabs>
+      <EventTabs eventId={event.id} data={data} event={event} refetch={refetch} />
     </div>
+  );
+}
+
+function EventTabs({
+  eventId,
+  data,
+  event,
+  refetch,
+}: {
+  eventId: string;
+  data: { settings: Record<string, unknown> | null; event: Record<string, unknown> };
+  event: { id: string };
+  refetch: () => void;
+}) {
+  const search = Route.useSearch();
+  const router = useRouter();
+  const activeTab: EventTab = search.tab ?? "general";
+  const setTab = (t: string) =>
+    router.navigate({
+      to: "/admin/events/$id",
+      params: { id: eventId },
+      search: { tab: t as EventTab },
+    });
+
+  return (
+    <Tabs value={activeTab} onValueChange={setTab} className="w-full">
+      <TabsList className="flex-wrap h-auto">
+        <TabsTrigger value="general">Thông tin chung</TabsTrigger>
+        <TabsTrigger value="settings">Cấu hình</TabsTrigger>
+        <TabsTrigger value="theme">Giao diện</TabsTrigger>
+        <TabsTrigger value="content">Nội dung</TabsTrigger>
+        <TabsTrigger value="modules">Module</TabsTrigger>
+        <TabsTrigger value="resources">Tài nguyên</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="general" className="mt-4">
+        <GeneralForm event={event as never} onSaved={refetch} />
+      </TabsContent>
+      <TabsContent value="settings" className="mt-4">
+        <SettingsForm
+          eventId={eventId}
+          settings={data.settings as Record<string, unknown> | null}
+          onSaved={refetch}
+        />
+      </TabsContent>
+      <TabsContent value="theme" className="mt-4">
+        <ThemeForm
+          eventId={eventId}
+          theme={(data.event as unknown as { theme?: Record<string, unknown> }).theme ?? {}}
+          onSaved={refetch}
+        />
+      </TabsContent>
+      <TabsContent value="content" className="mt-4">
+        <ContentTab eventId={eventId} />
+      </TabsContent>
+      <TabsContent value="modules" className="mt-4">
+        <ModulesTab eventId={eventId} />
+      </TabsContent>
+      <TabsContent value="resources" className="mt-4">
+        <ResourcesTab eventId={eventId} />
+      </TabsContent>
+    </Tabs>
   );
 }
 
