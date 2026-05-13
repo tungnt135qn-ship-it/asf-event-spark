@@ -47,7 +47,7 @@ export function FAQ() {
                   {f.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm leading-relaxed text-white/75">
-                  {f.a}
+                  <RichHtml html={f.a} />
                 </AccordionContent>
               </AccordionItem>
             ))}
