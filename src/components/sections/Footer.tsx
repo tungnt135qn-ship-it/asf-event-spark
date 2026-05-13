@@ -1,10 +1,35 @@
 import { AsfLogo } from "../AsfLogo";
-import { Mail, Phone, MapPin, Linkedin, Facebook, Youtube } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Facebook, Youtube, Globe, Twitter, Instagram, MessageCircle, Send } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useT } from "@/lib/i18n";
 import type { Dict } from "@/lib/i18n/dictionaries/en";
+import { useContactInfo, useFooterText } from "@/lib/event-adapters";
+
+const FOOTER_SOCIAL_ICONS: Record<string, LucideIcon> = {
+  facebook: Facebook,
+  linkedin: Linkedin,
+  youtube: Youtube,
+  twitter: Twitter,
+  x: Twitter,
+  instagram: Instagram,
+  zalo: MessageCircle,
+  telegram: Send,
+};
+function footerIcon(name: string): LucideIcon {
+  return FOOTER_SOCIAL_ICONS[name.trim().toLowerCase()] ?? Globe;
+}
 
 export function Footer() {
   const { t } = useT();
+  const info = useContactInfo();
+  const footerText = useFooterText();
+  const socials = info?.socials?.length
+    ? info.socials.map((s) => ({ Icon: footerIcon(s.name), href: s.url }))
+    : [
+        { Icon: Linkedin, href: "#" },
+        { Icon: Facebook, href: "https://www.facebook.com/p/Vietnam-Bond-Market-Association-100064838944642/" },
+        { Icon: Youtube, href: "#" },
+      ];
   const links: { key: keyof Dict; href: string }[] = [
     { key: "nav.overview", href: "#overview" },
     { key: "nav.agenda", href: "#agenda" },
