@@ -591,10 +591,11 @@ function KeyForm({
             </div>
           </div>
           <div className="space-y-2">
-            <Label>Image URL</Label>
-            <Input
-              value={it.image_url ?? ""}
-              onChange={(e) => update(idx, { image_url: e.target.value || null })}
+            <Label>Image</Label>
+            <ImageUpload
+              value={it.image_url}
+              onChange={(url) => update(idx, { image_url: url })}
+              folder="key-content"
             />
           </div>
           <I18nField label="Title" value={it.title} onChange={(v) => update(idx, { title: v })} />
