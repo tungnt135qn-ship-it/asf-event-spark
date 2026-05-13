@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { getAdminRoles } from "@/lib/admin-roles.functions";
 
 export type AppRole = "super_admin" | "event_admin" | "editor";
 
@@ -32,14 +33,23 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [rolesLoading, setRolesLoading] = useState(true);
 
-  const loadRoles = async (uid: string) => {
+  const loadRoles = async (_uid: string) => {
     setRolesLoading(true);
-    const { data } = await supabase
-      .from("user_roles")
-      .select("role, event_id")
-      .eq("user_id", uid);
-    setRoles((data ?? []) as UserRole[]);
-    setRolesLoading(false);
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+      if (!token) throw new Error("Missing admin session token");
+
+      const data = await getAdminRoles({
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setRoles((data ?? []) as UserRole[]);
+    } catch (error) {
+      console.error("Unable to load admin roles", error);
+      setRoles([]);
+    } finally {
+      setRolesLoading(false);
+    }
   };
 
   useEffect(() => {
