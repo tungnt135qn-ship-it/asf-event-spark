@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, Link, useRouter } from "@tanstack/react-router";
 import { AdminAuthProvider, useAdminAuth } from "@/lib/admin-auth";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, LogOut, Settings2 } from "lucide-react";
+import { LayoutDashboard, LogOut, Settings2, Users } from "lucide-react";
 import { AdminLogin } from "@/components/admin/AdminLogin";
 
 export const Route = createFileRoute("/admin")({
@@ -56,7 +56,7 @@ function NoAccess() {
 }
 
 function AdminShell() {
-  const { user, signOut } = useAdminAuth();
+  const { user, signOut, isSuperAdmin } = useAdminAuth();
   const router = useRouter();
 
   return (
@@ -75,6 +75,15 @@ function AdminShell() {
           >
             <LayoutDashboard className="h-4 w-4" /> Sự kiện
           </Link>
+          {isSuperAdmin && (
+            <Link
+              to="/admin/users"
+              activeProps={{ className: "bg-accent text-accent-foreground" }}
+              className="flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-accent"
+            >
+              <Users className="h-4 w-4" /> Người dùng
+            </Link>
+          )}
           <Link
             to="/admin"
             activeProps={{ className: "" }}
