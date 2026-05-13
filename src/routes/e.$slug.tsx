@@ -24,7 +24,8 @@ import { Footer } from "@/components/sections/Footer";
 import { Reveal } from "@/components/Reveal";
 import { Gated, LockedSection } from "@/components/LockedSection";
 import { useT } from "@/lib/i18n";
-import { fetchEventContent, pickI18n } from "@/lib/event-content";
+import { fetchEventContent } from "@/lib/event-content";
+import { buildEventHead } from "@/lib/seo-helpers";
 import { EventContentProvider } from "@/lib/event-context";
 
 export const eventContentQueryOptions = (slug: string) =>
@@ -41,24 +42,9 @@ export const eventContentQueryOptions = (slug: string) =>
 export const Route = createFileRoute("/e/$slug")({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(eventContentQueryOptions(params.slug)),
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [] };
-    const ev = loaderData.event;
-    const seo = (ev as { /* no seo on events row directly */ }) && loaderData.settings?.seo as
-      | { title?: { vi?: string; en?: string }; description?: { vi?: string; en?: string }; og_image?: string }
-      | null;
-    const title = pickI18n(seo?.title ?? null, "vi", pickI18n(ev.name as never, "vi", ev.slug));
-    const desc = pickI18n(seo?.description ?? null, "vi", pickI18n(ev.tagline as never, "vi", ""));
-    return {
-      meta: [
-        { title },
-        { name: "description", content: desc },
-        { property: "og:title", content: title },
-        { property: "og:description", content: desc },
-        { property: "og:type", content: "website" },
-        ...(seo?.og_image ? [{ property: "og:image", content: seo.og_image }] : ev.cover_url ? [{ property: "og:image", content: ev.cover_url }] : []),
-      ],
-    };
+    return buildEventHead({ content: loaderData, path: `/e/${params.slug}` });
   },
   notFoundComponent: () => (
     <div className="flex min-h-screen items-center justify-center text-white">

@@ -7,10 +7,30 @@ import { Footer } from "@/components/sections/Footer";
 import { EventContentProvider } from "@/lib/event-context";
 import { eventContentQueryOptions } from "./e.$slug";
 import { useNewsList } from "@/lib/event-adapters";
+import { pickI18n } from "@/lib/event-content";
+import { buildEventHead } from "@/lib/seo-helpers";
 
 export const Route = createFileRoute("/e/$slug/news/$newsSlug")({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(eventContentQueryOptions(params.slug)),
+  head: ({ loaderData, params }) => {
+    if (!loaderData) return { meta: [] };
+    const lang = (loaderData.event.default_lang as "vi" | "en") ?? "vi";
+    const n = loaderData.news.find((x) => x.slug === params.newsSlug);
+    const override = n
+      ? {
+          title: pickI18n(n.title as never, lang, ""),
+          description: pickI18n(n.excerpt as never, lang, ""),
+          image: n.cover_url ?? null,
+          type: "article",
+        }
+      : undefined;
+    return buildEventHead({
+      content: loaderData,
+      path: `/e/${params.slug}/news/${params.newsSlug}`,
+      override,
+    });
+  },
   notFoundComponent: () => (
     <div className="flex min-h-screen items-center justify-center text-white">
       <div className="text-center">

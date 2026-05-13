@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowLeft, Download, Eye, Trash2, Search } from "lucide-react";
 import { toast } from "sonner";
+import { RegistrationStats } from "@/components/admin/StatsCharts";
 
 export const Route = createFileRoute("/admin/events/$id/registrations")({
   component: RegistrationsPage,
@@ -173,6 +174,8 @@ function RegistrationsPage() {
           <Download className="mr-2 h-4 w-4" /> Xuất CSV
         </Button>
       </div>
+
+      <RegistrationStats rows={rows} />
 
       <Card className="p-4 mb-4">
         <div className="flex gap-3 flex-wrap items-center">
