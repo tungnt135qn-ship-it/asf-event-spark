@@ -332,7 +332,7 @@ function OverviewForm({
       <form onSubmit={submit} className="space-y-5">
         <I18nField label="Eyebrow" value={form.eyebrow} onChange={(v) => setForm({ ...form, eyebrow: v })} />
         <I18nField label="Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
-        <I18nField label="Lead" value={form.lead} onChange={(v) => setForm({ ...form, lead: v })} textarea />
+        <I18nField label="Lead" value={form.lead} onChange={(v) => setForm({ ...form, lead: v })} rich />
         <I18nField
           label="Orgs title"
           value={form.orgs_title}
