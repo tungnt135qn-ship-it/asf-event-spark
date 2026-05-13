@@ -16,6 +16,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as TopicsSlugRouteImport } from './routes/topics.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as ESlugRouteImport } from './routes/e.$slug'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AccountRegistrationsRouteImport } from './routes/account.registrations'
 import { Route as AccountBookingsRouteImport } from './routes/account.bookings'
 import { Route as ESlugLibraryRouteImport } from './routes/e.$slug.library'
@@ -59,6 +60,11 @@ const ESlugRoute = ESlugRouteImport.update({
   id: '/e/$slug',
   path: '/e/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AccountRegistrationsRoute = AccountRegistrationsRouteImport.update({
   id: '/account/registrations',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/e/$slug': typeof ESlugRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/e/$slug': typeof ESlugRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/library': typeof LibraryRoute
   '/account/bookings': typeof AccountBookingsRoute
   '/account/registrations': typeof AccountRegistrationsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/e/$slug': typeof ESlugRouteWithChildren
   '/news/$slug': typeof NewsSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/account/bookings'
     | '/account/registrations'
+    | '/admin/users'
     | '/e/$slug'
     | '/news/$slug'
     | '/topics/$slug'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/account/bookings'
     | '/account/registrations'
+    | '/admin/users'
     | '/e/$slug'
     | '/news/$slug'
     | '/topics/$slug'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/library'
     | '/account/bookings'
     | '/account/registrations'
+    | '/admin/users'
     | '/e/$slug'
     | '/news/$slug'
     | '/topics/$slug'
@@ -267,6 +279,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/e/$slug'
       preLoaderRoute: typeof ESlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/account/registrations': {
       id: '/account/registrations'
@@ -342,11 +361,13 @@ const AdminEventsIdRouteWithChildren = AdminEventsIdRoute._addFileChildren(
 )
 
 interface AdminRouteChildren {
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminEventsIdRoute: typeof AdminEventsIdRouteWithChildren
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminEventsIdRoute: AdminEventsIdRouteWithChildren,
 }
